@@ -18,6 +18,7 @@ var cors = function (req, res, next)
 app.use(cors);
 
 // importataan reitit
+
 //const customerRoutes = require('./routes/customerRoutes');
 //app.use(customerRoutes);
 

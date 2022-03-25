@@ -1,9 +1,11 @@
 import './App.css';
+import Navbar from './components/Navbar.js'
 
-function App() {
+const App = () => {
+  
   return (
     <div className="App">
-      <h1>Tästä se lähtee!</h1>
+        <Navbar />
     </div>
   );
 }

@@ -1,12 +1,18 @@
-import './App.css';
+import {Routes, Route, BrowserRouter as Router} from 'react-router-dom';
 import Navbar from './components/Navbar.js'
 import FrontPage from './components/FrontPage.js'
 
 const App = () => {
   return (
-    <div className="App">
+    <div>
+      <Router>
         <Navbar />
-        <FrontPage />
+
+        <Routes>
+          <Route path="/koti" element={<FrontPage />} />
+        </Routes>
+      </Router>
+        
     </div>
   );
 }

@@ -13,12 +13,13 @@ import Container from '@mui/material/Container';
 import Link from '@mui/material/Link';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
+
 function Copyright() {
   return (
     <Typography variant="body2" color="text.secondary" align="center">
       {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
+      <Link color="inherit" href="">
+        Sinna Hujanen, Simo Lyytinen ja Ville Paasonen
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -31,6 +32,7 @@ const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 const theme = createTheme();
 
 export default function FrontPage() {
+    
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -108,7 +110,7 @@ export default function FrontPage() {
       {/* Footer */}
       <Box sx={{ bgcolor: 'background.paper', p: 6 }} component="footer">
         <Typography variant="h6" align="center" gutterBottom>
-          Footer
+          Village People Oy
         </Typography>
         <Typography
           variant="subtitle1"
@@ -116,7 +118,7 @@ export default function FrontPage() {
           color="text.secondary"
           component="p"
         >
-          Something here to give the footer a purpose!
+          Elämyksiä ja majoitusta jo vuodesta 2022!
         </Typography>
         <Copyright />
       </Box>

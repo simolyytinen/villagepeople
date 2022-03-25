@@ -11,11 +11,13 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
+import {useNavigate} from 'react-router-dom';
 
 const pages = ['Majoitus', 'Palvelut', 'Asiakkaiden hallinta', 'Majoitusvarausten hallinta'];
 const settings = ['Profiili', 'Varaukset', 'Kirjaudu ulos'];
 
 const Navbar = () => {
+    let navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -28,7 +30,7 @@ const Navbar = () => {
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
-    console.log("hep");
+    navigate("/koti");
   };
 
   const handleCloseUserMenu = () => {

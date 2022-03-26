@@ -1,6 +1,9 @@
 import {Routes, Route, BrowserRouter as Router} from 'react-router-dom';
 import Navbar from './components/Navbar.js'
-import FrontPage from './components/FrontPage.js'
+import Majoitus from './components/Majoitus.js'
+import Footer from './components/Footer.js';
+import Palvelut from './components/Palvelut.js';
+import Haku from './components/Haku.js';
 
 const App = () => {
   return (
@@ -9,8 +12,12 @@ const App = () => {
         <Navbar />
 
         <Routes>
-          <Route path="/koti" element={<FrontPage />} />
+          <Route path="/" element={<Haku />} />
+          <Route path="/majoitus" element={<Majoitus />} />
+          <Route path="/palvelut" element={<Palvelut />} />
         </Routes>
+
+        <Footer />
       </Router>
         
     </div>

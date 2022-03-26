@@ -4,14 +4,7 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { useNavigate } from "react-router-dom";
 
-const hallinta = [
-  { otsikko: "Majoituskohteiden hallinta", reitti: "/majoitus/hallinta" },
-  { otsikko: "Palveluiden hallinta", reitti: "/palvelut/hallinta" },
-  { otsikko: "Asiakkaiden hallinta", reitti: "/asiakkaat/hallinta" },
-  { otsikko: "Laskujen hallinta", reitti: "/laskut/hallinta" },
-];
-
-export default function HallintaMenu() {
+export default function HallintaMenu({hallinta}) {
   let navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);

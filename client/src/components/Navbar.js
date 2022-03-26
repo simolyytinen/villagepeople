@@ -14,9 +14,16 @@ import MenuItem from "@mui/material/MenuItem";
 import { useNavigate } from "react-router-dom";
 import HallintaMenu from "./HallintaMenu";
 
+// reitit ja otsikot voisi tallentaa contextAPI niin olisi yhdessä paikassa
 const sivut = [
   { otsikko: "Majoitus", reitti: "/majoitus" },
   { otsikko: "Palvelut", reitti: "/palvelut" },
+];
+const hallinta = [
+  { otsikko: "Majoituskohteiden hallinta", reitti: "/majoitus/hallinta" },
+  { otsikko: "Palveluiden hallinta", reitti: "/palvelut/hallinta" },
+  { otsikko: "Asiakkaiden hallinta", reitti: "/asiakkaat/hallinta" },
+  { otsikko: "Laskujen hallinta", reitti: "/laskut/hallinta" },
 ];
 const kayttaja = ["Profiili", "Varaukset", "Kirjaudu ulos"];
 
@@ -90,6 +97,16 @@ const Navbar = () => {
                   <Typography textAlign="center">{sivu.otsikko}</Typography>
                 </MenuItem>
               ))}
+              {/*Tähän konditionaalinen renderöinti näille lopuille */}
+              {hallinta.map((sivu) => (
+                <MenuItem
+                  key={sivu.reitti}
+                  onClick={() => handleCloseNavMenu(sivu.reitti)}
+                >
+                  <Typography textAlign="center">{sivu.otsikko}</Typography>
+                </MenuItem>
+              ))}
+              
             </Menu>
           </Box>
           <Typography
@@ -110,7 +127,8 @@ const Navbar = () => {
                 {sivu.otsikko}
               </Button>
             ))}
-            <HallintaMenu />
+            {/*Tähän konditionaalinen renderöinti HallintaMenulle */}
+            <HallintaMenu hallinta={hallinta}/>
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>

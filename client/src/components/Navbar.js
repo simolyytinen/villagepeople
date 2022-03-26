@@ -12,12 +12,13 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import { useNavigate } from "react-router-dom";
+import HallintaMenu from "./HallintaMenu";
 
-const pages = [
+const sivut = [
   { otsikko: "Majoitus", reitti: "/majoitus" },
   { otsikko: "Palvelut", reitti: "/palvelut" },
 ];
-const settings = ["Profiili", "Varaukset", "Kirjaudu ulos"];
+const kayttaja = ["Profiili", "Varaukset", "Kirjaudu ulos"];
 
 const Navbar = () => {
   let navigate = useNavigate();
@@ -35,7 +36,6 @@ const Navbar = () => {
     setAnchorElNav(null);
     navigate(reitti);
   };
-
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
@@ -82,9 +82,12 @@ const Navbar = () => {
                 display: { xs: "block", md: "none" },
               }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page.reitti} onClick={()=>handleCloseNavMenu(page.reitti)}>
-                  <Typography textAlign="center">{page.otsikko}</Typography>
+              {sivut.map((sivu) => (
+                <MenuItem
+                  key={sivu.reitti}
+                  onClick={() => handleCloseNavMenu(sivu.reitti)}
+                >
+                  <Typography textAlign="center">{sivu.otsikko}</Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -98,15 +101,16 @@ const Navbar = () => {
             VILLAGE PEOPLE OY
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page) => (
+            {sivut.map((sivu) => (
               <Button
-                key={page.reitti}
-                onClick={() => handleCloseNavMenu(page.reitti)}
+                key={sivu.reitti}
+                onClick={() => handleCloseNavMenu(sivu.reitti)}
                 sx={{ my: 2, color: "white", display: "block" }}
               >
-                {page.otsikko}
+                {sivu.otsikko}
               </Button>
             ))}
+            <HallintaMenu />
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
@@ -131,9 +135,9 @@ const Navbar = () => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+              {kayttaja.map((a) => (
+                <MenuItem key={a} onClick={handleCloseUserMenu}>
+                  <Typography textAlign="center">{a}</Typography>
                 </MenuItem>
               ))}
             </Menu>

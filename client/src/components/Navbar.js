@@ -20,6 +20,7 @@ const sivut = [
   { otsikko: "Palvelut", reitti: "/palvelut" },
 ];
 const hallinta = [
+  { otsikko: "Alueiden hallinta", reitti: "/alue/hallinta" },
   { otsikko: "Majoituskohteiden hallinta", reitti: "/majoitus/hallinta" },
   { otsikko: "Palveluiden hallinta", reitti: "/palvelut/hallinta" },
   { otsikko: "Asiakkaiden hallinta", reitti: "/asiakkaat/hallinta" },

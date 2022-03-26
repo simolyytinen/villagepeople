@@ -19,8 +19,8 @@ app.use(cors);
 
 // importataan reitit
 
-//const customerRoutes = require('./routes/customerRoutes');
-//app.use(customerRoutes);
+const toimipisteRoutes = require('./routes/toimipisteRoutes');
+app.use(toimipisteRoutes);
 
 app.listen(port, hostname, () => {
   console.log(`Server running at http://${hostname}:${port}/`);

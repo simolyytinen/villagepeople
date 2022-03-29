@@ -15,7 +15,7 @@ const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 const theme = createTheme();
 
 export default function Majoitus() {
-    
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -38,10 +38,16 @@ export default function Majoitus() {
             >
               Majoitus
             </Typography>
-            <Typography variant="h5" align="center" color="text.secondary" paragraph>
-              Tähän haku-ehdot komponentti
+            {/* <Typography variant="h5" align="center" color="text.secondary" paragraph>
+            </Typography> */}
+            <Stack
+              sx={{ pt: 1 }}
+              direction="row"
+              spacing={2}
+              justifyContent="center"
+            >
               <DatePickers />
-            </Typography>
+            </Stack>
             <Stack
               sx={{ pt: 4 }}
               direction="row"

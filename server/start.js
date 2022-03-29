@@ -22,6 +22,9 @@ app.use(cors);
 const toimipisteRoutes = require('./routes/toimipisteRoutes');
 app.use(toimipisteRoutes);
 
+const palveluRoutes = require('./routes/palveluRoutes');
+app.use(palveluRoutes);
+
 app.listen(port, hostname, () => {
   console.log(`Server running at http://${hostname}:${port}/`);
 });

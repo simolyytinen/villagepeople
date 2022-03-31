@@ -11,7 +11,7 @@ import { Delete, Edit } from '@mui/icons-material';
 
 export default function AlueTaulukko({sarakkeet, data, poista, muokkaa}) {
   return (
-    <TableContainer component={Paper}>
+    <TableContainer style={{marginTop: 32}} component={Paper}>
       <Table aria-label="simple table">
         <TableHead>
           <TableRow>
@@ -32,7 +32,7 @@ export default function AlueTaulukko({sarakkeet, data, poista, muokkaa}) {
                   <IconButton onClick={()=>{poista(row.alue_id)}}>
                     <Delete />
                   </IconButton>
-                  <IconButton onClick={()=>{muokkaa(row.alue_id)}}>
+                  <IconButton onClick={()=>{muokkaa(row.alue_id, row.nimi)}}>
                     <Edit />
                   </IconButton>
               </TableCell>

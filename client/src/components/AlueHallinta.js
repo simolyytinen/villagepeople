@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
@@ -7,26 +7,42 @@ import AlueTaulukko from "./AlueTaulukko";
 
 const AlueHallinta = () => {
 
-    const [nimi, setNimi] = useState("");
-    const [alueid, setAlueid] = useState("");
+    const [toimipaikat, setToimipaikat] = useState([]);
+    const [hae, setHae] = useState(0);
+    const [poistaId, setPoistaId] = useState(-1);
 
     const sarakkeet = [
         "Alueen ID", "Nimi", "Muuta/Poista"
     ]
-    const data = [
-        {id: 1, nimi: "Ruka"},
-        {id: 2, nimi: "Vuokatti"},
-        {id: 3, nimi: "Ylläs"},
-        {id: 4, nimi: "Levi"},
-        {id: 5, nimi: "Ruka"},
-        {id: 6, nimi: "Vuokatti"},
-        {id: 7, nimi: "Ylläs"},
-        {id: 8, nimi: "Levi"},
-        {id: 9, nimi: "Ylläs"},
-        {id: 10, nimi: "Levi"},
-        {id: 11, nimi: "Ylläs"},
-        {id: 12, nimi: "Levi"},
-    ]
+
+    useEffect(()=>{
+        fetch("/api/toimipisteet")
+        .then(response => response.json())
+        .then((data) => {
+            console.log(data);
+            setToimipaikat(data)})
+        .catch(err => console.log(err));
+    }, [hae])
+
+    useEffect(()=>{
+        const api = "/api/toimipisteet/" + poistaId;
+        fetch(api, {
+            method: "DELETE"
+        })
+        .then((res) => {
+            console.log(res)
+            setHae(hae => hae+1);
+        })
+        .catch(err => console.log(err))
+    }, [poistaId])
+
+    const poistaToimipaikka = (id) => {
+        setPoistaId(id);
+    }
+
+    const muokkaaToimipaikka = (id) => {
+        console.log("Muokkaa", id)
+    }
 
     return (
         <Container maxWidth="xl">
@@ -40,7 +56,7 @@ const AlueHallinta = () => {
                     </Typography>
                 </Grid>
                 <Grid item xs={12} md={4}>
-                    <AlueTaulukko sarakkeet={sarakkeet} data={data} />
+                    <AlueTaulukko sarakkeet={sarakkeet} data={toimipaikat} poista={poistaToimipaikka} muokkaa={muokkaaToimipaikka} />
                 </Grid>
             </Grid>
             

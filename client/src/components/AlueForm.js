@@ -5,7 +5,6 @@ export default function AlueForm({ muokataanko, alueId, nimi, setAlueId, setNimi
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log("Formissa", alueId, nimi);
     muokataanko ? tallennaClick({
         alue_id : alueId,
         nimi : nimi

@@ -13,7 +13,7 @@ const AlueHallinta = () => {
     const [muokkaus, setMuokkaus] = useState(false);
     const [alueId, setAlueId] = useState("");
     const [nimi, setNimi] = useState("");
-    const [muokkausData, setMuokkausData] = useState();
+    const [muokkausData, setMuokkausData] = useState("");
     const [lisaaNimi, setLisaaNimi] = useState("");
 
     const sarakkeet = [
@@ -53,9 +53,20 @@ const AlueHallinta = () => {
     // Toimipisteen muokkaaminen
     useEffect(()=>{
         const funktio = () => {
-            console.log("effect lähti", muokkausData);
+            const api = "/api/toimipisteet/" + muokkausData.alue_id;
+
+            fetch(api, {
+                method: "PUT",
+                headers: { 'Content-Type' : 'application/json'},
+                body: JSON.stringify({nimi : muokkausData.nimi})
+            })
+            .then((res) => {
+                setHae(hae => hae+1)
+                setMuokkausData("");
+            })
+            .catch(err => console.log(err))
         }
-        if (muokkausData) funktio();
+        if (muokkausData != "") funktio();
     }, [muokkausData])
 
 
@@ -63,7 +74,6 @@ const AlueHallinta = () => {
         setMuokkaus(true);
         setAlueId(id);
         setNimi(nimi);
-        console.log("Hallinta", id, nimi);
     }
 
     const tallennaClick = (data) => {
@@ -78,8 +88,20 @@ const AlueHallinta = () => {
 
     useEffect(()=>{
         const funktio = () => {
-            console.log("lisäys effect", lisaaNimi);
+            const api = "/api/toimipisteet/";
+
+            fetch(api, {
+                method: "POST",
+                headers: { 'Content-Type' : 'application/json'},
+                body: JSON.stringify({nimi : lisaaNimi})
+            })
+            .then((res) => {
+                setHae(hae => hae+1)
+                setLisaaNimi("");
+            })
+            .catch(err => console.log(err))
         }
+        
         if (lisaaNimi != "") funktio();
     }, [lisaaNimi])
 

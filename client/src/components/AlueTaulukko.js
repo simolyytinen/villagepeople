@@ -14,7 +14,7 @@ export default function AlueTaulukko({sarakkeet, data, poista, muokkaa}) {
     <TableContainer style={{marginTop: 32}} component={Paper}>
       <Table aria-label="simple table">
         <TableHead>
-          <TableRow>
+          <TableRow key={0}>
             {sarakkeet.map((sarake)=>(
                 <TableCell component="th" align="center">{sarake}</TableCell>
             ))}

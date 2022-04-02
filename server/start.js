@@ -25,6 +25,9 @@ app.use(toimipisteRoutes);
 const palveluRoutes = require('./routes/palveluRoutes');
 app.use(palveluRoutes);
 
+const asiakasRoutes = require('./routes/asiakasRoutes');
+app.use(asiakasRoutes);
+
 app.listen(port, hostname, () => {
   console.log(`Server running at http://${hostname}:${port}/`);
 });

@@ -30,7 +30,8 @@ module.exports = {
             let henkilomaara = req.body.henkilomaara; 
             let varustelu = req.body.varustelu;
 
-            // Alue id:n tarkistus ja postinumeron tarkistus
+            // Alue id:n tarkistus ?
+            // postinumeron tarkistus ?
             let a = await sql.postMokki(alue_id, postinro, mokkinimi, katuosoite, hinta, kuvaus, henkilomaara, varustelu);
 
             res.statusCode = 201;
@@ -72,6 +73,8 @@ module.exports = {
             let kuvaus = req.body.kuvaus; 
             let henkilomaara = req.body.henkilomaara; 
             let varustelu = req.body.varustelu;
+
+            // samat tarkastukset kun lisäyksen tapauksessa?
 
             let a = await sql.updateMokki(alue_id, postinro, mokkinimi, katuosoite, hinta, kuvaus, henkilomaara, varustelu, mokki_id);
 

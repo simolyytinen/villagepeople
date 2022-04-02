@@ -66,7 +66,7 @@ module.exports = {
             let henkilomaara = req.body.henkilomaara; 
             let varustelu = req.body.varustelu;
 
-            let a = await sql.updateMokki(mokki_id, alue_id, postinro, mokkinimi, katuosoite, hinta, kuvaus, henkilomaara, varustelu);
+            let a = await sql.updateMokki(alue_id, postinro, mokkinimi, katuosoite, hinta, kuvaus, henkilomaara, varustelu, mokki_id);
 
             res.statusCode = 200;
             res.json({msg : "Mökin muokkaaminen onnistui."});

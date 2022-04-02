@@ -32,9 +32,11 @@ module.exports = {
         }
     },
 
-    poistaToimipiste: async (req, res) => {
+    poistaToimipiste: async (req, res) => { // EI VALMIS!
         try {
             let alueid = req.params.alueid;
+
+            // Tarkistus onko toimipisteeseen liittyen mökkejä -> voidaanko poistaa
             let a = await sql.deleteToimipiste(alueid);
 
             res.statusCode = 200;

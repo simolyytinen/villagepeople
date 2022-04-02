@@ -39,7 +39,7 @@ const AlueHallinta = () => {
             })
             .then((res) => {
                 console.log(res)
-                setHae(hae => hae+1);
+                setHae(hae => hae+1); // laukaistaan toimipaikkojen hakeminen useEffect
             })
             .catch(err => console.log(err))
         }
@@ -61,12 +61,12 @@ const AlueHallinta = () => {
                 body: JSON.stringify({nimi : muokkausData.nimi})
             })
             .then((res) => {
-                setHae(hae => hae+1)
+                setHae(hae => hae+1) // laukaistaan toimipaikkojen hakeminen useEffect
                 setMuokkausData("");
             })
             .catch(err => console.log(err))
         }
-        if (muokkausData != "") funktio();
+        if (muokkausData !== "") funktio();
     }, [muokkausData])
 
 
@@ -96,13 +96,13 @@ const AlueHallinta = () => {
                 body: JSON.stringify({nimi : lisaaNimi})
             })
             .then((res) => {
-                setHae(hae => hae+1)
+                setHae(hae => hae+1) // laukaistaan toimipaikkojen hakeminen useEffect
                 setLisaaNimi("");
             })
             .catch(err => console.log(err))
         }
         
-        if (lisaaNimi != "") funktio();
+        if (lisaaNimi !== "") funktio();
     }, [lisaaNimi])
 
     const lisaaClick = (nimi) => {

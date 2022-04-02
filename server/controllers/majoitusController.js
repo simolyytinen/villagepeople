@@ -3,10 +3,9 @@ const sql = require('../db/majoitusSQL');
 module.exports = {
 
     haeMokit: async (req, res) => {
-        let alue_id;
-        req.body.alue_id ? alue_id = req.body.alue_id : alue_id = "%";
-
         try {
+            let alue_id;
+            req.body.alue_id ? alue_id = req.body.alue_id : alue_id = "%";
             let mokit = await sql.getMokit(alue_id);
 
             res.statusCode = 200;
@@ -30,9 +29,9 @@ module.exports = {
             let kuvaus = req.body.kuvaus; 
             let henkilomaara = req.body.henkilomaara; 
             let varustelu = req.body.varustelu;
-            let a = await sql.postMokki(alue_id, postinro, mokkinimi, katuosoite, hinta, kuvaus, henkilomaara, varustelu);
 
             // Alue id:n tarkistus ja postinumeron tarkistus
+            let a = await sql.postMokki(alue_id, postinro, mokkinimi, katuosoite, hinta, kuvaus, henkilomaara, varustelu);
 
             res.statusCode = 201;
             res.json({msg : "Mökin lisääminen onnistui."});

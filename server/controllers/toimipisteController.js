@@ -1,5 +1,6 @@
 
 const sql = require('../db/toimipisteSQL');
+const mokkisql = require('../db/majoitusSQL');
 
 module.exports = {
 
@@ -35,12 +36,17 @@ module.exports = {
     poistaToimipiste: async (req, res) => { // EI VALMIS!
         try {
             let alueid = req.params.alueid;
-
-            // Tarkistus onko toimipisteeseen liittyen mökkejä -> voidaanko poistaa
-            let a = await sql.deleteToimipiste(alueid);
-
-            res.statusCode = 200;
-            res.json({msg : "Poistaminen onnistui."});
+            let m = await mokkisql.getMokit(alueid);
+            if (m.length == 0) {
+                let a = await sql.deleteToimipiste(alueid);
+                res.statusCode = 200;
+                res.json({msg : "Poistaminen onnistui."});
+            }
+            else {
+                res.statusCode = 400;
+                res.json({msg : "Aluetta ei voida poistaa, siihen liittyy mökkejä."});
+            }
+            
         }
         catch (err) {
             console.log("Error in server")

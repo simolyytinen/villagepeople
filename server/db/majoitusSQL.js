@@ -17,9 +17,9 @@ const executeSQL = (query, params) => {
 
 module.exports = {
 
-    getMokit: () => {
-        let sql = "SELECT * FROM mokki";
-        return executeSQL(sql, []);
+    getMokit: (alue_id) => {
+        let sql = "SELECT * FROM mokki WHERE alue_id LIKE ?";
+        return executeSQL(sql, [alue_id]);
     },
 
     postMokki: (alue_id, postinro, mokkinimi, katuosoite, hinta, kuvaus, henkilomaara, varustelu) => {

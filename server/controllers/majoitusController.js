@@ -3,8 +3,11 @@ const sql = require('../db/majoitusSQL');
 module.exports = {
 
     haeMokit: async (req, res) => {
+        let alue_id;
+        req.body.alue_id ? alue_id = req.body.alue_id : alue_id = "%";
+
         try {
-            let mokit = await sql.getMokit();
+            let mokit = await sql.getMokit(alue_id);
 
             res.statusCode = 200;
             res.json(mokit);
@@ -29,6 +32,8 @@ module.exports = {
             let varustelu = req.body.varustelu;
             let a = await sql.postMokki(alue_id, postinro, mokkinimi, katuosoite, hinta, kuvaus, henkilomaara, varustelu);
 
+            // Alue id:n tarkistus ja postinumeron tarkistus
+
             res.statusCode = 201;
             res.json({msg : "Mökin lisääminen onnistui."});
         }
@@ -42,6 +47,9 @@ module.exports = {
     poistaMokki: async (req, res) => {
         try {
             let mokki_id = req.params.mokki_id;
+
+            // TARKASTUS ETTÄ ONKO MÖKKIIN OLEMASSA VARAUKSIA?
+
             let a = await sql.deleteMokki(mokki_id);
 
             res.statusCode = 200;

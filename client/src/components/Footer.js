@@ -36,7 +36,7 @@ export default function Footer() {
           color="text.secondary"
           component="p"
         >
-          Elämyksiä ja majoitusta jo vuodesta 2022!
+          Elämyksiä ja majoitusta jo vuodesta {new Date().getFullYear()}!
         </Typography>
         <Copyright />
       </Box>

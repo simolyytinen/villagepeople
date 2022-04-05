@@ -20,20 +20,20 @@ export default function DatePickers() {
   return (
     <form className={classes.container} noValidate>
       <TextField
-        id="date"
+        id="dateArrival"
         label="Saapuminen"
         type="date"
-        defaultValue=""
+        // defaultValue= {new Date().getDate()+"-"+(new Date().getMonth()+1)+"-"+new Date().getFullYear()}
         className={classes.textField}
         InputLabelProps={{
           shrink: true,
         }}
       />
        <TextField
-        id="date"
+        id="dateLeave"
         label="Lähtö"
         type="date"
-        defaultValue=""
+        // defaultValue= ""
         className={classes.textField}
         InputLabelProps={{
           shrink: true,

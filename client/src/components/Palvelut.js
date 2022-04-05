@@ -6,15 +6,15 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Kortti from './Kortti';
-
+import PalveluKortti from './Kortti_palvelut';
+import TextField from '@material-ui/core/TextField';
 
 const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 const theme = createTheme();
 
 export default function Palvelut() {
-    
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -37,9 +37,18 @@ export default function Palvelut() {
             >
               Palvelut
             </Typography>
-            <Typography variant="h5" align="center" color="text.secondary" paragraph>
+            {/* <Typography variant="h5" align="center" color="text.secondary" paragraph>
               Tähän haku-ehdot komponentti
-            </Typography>
+            </Typography> */}
+            <TextField
+              margin="normal"
+              fullWidth
+              id="palveluNimi"
+              label="Etsi palvelua"
+              name="nimi"
+              value=""
+            // onChange={(event)=>{setXXXXXX(event.target.value)}}
+            />
             <Stack
               sx={{ pt: 4 }}
               direction="row"
@@ -51,7 +60,7 @@ export default function Palvelut() {
             </Stack>
           </Container>
         </Box>
-        <Kortti data={cards} />
+        <PalveluKortti data={cards} />
       </main>
     </ThemeProvider>
   );

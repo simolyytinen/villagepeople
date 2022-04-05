@@ -14,8 +14,8 @@ router.route('/api/palvelut').
 router.route('/api/palvelut/:palveluid').
     delete(ctrl.poistaPalvelu);
 
-// router.route('/api/palvelut/:palveluid').
-//     put(ctrl.muokkaaPalvelu);
+router.route('/api/palvelut/:palveluid').
+    put(ctrl.muokkaaPalvelu);
 
 // Julkaistaan ao. funktiot tämän js-filun ulkopuolelle
 module.exports = router;

@@ -10,7 +10,7 @@ module.exports = {
 
         try {
 
-            console.log("haetaan kaikki palvelut");
+            console.log("haetaan palveluja");
             let c = await sql.getPalvelut(nimi);
 
             // console.log("Next")
@@ -52,6 +52,26 @@ module.exports = {
             res.status = 400;
             res.json({ status: "NOT OK", msg: error });
 
+        }
+    },
+    muokkaaPalvelu: async (req, res) => {
+        try {
+            let palveluid = req.params.palveluid;
+            let nimi = req.body.nimi;
+            let tyyppi = req.body.tyyppi;
+            let kuvaus = req.body.kuvaus;
+            let hinta = req.body.hinta;
+            let alv = req.body.alv;
+
+            let a = await sql.updatePalvelu(palveluid, nimi, tyyppi, kuvaus, hinta, alv);
+
+            res.statusCode = 200;
+            res.json({ status: "OK"});
+        }
+        catch (err) {
+            console.log("Error in server")
+            res.statusCode = 400;
+            res.json({msg : err});
         }
     },
 }

@@ -32,7 +32,7 @@ export default function PalveluTaulukko() {
                         <TableCell align="center">Kuvaus</TableCell>
                         <TableCell align="center">Hinta</TableCell>
                         <TableCell align="center">Alv</TableCell>
-                        <TableCell align="center">Muokkaa/poista</TableCell>
+                        <TableCell align="center">Muokkaa/Poista</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>

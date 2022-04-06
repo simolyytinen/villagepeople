@@ -63,7 +63,7 @@ module.exports = {
             let hinta = req.body.hinta;
             let alv = req.body.alv;
 
-            let a = await sql.updatePalvelu(palveluid, nimi, tyyppi, kuvaus, hinta, alv);
+            let a = await sql.updatePalvelu(nimi, tyyppi, kuvaus, hinta, alv, palveluid);
 
             res.statusCode = 200;
             res.json({ status: "OK"});

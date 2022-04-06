@@ -30,7 +30,8 @@ export default function PalveluForm({
   };
 
   return (
-    <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+    <Box style={{ marginTop: 32 }} component="form" noValidate onSubmit={handleSubmit} sx={{ '& .MuiTextField-root': { m: 1, width: '25ch' }, /* mt: 1 */ }}>
+      <div>
       <TextField
         margin="normal"
         disabled
@@ -61,6 +62,8 @@ export default function PalveluForm({
         value= "" /* {nimi} */
         // onChange={(event)=>{setNimi(event.target.value)}}
       />
+       </div>
+      <div>
       <TextField
         margin="normal"
         required
@@ -86,11 +89,13 @@ export default function PalveluForm({
         required
         fullWidth
         name="hinta"
-        label="Hinta alv0"
+        label="Hinta (alv0)"
         id="outlined"
         value= "" /* {nimi} */
         // onChange={(event)=>{setNimi(event.target.value)}}
       />
+      </div>
+      <div>
       <TextField
         margin="normal"
         required
@@ -101,6 +106,7 @@ export default function PalveluForm({
         value= "" /* {nimi} */
         // onChange={(event)=>{setNimi(event.target.value)}}
       />
+      </div>
       <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
         {/* {muokataanko ? "Tallenna" : "Lisää"} */}
         NAPPULA

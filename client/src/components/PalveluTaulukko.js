@@ -15,8 +15,8 @@ function createData(id, sijainti, nimi, tyyppi, kuvaus, hinta, alv) {
 
 const rows = [
     createData(1, "Himos", "Palju", 1, "Kuuma kylpy", 300, 24),
-    createData(1, "Ylläs", "Rekiajelu", 1, "Kylmä tulee", 200, 24),
-    createData(1, "Levi", "Moottorikelkka", 1, "Varo puita", 500, 24),
+    createData(2, "Ylläs", "Rekiajelu", 1, "Kylmä tulee", 200, 24),
+    createData(3, "Levi", "Moottorikelkka", 1, "Varo puita", 500, 24),
 ];
 
 export default function PalveluTaulukko() {
@@ -41,7 +41,7 @@ export default function PalveluTaulukko() {
                             key={row.id}
                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                         >
-                            <TableCell component="th" scope="row">
+                            <TableCell align="center" component="th" scope="row">
                                 {row.id}
                             </TableCell>
                             <TableCell align="center">{row.sijainti}</TableCell>

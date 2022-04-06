@@ -34,7 +34,6 @@ const PalveluHallinta = () => {
             <Typography variant="h4" align="center" color="text.primary" paragraph sx={{ mt: 4 }}>
                 Palveluiden hallinta
             </Typography>
-            {/* TÄTÄ VOIS KOITTAA LAITTAA VIEREKKÄIN TMS */}
             <Grid container spacing={4}>
                 <Grid item xs={12} md={8}>
                         <PalveluForm />

@@ -1,4 +1,4 @@
-import React, { createContext } from "react";
+import React, { createContext, useState } from "react";
 import { Routes, Route, BrowserRouter as Router } from "react-router-dom";
 import Navbar from "./components/Navbar.js";
 import Majoitus from "./components/Majoitus.js";
@@ -13,8 +13,12 @@ export const DataContext = createContext({});
 
 const App = () => {
 
+  const [login, setLogin] = useState(true); // onko käyttäjä kirjaututunut vai ei
+
   const intialValue = {
-    server: "http://localhost:3004",
+    server: "http://127.0.0.1:3004",
+    login: login,
+    seLogin: setLogin
   };
 
   return (

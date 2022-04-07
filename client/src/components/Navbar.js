@@ -30,7 +30,7 @@ const hallinta = [
 const kayttaja = ["Profiili", "Varaukset", "Kirjaudu ulos"];
 
 const Navbar = () => {
-  const {login} = useContext(DataContext);
+  const {login, admin} = useContext(DataContext);
   let navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -100,15 +100,16 @@ const Navbar = () => {
                   <Typography textAlign="center">{sivu.otsikko}</Typography>
                 </MenuItem>
               ))}
-              {/*Tähän konditionaalinen renderöinti näille lopuille */}
-              {hallinta.map((sivu) => (
+              {admin ? 
+              (hallinta.map((sivu) => (
                 <MenuItem
                   key={sivu.reitti}
                   onClick={() => handleCloseNavMenu(sivu.reitti)}
                 >
                   <Typography textAlign="center">{sivu.otsikko}</Typography>
                 </MenuItem>
-              ))}
+              ))) : <></>
+              }
               
             </Menu>
           </Box>

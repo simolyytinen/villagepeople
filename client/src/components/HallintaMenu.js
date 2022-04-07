@@ -8,8 +8,11 @@ import { DataContext } from "../App";
 export default function HallintaMenu({ hallinta }) {
   const { admin } = useContext(DataContext);
   let navigate = useNavigate();
+
   const [anchorEl, setAnchorEl] = React.useState(null);
+  
   const open = Boolean(anchorEl);
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };

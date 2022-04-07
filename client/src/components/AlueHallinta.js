@@ -1,11 +1,15 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Grid from "@mui/material/Grid";
 import AlueTaulukko from "./AlueTaulukko";
 import AlueForm from "./AlueForm";
+import { DataContext } from "../App";
 
 const AlueHallinta = () => {
+    // tuodaan contextista serverin osoite
+    const c = useContext(DataContext);
+    const server = c.server;
 
     const [toimipaikat, setToimipaikat] = useState([]);
     const [hae, setHae] = useState(0);
@@ -20,20 +24,21 @@ const AlueHallinta = () => {
         "Alueen ID", "Nimi", "Muuta/Poista"
     ];
 
+
     // Toimipisteiden hakeminen tietokannasta
     useEffect(()=>{
-        fetch("/api/toimipisteet")
+        fetch(server + "/api/toimipisteet")
         .then(response => response.json())
         .then((data) => {
             console.log(data);
             setToimipaikat(data)})
         .catch(err => console.log(err));
-    }, [hae])
+    }, [hae, server])
 
     // Toimipisteen poistaminen tietokannasta REST-apin kautta
     useEffect(()=>{
         const funktio = () => {
-            const api = "/api/toimipisteet/" + poistaId;
+            const api = server + "/api/toimipisteet/" + poistaId;
             fetch(api, {
                 method: "DELETE"
             })
@@ -44,7 +49,7 @@ const AlueHallinta = () => {
             .catch(err => console.log(err))
         }
         if (poistaId > 0) funktio();
-    }, [poistaId])
+    }, [poistaId, server])
 
     const poistaToimipaikka = (id) => {
         setPoistaId(id);
@@ -53,7 +58,7 @@ const AlueHallinta = () => {
     // Toimipisteen muokkaaminen
     useEffect(()=>{
         const funktio = () => {
-            const api = "/api/toimipisteet/" + muokkausData.alue_id;
+            const api = server + "/api/toimipisteet/" + muokkausData.alue_id;
 
             fetch(api, {
                 method: "PUT",
@@ -67,7 +72,7 @@ const AlueHallinta = () => {
             .catch(err => console.log(err))
         }
         if (muokkausData !== "") funktio();
-    }, [muokkausData])
+    }, [muokkausData, server])
 
 
     const muokkaaToimipaikka = (id, nimi) => {
@@ -88,7 +93,7 @@ const AlueHallinta = () => {
 
     useEffect(()=>{
         const funktio = () => {
-            const api = "/api/toimipisteet/";
+            const api = server + "/api/toimipisteet/";
 
             fetch(api, {
                 method: "POST",
@@ -103,7 +108,7 @@ const AlueHallinta = () => {
         }
         
         if (lisaaNimi !== "") funktio();
-    }, [lisaaNimi])
+    }, [lisaaNimi, server])
 
     const lisaaClick = (nimi) => {
         setLisaaNimi(nimi);

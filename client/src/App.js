@@ -14,11 +14,14 @@ export const DataContext = createContext({});
 const App = () => {
 
   const [login, setLogin] = useState(true); // onko käyttäjä kirjaututunut vai ei
+  const [admin, setAdmin] = useState(true); // onko käyttäjä admin, autentikoidaan serverin päässä
 
   const intialValue = {
     server: "http://127.0.0.1:3004",
     login: login,
-    seLogin: setLogin
+    setLogin: setLogin,
+    admin: admin,
+    setAdmin: setAdmin
   };
 
   return (

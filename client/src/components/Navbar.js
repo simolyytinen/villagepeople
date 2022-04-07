@@ -24,14 +24,18 @@ const hallinta = [
   { otsikko: "Alueiden hallinta", reitti: "/alue/hallinta" },
   { otsikko: "Majoituskohteiden hallinta", reitti: "/majoitus/hallinta" },
   { otsikko: "Palveluiden hallinta", reitti: "/palvelut/hallinta" },
+  { otsikko: "Varausten hallinta", reitti: "/varaukset"},
   { otsikko: "Asiakkaiden hallinta", reitti: "/asiakkaat/hallinta" },
   { otsikko: "Laskujen hallinta", reitti: "/laskut/hallinta" },
+  { otsikko: "Raportointi", reitti: "/raportointi"}
 ];
 const kayttaja = ["Profiili", "Varaukset", "Kirjaudu ulos"];
 
 const Navbar = () => {
   const {login, admin} = useContext(DataContext);
+
   let navigate = useNavigate();
+
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -110,7 +114,6 @@ const Navbar = () => {
                 </MenuItem>
               ))) : <></>
               }
-              
             </Menu>
           </Box>
           <Typography
@@ -131,14 +134,14 @@ const Navbar = () => {
                 {sivu.otsikko}
               </Button>
             ))}
-            {/*Tähän konditionaalinen renderöinti HallintaMenulle */}
+            {/*Hallintamenun kondtionaalinen renderöinti on tehty itse komponentissa */}
             <HallintaMenu hallinta={hallinta}/>
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
             {login ? <Tooltip title="Oma tili">
             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-              <Avatar alt="Admin" />
+              <Avatar alt="Käyttäjä" />
             </IconButton>
           </Tooltip> : <Button sx={{ my: 2, color: "white", display: "block" }}>Kirjaudu</Button> 
           }

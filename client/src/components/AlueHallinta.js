@@ -8,8 +8,7 @@ import { DataContext } from "../App";
 
 const AlueHallinta = () => {
     // tuodaan contextista serverin osoite
-    const c = useContext(DataContext);
-    const server = c.server;
+    const { server } = useContext(DataContext);
 
     const [toimipaikat, setToimipaikat] = useState([]);
     const [hae, setHae] = useState(0);

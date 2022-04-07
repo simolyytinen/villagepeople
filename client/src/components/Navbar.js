@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, {useContext} from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -13,6 +13,7 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import { useNavigate } from "react-router-dom";
 import HallintaMenu from "./HallintaMenu";
+import { DataContext } from "../App";
 
 // reitit ja otsikot voisi tallentaa contextAPI niin olisi yhdessä paikassa
 const sivut = [
@@ -29,6 +30,7 @@ const hallinta = [
 const kayttaja = ["Profiili", "Varaukset", "Kirjaudu ulos"];
 
 const Navbar = () => {
+  const {login} = useContext(DataContext);
   let navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -133,11 +135,13 @@ const Navbar = () => {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Oma tili">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Admin" />
-              </IconButton>
-            </Tooltip>
+            {login ? <Tooltip title="Oma tili">
+            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+              <Avatar alt="Admin" />
+            </IconButton>
+          </Tooltip> : <Button sx={{ my: 2, color: "white", display: "block" }}>Kirjaudu</Button> 
+          }
+            
             <Menu
               sx={{ mt: "45px" }}
               id="menu-appbar"

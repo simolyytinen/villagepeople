@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState } from 'react';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import Stack from '@mui/material/Stack';
@@ -14,6 +14,20 @@ const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 const theme = createTheme();
 
 export default function Palvelut({palvelut}) {
+
+  const [hakuehto, setHakuehto] = useState("");
+
+  const tyhjenna = () =>{
+    setHakuehto("");
+  }
+
+  const hae = () =>{
+    //haetaan hakuehdon mukaiset palvelut
+  }
+
+  // const handleSubmit = (event) => {
+  //   event.preventDefault();
+  // };
 
   return (
     <ThemeProvider theme={theme}>
@@ -37,17 +51,14 @@ export default function Palvelut({palvelut}) {
             >
               Palvelut
             </Typography>
-            {/* <Typography variant="h5" align="center" color="text.secondary" paragraph>
-              Tähän haku-ehdot komponentti
-            </Typography> */}
             <TextField
               margin="normal"
               fullWidth
               id="palveluNimi"
               label="Etsi palvelua"
               name="nimi"
-              value=""
-            // onChange={(event)=>{setXXXXXX(event.target.value)}}
+              value={hakuehto}
+              onChange={(event)=>{setHakuehto(event.target.value)}}
             />
             <Stack
               sx={{ pt: 4 }}
@@ -55,8 +66,8 @@ export default function Palvelut({palvelut}) {
               spacing={2}
               justifyContent="center"
             >
-              <Button variant="contained">Hae palvelut</Button>
-              <Button variant="outlined">Tyhjennä</Button>
+              <Button variant="contained" onClick={hae}>Hae palvelut</Button>
+              <Button variant="outlined" onClick={tyhjenna}>Tyhjennä</Button>
             </Stack>
           </Container>
         </Box>

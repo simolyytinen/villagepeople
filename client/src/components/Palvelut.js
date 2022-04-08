@@ -6,14 +6,14 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import PalveluKortti from './Kortti_palvelut';
+import PalveluKortti from './PalveluKortti';
 import TextField from '@material-ui/core/TextField';
 
 const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 const theme = createTheme();
 
-export default function Palvelut() {
+export default function Palvelut({palvelut}) {
 
   return (
     <ThemeProvider theme={theme}>

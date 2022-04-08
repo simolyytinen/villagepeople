@@ -1,4 +1,4 @@
-import { Box, Button, TextField } from "@mui/material";
+import { Box, Button, TextField, Grid } from "@mui/material";
 
 export default function PalveluForm({
   muokataanko,
@@ -28,8 +28,9 @@ export default function PalveluForm({
   };
 
   return (
-    <Box style={{ marginTop: 32 }} component="form" noValidate onSubmit={handleSubmit} sx={{ '& .MuiTextField-root': { m: 1, width: '25ch' }, /* mt: 1 */ }}>
-      <div>
+    <Box style={{ marginTop: 32 }} component="form" noValidate onSubmit={handleSubmit} sx={{ /* '& .MuiTextField-root': { m: 1, width: '42ch' }, */  mt: 1  }}>
+      <Grid container spacing={4}>
+        <Grid item xs={12} md={6}>
         <TextField
           margin="normal"
           required
@@ -50,8 +51,6 @@ export default function PalveluForm({
           value={nimi}
         onChange={(event)=>{setNimi(event.target.value)}}
         />
-      </div>
-      <div>
         <TextField
           margin="normal"
           required
@@ -62,6 +61,8 @@ export default function PalveluForm({
           value={tyyppi}
         onChange={(event)=>{setTyyppi(event.target.value)}}
         />
+        </Grid>
+        <Grid item xs={12} md={6}>
         <TextField
           margin="normal"
           required
@@ -72,8 +73,7 @@ export default function PalveluForm({
           value={kuvaus}
         onChange={(event)=>{setKuvaus(event.target.value)}}
         />
-         </div>
-         <div>
+        
         <TextField
           margin="normal"
           required
@@ -94,7 +94,8 @@ export default function PalveluForm({
           value={alv}
         onChange={(event)=>{setAlv(event.target.value)}}
         />
-      </div>
+      </Grid>
+      </Grid>
       <Button fullWidth type="submit" variant="contained" sx={{ mt: 3, mb: 2 }}>
         {muokataanko ? "Tallenna" : "Lisää"}
       </Button>

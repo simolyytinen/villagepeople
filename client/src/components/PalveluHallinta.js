@@ -115,7 +115,7 @@ const PalveluHallinta = () => {
                 Palveluiden hallinta
             </Typography>
             <Grid container spacing={4}>
-                <Grid item xs={12} md={8}>
+                <Grid item xs={12} md={12}>
                 <PalveluForm muokataanko={muokkaus} nimi={nimi} sijainti={sijainti} tyyppi={tyyppi} kuvaus={kuvaus} hinta={hinta} alv={alv} setNimi={setNimi} setSijainti={setSijainti} setTyyppi={setTyyppi} setKuvaus={setKuvaus} setHinta={setHinta} setAlv={setAlv} tallennaClick={tallennaClick} lisaaClick={lisaaClick} />
                 </Grid>
                 <Grid item xs={12} md={12}>

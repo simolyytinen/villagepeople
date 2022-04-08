@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState } from "react";
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -11,6 +11,9 @@ import Container from '@mui/material/Container';
 
 
 const PalveluKortti = ({data}) => {
+
+  //tuodaan haetut palvelut ja mapataan ne kortteihin jotenkin?
+  const [tiedot, setTiedot] = useState([1,2,3]);
 
     return (
         <Container sx={{ py: 8 }} maxWidth="md">
@@ -28,14 +31,14 @@ const PalveluKortti = ({data}) => {
                       pt: '56.25%',
                     }}
                     image="https://source.unsplash.com/random/?hiking"
-                    alt="majoituskohde"
+                    alt="palvelu"
                   />
                   <CardContent sx={{ flexGrow: 1 }}>
                     <Typography gutterBottom variant="h5" component="h2">
                       Otsikko
                     </Typography>
                     <Typography>
-                      Palvelun kuvaus
+                      {tiedot}
                     </Typography>
                   </CardContent>
                   <CardActions>

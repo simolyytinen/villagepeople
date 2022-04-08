@@ -12,8 +12,8 @@ import Container from '@mui/material/Container';
 
 const PalveluKortti = ({data}) => {
 
-  //tuodaan haetut palvelut ja mapataan ne kortteihin jotenkin?
-  const [tiedot, setTiedot] = useState([1,2,3]);
+  //tuodaan haetut palvelut ja mapataan ne kortteihin tms...?
+  const [tiedot, setTiedot] = useState(["plaaplaa"]);
 
     return (
         <Container sx={{ py: 8 }} maxWidth="md">

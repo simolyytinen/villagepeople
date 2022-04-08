@@ -4,8 +4,6 @@ module.exports = {
 
     haePalvelut: async (req, res) => {
 
-        //eri hakuvaihtoehdot? nimi, tyyppi(mitä tyyppi tarkoittaa kannassa?)
-
         let nimi = req.query.nimi || "";
 
         try {
@@ -16,7 +14,7 @@ module.exports = {
             // console.log("Next")
 
             res.status = 200;
-            res.json({ status: "OK", palvelut: c });
+            res.json( c );
         }
         catch (err) {
             console.log("Error in server")

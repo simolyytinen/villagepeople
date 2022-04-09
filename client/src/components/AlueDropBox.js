@@ -7,7 +7,7 @@ import Select from '@mui/material/Select';
 
 
 
-export default function AlueDropBox({ sijainti, setSijainti, data }) {
+export default function AlueDropBox({ alueid, setAlueId, sijainti, setSijainti, data }) {
 
   // const [sijainti, setSijainti] = useState("");
   const [toimipaikat, setToimipaikat] = useState([]);
@@ -19,22 +19,21 @@ export default function AlueDropBox({ sijainti, setSijainti, data }) {
 
 
   const handleChange = (event) => {
-    setSijainti(event.target.value);
-    console.log(sijainti + " valittu")
+    setAlueId(event.target.value);
   };
 
 
   return (
     <Box /* style={{ marginTop: 32 }} */ sx={{ mt: 1 /* minWidth: 120 */ }}>
       <FormControl fullWidth onChange={handleChange}>
-        <InputLabel id="sijainti">Sijainnin valinnan vois tehä näin</InputLabel>
+        <InputLabel id="sijainti">Sijainti</InputLabel>
         <Select
           labelId="sijaintiSelect"
           id="sijainti"
-          value={sijainti}
+          value={alueid}
           // name=""
           label="Sijainti"
-          onChange={(event) => { setSijainti(event.target.value) }}
+          onChange={(event) => { setAlueId(event.target.value) }}
         >
          {data}
         </Select>

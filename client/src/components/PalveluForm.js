@@ -43,6 +43,8 @@ export default function PalveluForm({
           <AlueDropBox 
           sijainti={sijainti} 
           setSijainti={setSijainti} 
+          alueid={alueid}
+          setAlueId={setAlueId}
           data =
             {alueet?.map(alueet => {
               return (
@@ -84,7 +86,7 @@ export default function PalveluForm({
             id="outlined"
             value={sijainti}
             onChange={(event) => { setSijainti(event.target.value) }}
-          />
+          /> 
 
           <TextField
             margin="normal"

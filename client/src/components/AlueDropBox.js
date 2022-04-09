@@ -1,69 +1,54 @@
-import { useState } from 'react';
+import { useState } from "react";
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
-export default function AlueDropBox() {
 
-  const options = [{ id: "AD", nimi: "Sappee" },
-  { id: "AE", nimi: "Ruka" },
-  { id: "AF", nimi: "Levi" },
-  { id: "AG", nimi: "Ylläs" }];
 
-  const [testi, setTesti] = useState("");
+export default function AlueDropBox({ sijainti, setSijainti, data }) {
+
+  // const [sijainti, setSijainti] = useState("");
+  const [toimipaikat, setToimipaikat] = useState([]);
+  // const [data, setData] = useState([]);
+
+  const options = [{ id: 1, nimi: "Sappee" },
+  { id: 2, nimi: "Levi" },
+  { id: 3, nimi: "Ylläs" }];
+
+
   const handleChange = (event) => {
-    setTesti(event.target.value);
+    setSijainti(event.target.value);
+    console.log(sijainti + " valittu")
   };
 
-//   return (
-//     <Select name={name} value={value}>
-//       {options?.map(option => {
-//           return (
-//             <MenuItem key={option.value} value={option.value}>
-//               {option.label ?? option.value}
-//             </MenuItem>
-//           );
-//       })}
-//     </Select>
-// );
 
   return (
     <Box /* style={{ marginTop: 32 }} */ sx={{ mt: 1 /* minWidth: 120 */ }}>
-      <FormControl fullWidth>
+      <FormControl fullWidth onChange={handleChange}>
         <InputLabel id="sijainti">Sijainnin valinnan vois tehä näin</InputLabel>
         <Select
           labelId="sijaintiSelect"
           id="sijainti"
-          // value={nimi}
-          // name={nimi}
+          value={sijainti}
+          // name=""
           label="Sijainti"
-          onChange={handleChange}
+          onChange={(event) => { setSijainti(event.target.value) }}
         >
-          {options?.map(option => {
-          return (
-            <MenuItem key={option.value} value={option.value}>
-              {option.id ?? option.nimi}
-            </MenuItem>
-          );
-      })}
+         {data}
         </Select>
       </FormControl>
     </Box>
   );
 }
 
-const paikkaSelect = (props) => {
+// {options?.map(option => {
+//   return (
+//     <MenuItem key={option.value} value={option.nimi}>
+//       {/* {option.id ?? option.nimi} */}
+//       {option.id} - {option.nimi}
+//     </MenuItem>
+//   );
+// })}
 
-  const a = props.data.map((n, index) => {
-    return <MenuItem key={index}>{n.id}, {n.nimi}</MenuItem>
-
-});
-
-  return (
-    <>
-          {a}
-    </>
-  );
-};

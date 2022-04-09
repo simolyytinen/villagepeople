@@ -114,8 +114,6 @@ const AlueHallinta = () => {
         setNimi("");
     }
 
-    
-
     return (
         <Container maxWidth="xl">
             <Typography variant="h3" align="center" color="text.primary" paragraph sx={{mt: 4}}>

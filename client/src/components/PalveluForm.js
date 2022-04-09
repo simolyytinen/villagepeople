@@ -1,7 +1,10 @@
 import { Box, Button, TextField, Grid } from "@mui/material";
 import AlueDropBox from "./AlueDropBox";
+import MenuItem from '@mui/material/MenuItem';
+
 
 export default function PalveluForm({
+  alueet,
   muokataanko,
   palveluid,
   alueid,
@@ -29,6 +32,7 @@ export default function PalveluForm({
 
     }) : lisaaClick();
   };
+  
 
   return (
     <Box style={{ marginTop: 32 }} component="form" noValidate onSubmit={handleSubmit} sx={{ /* '& .MuiTextField-root': { m: 1, width: '42ch' }, */  mt: 1 }}>
@@ -36,7 +40,18 @@ export default function PalveluForm({
         <Grid item xs={12} md={6}>
 
           {/* valikko ei vielä toimi */}
-          <AlueDropBox />
+          <AlueDropBox 
+          sijainti={sijainti} 
+          setSijainti={setSijainti} 
+          data =
+            {alueet?.map(alueet => {
+              return (
+                <MenuItem key={alueet.value} value={alueet.alue_id}>
+                  {/* {alueet.alue_id} -  */}{alueet.nimi}
+                </MenuItem>
+              );
+            })}
+          />
 
           <TextField
             margin="normal"

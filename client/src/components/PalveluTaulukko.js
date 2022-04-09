@@ -48,5 +48,6 @@ export default function PalveluTaulukko({ sarakkeet, data, poista, muokkaa }) {
           </TableBody>
         </Table>
       </TableContainer>
+     
     )
   }

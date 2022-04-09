@@ -11,7 +11,7 @@ import { DataContext } from "../App";
 const PalveluHallinta = () => {
 
     const { server } = useContext(DataContext);
-
+    const [toimipaikat, setToimipaikat] = useState([]);
     const [palvelut, setPalvelut] = useState([]);
     const [hae, setHae] = useState(0);
     const [poistaId, setPoistaId] = useState(-1);
@@ -38,6 +38,17 @@ const PalveluHallinta = () => {
     const sarakkeet = [
         "Nimi", "AlueId", "Sijainti", "Tyyppi", "Kuvaus", "Hinta", "Alv", "Poista/Muokkaa"
     ];
+
+     // Toimipisteiden hakeminen tietokannasta
+     useEffect(()=>{
+        fetch(server + "/api/toimipisteet")
+        .then(response => response.json())
+        .then((toimipaikat) => {
+            console.log(toimipaikat);
+            setToimipaikat(toimipaikat)})
+        .catch(err => console.log(err));
+    }, [hae, server])
+
 
     // Palvelut tietokannasta
     useEffect(() => {
@@ -189,7 +200,7 @@ const PalveluHallinta = () => {
             </Typography>
             <Grid container spacing={4}>
                 <Grid item xs={12} md={12}>
-                    <PalveluForm muokataanko={muokkaus} alueid={alueId} nimi={nimi} sijainti={sijainti} tyyppi={tyyppi} kuvaus={kuvaus} hinta={hinta} alv={alv} setAlueId={setAlueId} setNimi={setNimi} setSijainti={setSijainti} setTyyppi={setTyyppi} setKuvaus={setKuvaus} setHinta={setHinta} setAlv={setAlv} tallennaClick={tallennaClick} lisaaClick={lisaaClick} />
+                    <PalveluForm alueet={toimipaikat} muokataanko={muokkaus} alueid={alueId} nimi={nimi} sijainti={sijainti} tyyppi={tyyppi} kuvaus={kuvaus} hinta={hinta} alv={alv} setAlueId={setAlueId} setNimi={setNimi} setSijainti={setSijainti} setTyyppi={setTyyppi} setKuvaus={setKuvaus} setHinta={setHinta} setAlv={setAlv} tallennaClick={tallennaClick} lisaaClick={lisaaClick} />
                 </Grid>
                 <Grid item xs={12} md={12}>
                     <PalveluTaulukko sarakkeet={sarakkeet} data={palvelut} poista={poistaPalvelu} muokkaa={muokkaaPalvelu} />

@@ -95,10 +95,10 @@ const PalveluHallinta = () => {
 
     }
 
-    const muokkaaPalvelu = (nimi, alue_id, sijainti, tyyppi, kuvaus, hinta, alv) => {
+    const muokkaaPalvelu = (nimi, alueId, sijainti, tyyppi, kuvaus, hinta, alv) => {
         setMuokkaus(true);
         // setPalveluId(id);
-        setAlueId(alue_id);
+        setAlueId(alueId);
         setSijainti(sijainti);
         setNimi(nimi);
         setTyyppi(tyyppi);

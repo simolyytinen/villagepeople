@@ -19,6 +19,7 @@ const PalveluHallinta = () => {
     const [muokkausData, setMuokkausData] = useState("");
 
     // const [palveluId, setPalveluId] = useState("");
+    const [alueId, setAlueId] = useState("");
     const [nimi, setNimi] = useState("");
     const [tyyppi, setTyyppi] = useState("");
     const [sijainti, setSijainti] = useState("");
@@ -26,6 +27,7 @@ const PalveluHallinta = () => {
     const [hinta, setHinta] = useState("");
     const [alv, setAlv] = useState("");
 
+    const [lisaaAlueId, setLisaaAlueId] = useState("");
     const [lisaaNimi, setLisaaNimi] = useState("");
     const [lisaaTyyppi, setlisaaTyyppi] = useState("");
     const [lisaaSijainti, setlisaaSijainti] = useState("");
@@ -34,7 +36,7 @@ const PalveluHallinta = () => {
     const [lisaaAlv, setlisaaAlv] = useState("");
 
     const sarakkeet = [
-        "Nimi", "Sijainti", "Tyyppi", "Kuvaus", "Hinta", "Alv", "Poista/Muokkaa"
+        "Nimi", "AlueId", "Sijainti", "Tyyppi", "Kuvaus", "Hinta", "Alv", "Poista/Muokkaa"
     ];
 
     // Palvelut tietokannasta
@@ -58,8 +60,9 @@ const PalveluHallinta = () => {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(
                     {
-                        sijainti: muokkausData.sijainti,
                         nimi: muokkausData.nimi,
+                        alue_id: muokkausData.alueId,
+                        sijainti: muokkausData.sijainti,
                         tyyppi: muokkausData.tyyppi,
                         kuvaus: muokkausData.kuvaus,
                         hinta: muokkausData.hinta,
@@ -82,6 +85,7 @@ const PalveluHallinta = () => {
         console.log("Tallenna");
         setMuokkausData(data);
         setMuokkaus(false);
+        setAlueId("");
         setSijainti("");
         setNimi("");
         setTyyppi("");
@@ -91,9 +95,10 @@ const PalveluHallinta = () => {
 
     }
 
-    const muokkaaPalvelu = (id, nimi, sijainti, tyyppi, kuvaus, hinta, alv) => {
+    const muokkaaPalvelu = (nimi, alue_id, sijainti, tyyppi, kuvaus, hinta, alv) => {
         setMuokkaus(true);
         // setPalveluId(id);
+        setAlueId(alue_id);
         setSijainti(sijainti);
         setNimi(nimi);
         setTyyppi(tyyppi);
@@ -102,6 +107,7 @@ const PalveluHallinta = () => {
         setAlv(alv);
     }
 
+    //Palvelun lisäys
     useEffect(() => {
         const funktio = () => {
             const api = server + "/api/palvelut/";
@@ -111,6 +117,7 @@ const PalveluHallinta = () => {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(
                     {
+                        alue_id: lisaaAlueId,
                         nimi: lisaaNimi,
                         tyyppi: lisaaTyyppi,
                         sijainti: lisaaSijainti,
@@ -121,6 +128,7 @@ const PalveluHallinta = () => {
             })
                 .then((res) => {
                     setHae(hae => hae + 1)
+                    setAlueId("");
                     setSijainti("");
                     setNimi("");
                     setTyyppi("");
@@ -131,11 +139,12 @@ const PalveluHallinta = () => {
                 .catch(err => console.log(err))
         }
 
-        if (lisaaNimi !== "" && lisaaTyyppi !== "" && lisaaSijainti !== "" && lisaaKuvaus !== "" && lisaaHinta !== "" && lisaaAlv !== "") funktio();
-    }, [lisaaNimi, lisaaTyyppi, lisaaSijainti, lisaaKuvaus, lisaaHinta, lisaaAlv, server])
+        if (lisaaAlueId !== "" && lisaaNimi !== "" && lisaaTyyppi !== "" && lisaaSijainti !== "" && lisaaKuvaus !== "" && lisaaHinta !== "" && lisaaAlv !== "") funktio();
+    }, [lisaaAlueId, lisaaNimi, lisaaTyyppi, lisaaSijainti, lisaaKuvaus, lisaaHinta, lisaaAlv, server])
 
     const lisaaClick = () => {
         console.log("Lisää");
+        setLisaaAlueId(alueId);
         setLisaaNimi(nimi);
         setlisaaTyyppi(tyyppi);
         setlisaaSijainti(sijainti);
@@ -143,6 +152,7 @@ const PalveluHallinta = () => {
         setlisaaHinta(hinta);
         setlisaaAlv(alv);
 
+        setAlueId("");
         setSijainti("");
         setNimi("");
         setTyyppi("");
@@ -179,7 +189,7 @@ const PalveluHallinta = () => {
             </Typography>
             <Grid container spacing={4}>
                 <Grid item xs={12} md={12}>
-                    <PalveluForm muokataanko={muokkaus} nimi={nimi} sijainti={sijainti} tyyppi={tyyppi} kuvaus={kuvaus} hinta={hinta} alv={alv} setNimi={setNimi} setSijainti={setSijainti} setTyyppi={setTyyppi} setKuvaus={setKuvaus} setHinta={setHinta} setAlv={setAlv} tallennaClick={tallennaClick} lisaaClick={lisaaClick} />
+                    <PalveluForm muokataanko={muokkaus} alueid={alueId} nimi={nimi} sijainti={sijainti} tyyppi={tyyppi} kuvaus={kuvaus} hinta={hinta} alv={alv} setAlueId={setAlueId} setNimi={setNimi} setSijainti={setSijainti} setTyyppi={setTyyppi} setKuvaus={setKuvaus} setHinta={setHinta} setAlv={setAlv} tallennaClick={tallennaClick} lisaaClick={lisaaClick} />
                 </Grid>
                 <Grid item xs={12} md={12}>
                     <PalveluTaulukko sarakkeet={sarakkeet} data={palvelut} poista={poistaPalvelu} muokkaa={muokkaaPalvelu} />

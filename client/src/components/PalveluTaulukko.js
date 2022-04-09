@@ -29,6 +29,7 @@ export default function PalveluTaulukko({ sarakkeet, data, poista, muokkaa }) {
               >
                 {/* <TableCell align="center">{row.id}</TableCell> */}
                 <TableCell align="center">{row.nimi}</TableCell>
+                <TableCell align="center">{row.alue_id}</TableCell>
                 <TableCell align="center">{row.sijainti}</TableCell>
                 <TableCell align="center">{row.tyyppi}</TableCell>
                 <TableCell align="center">{row.kuvaus}</TableCell>
@@ -38,7 +39,7 @@ export default function PalveluTaulukko({ sarakkeet, data, poista, muokkaa }) {
                   <IconButton onClick={() => { poista(row.id) }}>
                     <Delete />
                   </IconButton>
-                  <IconButton onClick={() => { muokkaa(row.id, row.nimi, row.sijainti, row.tyyppi, row.kuvaus, row.hinta, row.alv) }}>
+                  <IconButton onClick={() => { muokkaa(/* row.id, */ row.nimi, row.alue_id, row.sijainti, row.tyyppi, row.kuvaus, row.hinta, row.alv) }}>
                     <Edit />
                   </IconButton>
                 </TableCell>

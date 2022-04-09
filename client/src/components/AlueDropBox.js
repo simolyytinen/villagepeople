@@ -4,28 +4,28 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import PalveluHallinta from './PalveluHallinta';
 
-export default function AlueDropBox(sijainti, setSijainti) {
+export default function AlueDropBox() {
+  const [testi, setTesti] = React.useState('');
 
   const handleChange = (event) => {
-    setSijainti(event.target.value);
+    setTesti(event.target.value);
   };
 
   return (
     <Box /* style={{ marginTop: 32 }} */ sx={{ mt: 1 /* minWidth: 120 */ }}>
       <FormControl fullWidth>
-        <InputLabel id="sijainti">Sijainti</InputLabel>
+        <InputLabel id="sijainti">Sijainnin valinnan vois tehä näin</InputLabel>
         <Select
           labelId="sijaintiSelect"
           id="sijainti"
-          value={sijainti}
+          value={testi}
           label="Sijainti"
           onChange={handleChange}
         >
-          <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
+          <MenuItem value={1}>Paikka1</MenuItem>
+          <MenuItem value={2}>Paikka2</MenuItem>
+          <MenuItem value={3}>Paikka3</MenuItem>
         </Select>
       </FormControl>
     </Box>

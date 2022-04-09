@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState } from 'react';
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -6,16 +6,28 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
 export default function AlueDropBox() {
-  const [testi, setTesti] = React.useState('');
 
-  let countries = [{ code: "AD", name: "Andorra" },
-  { code: "AE", name: "United Arab Emirates" },
-  { code: "AF", name: "Afghanistan" },
-  { code: "AG", name: "Antigua and Barbuda" }];
+  const options = [{ id: "AD", nimi: "Sappee" },
+  { id: "AE", nimi: "Ruka" },
+  { id: "AF", nimi: "Levi" },
+  { id: "AG", nimi: "Ylläs" }];
 
+  const [testi, setTesti] = useState("");
   const handleChange = (event) => {
     setTesti(event.target.value);
   };
+
+//   return (
+//     <Select name={name} value={value}>
+//       {options?.map(option => {
+//           return (
+//             <MenuItem key={option.value} value={option.value}>
+//               {option.label ?? option.value}
+//             </MenuItem>
+//           );
+//       })}
+//     </Select>
+// );
 
   return (
     <Box /* style={{ marginTop: 32 }} */ sx={{ mt: 1 /* minWidth: 120 */ }}>
@@ -24,32 +36,34 @@ export default function AlueDropBox() {
         <Select
           labelId="sijaintiSelect"
           id="sijainti"
-          value={simpleCountrySelect}
+          // value={nimi}
+          // name={nimi}
           label="Sijainti"
           onChange={handleChange}
         >
-            <simpleCountrySelect data={countries}/>
+          {options?.map(option => {
+          return (
+            <MenuItem key={option.value} value={option.value}>
+              {option.id ?? option.nimi}
+            </MenuItem>
+          );
+      })}
         </Select>
       </FormControl>
     </Box>
   );
 }
 
-const simpleCountrySelect = (props) => {
+const paikkaSelect = (props) => {
 
-  const a = props.countries.map((n, index) => {
-    return <MenuItem key={index} value={n.code}>yt4y4y</MenuItem>
+  const a = props.data.map((n, index) => {
+    return <MenuItem key={index}>{n.id}, {n.nimi}</MenuItem>
 
 });
 
   return (
     <>
-      <FormControl>
-        <InputLabel id="countrySelectLabel">Country</InputLabel>
-        <Select labelId="countrySelectLabel" id="countrySelect" value=''>
           {a}
-        </Select>
-      </FormControl>
     </>
   );
 };

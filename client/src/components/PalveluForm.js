@@ -1,4 +1,5 @@
 import { Box, Button, TextField, Grid } from "@mui/material";
+import AlueDropBox from "./AlueDropBox";
 
 export default function PalveluForm({
   muokataanko,
@@ -9,7 +10,7 @@ export default function PalveluForm({
   kuvaus,
   hinta,
   alv,
-  setPalveluId,
+  // setPalveluId,
   setNimi,
   setTyyppi,
   setSijainti,
@@ -31,7 +32,7 @@ export default function PalveluForm({
     <Box style={{ marginTop: 32 }} component="form" noValidate onSubmit={handleSubmit} sx={{ /* '& .MuiTextField-root': { m: 1, width: '42ch' }, */  mt: 1  }}>
       <Grid container spacing={4}>
         <Grid item xs={12} md={6}>
-        <TextField
+        {/* <TextField
           margin="normal"
           required
           fullWidth
@@ -40,7 +41,9 @@ export default function PalveluForm({
           id="outlined"
           value={sijainti}
         onChange={(event)=>{setSijainti(event.target.value)}}
-        />
+        /> */}
+        <AlueDropBox />
+        
         <TextField
           margin="normal"
           required

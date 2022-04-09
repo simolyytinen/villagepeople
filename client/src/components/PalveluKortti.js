@@ -15,6 +15,8 @@ const PalveluKortti = ({data}) => {
   //tuodaan haetut palvelut ja mapataan ne kortteihin tms...?
   const [tiedot, setTiedot] = useState(["plaaplaa"]);
 
+    
+
     return (
         <Container sx={{ py: 8 }} maxWidth="md">
           {/* End hero unit */}
@@ -38,7 +40,7 @@ const PalveluKortti = ({data}) => {
                       Otsikko
                     </Typography>
                     <Typography>
-                      {tiedot}
+                      {data}
                     </Typography>
                   </CardContent>
                   <CardActions>

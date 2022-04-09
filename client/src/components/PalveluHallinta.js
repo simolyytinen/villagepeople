@@ -16,70 +16,82 @@ const PalveluHallinta = () => {
     const [hae, setHae] = useState(0);
     const [poistaId, setPoistaId] = useState(-1);
     const [muokkaus, setMuokkaus] = useState(false);
-    const [palveluId, setPalveluId] = useState("");
+    const [muokkausData, setMuokkausData] = useState("");
+
+    // const [palveluId, setPalveluId] = useState("");
     const [nimi, setNimi] = useState("");
     const [tyyppi, setTyyppi] = useState("");
     const [sijainti, setSijainti] = useState("");
     const [kuvaus, setKuvaus] = useState("");
     const [hinta, setHinta] = useState("");
     const [alv, setAlv] = useState("");
-    const [muokkausData, setMuokkausData] = useState("");
+
     const [lisaaNimi, setLisaaNimi] = useState("");
+    const [lisaaTyyppi, setlisaaTyyppi] = useState("");
+    const [lisaaSijainti, setlisaaSijainti] = useState("");
+    const [lisaaKuvaus, setlisaaKuvaus] = useState("");
+    const [lisaaHinta, setlisaaHinta] = useState("");
+    const [lisaaAlv, setlisaaAlv] = useState("");
 
     const sarakkeet = [
         "Nimi", "Sijainti", "Tyyppi", "Kuvaus", "Hinta", "Alv", "Poista/Muokkaa"
     ];
 
-     // Palvelut tietokannasta
-     useEffect(()=>{
+    // Palvelut tietokannasta
+    useEffect(() => {
         fetch(server + "/api/palvelut")
-        .then(response => response.json())
-        .then((data) => {
-            console.log(data);
-            setPalvelut(data)})
-        .catch(err => console.log(err));
+            .then(response => response.json())
+            .then((data) => {
+                console.log(data);
+                setPalvelut(data)
+            })
+            .catch(err => console.log(err));
     }, [hae, server])
 
-     // Palvelun muokkaus
-     useEffect(()=>{
+    // Palvelun muokkaus
+    useEffect(() => {
         const funktio = () => {
             const api = server + "/api/palvelut/" + muokkausData.id;
 
             fetch(api, {
                 method: "PUT",
-                headers: { 'Content-Type' : 'application/json'},
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(
                     {
                         sijainti: muokkausData.sijainti,
-                        nimi : muokkausData.nimi,
+                        nimi: muokkausData.nimi,
                         tyyppi: muokkausData.tyyppi,
                         kuvaus: muokkausData.kuvaus,
                         hinta: muokkausData.hinta,
                         alv: muokkausData.alv
 
                     }
-                    )
+                )
             })
-            .then((res) => {
-                setHae(hae => hae+1) // laukaistaan toimipaikkojen hakeminen useEffect
-                setMuokkausData("");
-            })
-            .catch(err => console.log(err))
+                .then((res) => {
+                    setHae(hae => hae + 1)
+                    setMuokkausData("");
+                })
+                .catch(err => console.log(err))
         }
         if (muokkausData !== "") funktio();
     }, [muokkausData, server])
 
 
-    const tallennaClick = () => {
+    const tallennaClick = (data) => {
         console.log("Tallenna");
-    }
-    
-      const lisaaClick = () => {
-       console.log("Lisää");
-       
-      }
+        setMuokkausData(data);
+        setMuokkaus(false);
+        setSijainti("");
+        setNimi("");
+        setTyyppi("");
+        setKuvaus("");
+        setHinta("");
+        setAlv("");
 
-      const muokkaaPalvelu = (id, nimi, sijainti, tyyppi, kuvaus, hinta, alv) => {
+    }
+
+    const muokkaaPalvelu = (id, nimi, sijainti, tyyppi, kuvaus, hinta, alv) => {
         setMuokkaus(true);
         // setPalveluId(id);
         setSijainti(sijainti);
@@ -90,22 +102,73 @@ const PalveluHallinta = () => {
         setAlv(alv);
     }
 
-    useEffect(()=>{
+    useEffect(() => {
+        const funktio = () => {
+            const api = server + "/api/palvelut/";
+
+            fetch(api, {
+                method: "POST",
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(
+                    {
+                        nimi: lisaaNimi,
+                        tyyppi: lisaaTyyppi,
+                        sijainti: lisaaSijainti,
+                        kuvaus: lisaaKuvaus,
+                        hinta: lisaaHinta,
+                        alv: lisaaAlv
+                    })
+            })
+                .then((res) => {
+                    setHae(hae => hae + 1)
+                    setSijainti("");
+                    setNimi("");
+                    setTyyppi("");
+                    setKuvaus("");
+                    setHinta("");
+                    setAlv("");
+                })
+                .catch(err => console.log(err))
+        }
+
+        if (lisaaNimi !== "" && lisaaTyyppi !== "" && lisaaSijainti !== "" && lisaaKuvaus !== "" && lisaaHinta !== "" && lisaaAlv !== "") funktio();
+    }, [lisaaNimi, lisaaTyyppi, lisaaSijainti, lisaaKuvaus, lisaaHinta, lisaaAlv, server])
+
+    const lisaaClick = () => {
+        console.log("Lisää");
+        setLisaaNimi(nimi);
+        setlisaaTyyppi(tyyppi);
+        setlisaaSijainti(sijainti);
+        setlisaaKuvaus(kuvaus);
+        setlisaaHinta(hinta);
+        setlisaaAlv(alv);
+
+        setSijainti("");
+        setNimi("");
+        setTyyppi("");
+        setKuvaus("");
+        setHinta("");
+        setAlv("");
+    }
+
+
+    //Palvelun poisto
+    useEffect(() => {
         const funktio = () => {
             const api = server + "/api/palvelut/" + poistaId;
             fetch(api, {
                 method: "DELETE"
             })
-            .then((res) => {
-                console.log(res)
-                setHae(hae => hae+1); // laukaistaan toimipaikkojen hakeminen useEffect
-            })
-            .catch(err => console.log(err))
+                .then((res) => {
+                    console.log(res)
+                    setHae(hae => hae + 1);
+                })
+                .catch(err => console.log(err))
         }
         if (poistaId > 0) funktio();
     }, [poistaId, server])
 
-    const poistaPalvelu = (id) =>{
+    const poistaPalvelu = (id) => {
         setPoistaId(id);
     }
 
@@ -116,7 +179,7 @@ const PalveluHallinta = () => {
             </Typography>
             <Grid container spacing={4}>
                 <Grid item xs={12} md={12}>
-                <PalveluForm muokataanko={muokkaus} nimi={nimi} sijainti={sijainti} tyyppi={tyyppi} kuvaus={kuvaus} hinta={hinta} alv={alv} setNimi={setNimi} setSijainti={setSijainti} setTyyppi={setTyyppi} setKuvaus={setKuvaus} setHinta={setHinta} setAlv={setAlv} tallennaClick={tallennaClick} lisaaClick={lisaaClick} />
+                    <PalveluForm muokataanko={muokkaus} nimi={nimi} sijainti={sijainti} tyyppi={tyyppi} kuvaus={kuvaus} hinta={hinta} alv={alv} setNimi={setNimi} setSijainti={setSijainti} setTyyppi={setTyyppi} setKuvaus={setKuvaus} setHinta={setHinta} setAlv={setAlv} tallennaClick={tallennaClick} lisaaClick={lisaaClick} />
                 </Grid>
                 <Grid item xs={12} md={12}>
                     <PalveluTaulukko sarakkeet={sarakkeet} data={palvelut} poista={poistaPalvelu} muokkaa={muokkaaPalvelu} />

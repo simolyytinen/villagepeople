@@ -36,7 +36,7 @@ const PalveluHallinta = () => {
     const [lisaaAlv, setlisaaAlv] = useState("");
 
     const sarakkeet = [
-        "Nimi", "AlueId", "Sijainti", "Tyyppi", "Kuvaus", "Hinta", "Alv", "Poista/Muokkaa"
+        "Nimi", "AlueId", /* "Sijainti",  */"Tyyppi", "Kuvaus", "Hinta", "Alv", "Poista/Muokkaa"
     ];
 
      // Toimipisteiden hakeminen tietokannasta
@@ -73,7 +73,7 @@ const PalveluHallinta = () => {
                     {
                         nimi: muokkausData.nimi,
                         alue_id: muokkausData.alueId,
-                        sijainti: muokkausData.sijainti,
+                        // sijainti: muokkausData.sijainti,
                         tyyppi: muokkausData.tyyppi,
                         kuvaus: muokkausData.kuvaus,
                         hinta: muokkausData.hinta,
@@ -97,7 +97,7 @@ const PalveluHallinta = () => {
         setMuokkausData(data);
         setMuokkaus(false);
         setAlueId("");
-        setSijainti("");
+        // setSijainti("");
         setNimi("");
         setTyyppi("");
         setKuvaus("");
@@ -110,7 +110,7 @@ const PalveluHallinta = () => {
         setMuokkaus(true);
         // setPalveluId(id);
         setAlueId(alueId);
-        setSijainti(sijainti);
+        // setSijainti(sijainti);
         setNimi(nimi);
         setTyyppi(tyyppi);
         setKuvaus(kuvaus);
@@ -131,7 +131,7 @@ const PalveluHallinta = () => {
                         alue_id: lisaaAlueId,
                         nimi: lisaaNimi,
                         tyyppi: lisaaTyyppi,
-                        sijainti: lisaaSijainti,
+                        // sijainti: lisaaSijainti,
                         kuvaus: lisaaKuvaus,
                         hinta: lisaaHinta,
                         alv: lisaaAlv
@@ -140,7 +140,7 @@ const PalveluHallinta = () => {
                 .then((res) => {
                     setHae(hae => hae + 1)
                     setAlueId("");
-                    setSijainti("");
+                    // setSijainti("");
                     setNimi("");
                     setTyyppi("");
                     setKuvaus("");
@@ -150,21 +150,21 @@ const PalveluHallinta = () => {
                 .catch(err => console.log(err))
         }
 
-        if (lisaaAlueId !== "" && lisaaNimi !== "" && lisaaTyyppi !== "" && lisaaSijainti !== "" && lisaaKuvaus !== "" && lisaaHinta !== "" && lisaaAlv !== "") funktio();
-    }, [lisaaAlueId, lisaaNimi, lisaaTyyppi, lisaaSijainti, lisaaKuvaus, lisaaHinta, lisaaAlv, server])
+        if (lisaaAlueId !== "" && lisaaNimi !== "" && lisaaTyyppi !== "" /* && lisaaSijainti !== "" */ && lisaaKuvaus !== "" && lisaaHinta !== "" && lisaaAlv !== "") funktio();
+    }, [lisaaAlueId, lisaaNimi, lisaaTyyppi, /* lisaaSijainti, */ lisaaKuvaus, lisaaHinta, lisaaAlv, server])
 
     const lisaaClick = () => {
         console.log("Lisää");
         setLisaaAlueId(alueId);
         setLisaaNimi(nimi);
         setlisaaTyyppi(tyyppi);
-        setlisaaSijainti(sijainti);
+        // setlisaaSijainti(sijainti);
         setlisaaKuvaus(kuvaus);
         setlisaaHinta(hinta);
         setlisaaAlv(alv);
 
         setAlueId("");
-        setSijainti("");
+        // setSijainti("");
         setNimi("");
         setTyyppi("");
         setKuvaus("");
@@ -200,7 +200,7 @@ const PalveluHallinta = () => {
             </Typography>
             <Grid container spacing={4}>
                 <Grid item xs={12} md={12}>
-                    <PalveluForm alueet={toimipaikat} muokataanko={muokkaus} alueid={alueId} nimi={nimi} sijainti={sijainti} tyyppi={tyyppi} kuvaus={kuvaus} hinta={hinta} alv={alv} setAlueId={setAlueId} setNimi={setNimi} setSijainti={setSijainti} setTyyppi={setTyyppi} setKuvaus={setKuvaus} setHinta={setHinta} setAlv={setAlv} tallennaClick={tallennaClick} lisaaClick={lisaaClick} />
+                    <PalveluForm alueet={toimipaikat} muokataanko={muokkaus} alueid={alueId} nimi={nimi} /* sijainti={sijainti} */ tyyppi={tyyppi} kuvaus={kuvaus} hinta={hinta} alv={alv} setAlueId={setAlueId} setNimi={setNimi} setSijainti={setSijainti} setTyyppi={setTyyppi} setKuvaus={setKuvaus} setHinta={setHinta} setAlv={setAlv} tallennaClick={tallennaClick} lisaaClick={lisaaClick} />
                 </Grid>
                 <Grid item xs={12} md={12}>
                     <PalveluTaulukko sarakkeet={sarakkeet} data={palvelut} poista={poistaPalvelu} muokkaa={muokkaaPalvelu} />

@@ -66,7 +66,7 @@ export default function PalveluForm({
             onChange={(event) => { setNimi(event.target.value) }}
           />
 
-          <TextField
+          {/* <TextField
             margin="normal"
             required
             fullWidth
@@ -75,9 +75,9 @@ export default function PalveluForm({
             id="outlined"
             value={alueid}
             onChange={(event) => { setAlueId(event.target.value) }}
-          />
+          /> */}
 
-          <TextField
+          {/* <TextField
             margin="normal"
             required
             fullWidth
@@ -86,7 +86,7 @@ export default function PalveluForm({
             id="outlined"
             value={sijainti}
             onChange={(event) => { setSijainti(event.target.value) }}
-          /> 
+          />  */}
 
           <TextField
             margin="normal"

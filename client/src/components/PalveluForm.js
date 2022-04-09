@@ -1,6 +1,7 @@
 import { Box, Button, TextField, Grid } from "@mui/material";
 import AlueDropBox from "./AlueDropBox";
 import MenuItem from '@mui/material/MenuItem';
+import TyyppiDropBox from "./TyyppiDropBox";
 
 
 export default function PalveluForm({
@@ -88,7 +89,7 @@ export default function PalveluForm({
             onChange={(event) => { setSijainti(event.target.value) }}
           />  */}
 
-          <TextField
+          {/* <TextField
             margin="normal"
             required
             fullWidth
@@ -97,7 +98,8 @@ export default function PalveluForm({
             id="outlined"
             value={tyyppi}
             onChange={(event) => { setTyyppi(event.target.value) }}
-          />
+          /> */}
+          <TyyppiDropBox tyyppi={tyyppi} setTyyppi={setTyyppi}/>
         </Grid>
         <Grid item xs={12} md={6}>
           <TextField

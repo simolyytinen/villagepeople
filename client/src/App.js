@@ -9,12 +9,14 @@ import AlueHallinta from "./components/AlueHallinta.js";
 import MajoitusHallinta from "./components/MajoitusHallinta.js";
 import PalveluHallinta from "./components/PalveluHallinta.js";
 import AsiakasHallinta from "./components/AsiakasHallinta.js";
+import Kirjaudu from "./components/Kirjaudu.js";
+import UusiAsiakas from "./components/UusiAsiakas.js";
 
 export const DataContext = createContext({});
 
 const App = () => {
 
-  const [login, setLogin] = useState(true); // onko käyttäjä kirjaututunut vai ei
+  const [login, setLogin] = useState(false); // onko käyttäjä kirjaututunut vai ei
   const [admin, setAdmin] = useState(true); // onko käyttäjä admin, autentikoidaan serverin päässä
 
   const intialValue = {
@@ -38,6 +40,8 @@ const App = () => {
           <Route path="/majoitus/hallinta" element={<MajoitusHallinta />} />
           <Route path="/palvelut/hallinta" element={<PalveluHallinta />} />
           <Route path="/asiakkaat/hallinta" element={<AsiakasHallinta />} />
+          <Route path="/kirjaudu" element={<Kirjaudu />} />
+          <Route path="/uusiasiakas" element={<UusiAsiakas />} />
         </Routes>
 
         <Footer />

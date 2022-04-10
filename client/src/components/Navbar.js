@@ -143,7 +143,7 @@ const Navbar = () => {
             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
               <Avatar alt="Käyttäjä" />
             </IconButton>
-          </Tooltip> : <Button sx={{ my: 2, color: "white", display: "block" }}>Kirjaudu</Button> 
+          </Tooltip> : <Button sx={{ my: 2, color: "white", display: "block" }} onClick={()=>{navigate("/kirjaudu")}}>Kirjaudu</Button> 
           }
             
             <Menu

@@ -1,5 +1,6 @@
 import { Box, Button, TextField, Grid } from "@mui/material";
 
+
 export default function AlueForm({ muokataanko, tallennaClick, lisaaClick }) {
 
 
@@ -14,14 +15,22 @@ export default function AlueForm({ muokataanko, tallennaClick, lisaaClick }) {
     <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
       <Grid container spacing={4}>
         <Grid item xs={12} md={6}>
-          {/*Alueen valinta ylimmäksi*/}
           <TextField
             margin="normal"
             fullWidth
             required
-            id="mokkiNimi"
+            id="mokkinimi"
             label="Mökin nimi"
-            name="mokkiNimi"
+            name="mokkinimi"
+            onChange={(event)=>{}}
+          />
+          <TextField
+            margin="normal"
+            fullWidth
+            required
+            id="kaupunki"
+            label="Kaupunki"
+            name="kaupunki"
             onChange={(event)=>{}}
           />
           <TextField

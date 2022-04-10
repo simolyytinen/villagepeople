@@ -35,7 +35,13 @@ export default function AlueDropBox({ alueid, setAlueId, /* sijainti, setSijaint
           label="Sijainti"
           onChange={(event) => { setAlueId(event.target.value) }}
         >
-         {data}
+         {data.map(alueet => {
+              return (
+                <MenuItem key={alueet.value} value={alueet.alue_id}>
+                  {/* {alueet.alue_id} -  */}{alueet.nimi}
+                </MenuItem>
+              );
+            })}
         </Select>
       </FormControl>
     </Box>

@@ -38,7 +38,7 @@ export default function MajoitusTaulukko({sarakkeet, data, poista, muokkaa}) {
                   <IconButton onClick={()=>{poista(row.alue_id)}}>
                     <Delete />
                   </IconButton>
-                  <IconButton onClick={()=>{muokkaa(row.alue_id, row.nimi)}}>
+                  <IconButton onClick={()=>{muokkaa(row.alue_id)}}>
                     <Edit />
                   </IconButton>
               </TableCell>

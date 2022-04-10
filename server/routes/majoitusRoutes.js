@@ -5,7 +5,10 @@ var router = express.Router();
 let ctrl = require('../controllers/majoitusController');
 
 
-router.route('/api/mokit').
+router.route('/api/mokit/:alue_id').
+    get(ctrl.haeMokit);
+    
+router.route('/api/mokit/').
     get(ctrl.haeMokit);
     
 router.route('/api/mokit').

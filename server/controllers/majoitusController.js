@@ -5,7 +5,7 @@ module.exports = {
     haeMokit: async (req, res) => {
         try {
             let alue_id;
-            req.body.alue_id ? alue_id = req.body.alue_id : alue_id = "%";
+            req.params.alue_id ? alue_id = req.params.alue_id : alue_id = "%";
             let mokit = await sql.getMokit(alue_id);
 
             res.statusCode = 200;

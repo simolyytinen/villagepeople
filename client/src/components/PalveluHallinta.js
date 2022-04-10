@@ -47,7 +47,7 @@ const PalveluHallinta = () => {
             console.log(toimipaikat);
             setToimipaikat(toimipaikat)})
         .catch(err => console.log(err));
-    }, [hae, server])
+    }, [server])
 
 
     // Palvelut tietokannasta

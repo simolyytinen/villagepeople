@@ -46,14 +46,7 @@ export default function PalveluForm({
           setSijainti={setSijainti} 
           alueid={alueid}
           setAlueId={setAlueId}
-          data =
-            {alueet?.map(alueet => {
-              return (
-                <MenuItem key={alueet.value} value={alueet.alue_id}>
-                  {/* {alueet.alue_id} -  */}{alueet.nimi}
-                </MenuItem>
-              );
-            })}
+          data={alueet}
           />
 
           <TextField

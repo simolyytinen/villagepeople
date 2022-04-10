@@ -59,7 +59,7 @@ module.exports = {
         try {
             let mokki_id = req.params.mokki_id;
 
-            let v = await varausSql.getVaraukset(mokki_id);
+            let v = await varausSql.getVaraukset(mokki_id, "%");
             
             if (v.length == 0) {
                 let a = await sql.deleteMokki(mokki_id);

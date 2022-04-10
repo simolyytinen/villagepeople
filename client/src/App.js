@@ -8,6 +8,7 @@ import Haku from "./components/Haku.js";
 import AlueHallinta from "./components/AlueHallinta.js";
 import MajoitusHallinta from "./components/MajoitusHallinta.js";
 import PalveluHallinta from "./components/PalveluHallinta.js";
+import AsiakasHallinta from "./components/AsiakasHallinta.js";
 
 export const DataContext = createContext({});
 
@@ -36,6 +37,7 @@ const App = () => {
           <Route path="/alue/hallinta" element={<AlueHallinta />} />
           <Route path="/majoitus/hallinta" element={<MajoitusHallinta />} />
           <Route path="/palvelut/hallinta" element={<PalveluHallinta />} />
+          <Route path="/asiakkaat/hallinta" element={<AsiakasHallinta />} />
         </Routes>
 
         <Footer />

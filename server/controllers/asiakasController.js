@@ -1,17 +1,19 @@
 
 const sql = require('../db/asiakasSQL');
+const postiSql = require('../db/postiSQL');
+const varausSql = require('../db/varausSQL');
 
 module.exports = {
 
     haeAsiakkaat: async (req, res) => {
-        let asiakas_id;
-        let etunimi;
-        let sukunimi; 
-        req.body.asiakas_id ? asiakas_id = req.body.asiakas_id : asiakas_id = "%";
-        req.body.etunimi ? etunimi = req.body.etunimi + "%" : etunimi = "%";
-        req.body.sukunimi ? sukunimi = req.body.sukunimi + "%" : sukunimi = "%";
-
         try {
+            let asiakas_id;
+            let etunimi;
+            let sukunimi; 
+            req.body.asiakas_id ? asiakas_id = req.body.asiakas_id : asiakas_id = "%";
+            req.body.etunimi ? etunimi = req.body.etunimi + "%" : etunimi = "%";
+            req.body.sukunimi ? sukunimi = req.body.sukunimi + "%" : sukunimi = "%";
+
             let asiakkaat = await sql.getAsiakkaat(asiakas_id, etunimi, sukunimi);
 
             res.statusCode = 200;
@@ -24,19 +26,25 @@ module.exports = {
         }
     },
 
-    lisaaAsiakas: async (req, res) => { // EI VALMIS
+    lisaaAsiakas: async (req, res) => {
         try {
             let postinro = req.body.postinro;
             let etunimi = req.body.etunimi;
             let sukunimi = req.body.sukunimi;
+            let kaupunki = req.body.kaupunki;
             let lahiosoite = req.body.lahiosoite;
             let email = req.body.email;
             let puhelinnro = req.body.puhelinnro;
 
-            // Tarkistus löytyykö postinumero jo kannasta, jos ei niin lisätään ensin
-
-            // sen jälkeen luodaan asiakas
-            let a = await sql.postAsiakas(asiakas);
+            let t = await postiSql.getPostinumero(postinro);
+            if (t.length > 0) {
+                let a = await sql.postAsiakas([postinro, etunimi, sukunimi, lahiosoite, email, puhelinnro]);
+                
+            }
+            else {
+                let l = await postiSql.postPostinumero(postinro, kaupunki);
+                let a = await sql.postAsiakas([postinro, etunimi, sukunimi, lahiosoite, email, puhelinnro]);
+            }
 
             res.statusCode = 201;
             res.json({msg : "Lisääminen onnistui."});
@@ -48,19 +56,22 @@ module.exports = {
         }
     },
 
-    poistaAsiakas: async (req, res) => { // EI VALMIS
+    poistaAsiakas: async (req, res) => {
         try {
             let asiakas_id = req.params.asiakasid;
 
-            // tarkistus löytyykö asiakkaalta varauksia / laskuja, jos löytyy -> ei voida poistaa
+            let v = await varausSql.getVaraukset("%", asiakas_id);
+
+            if (v.length > 0) {
+                res.statusCode = 600;
+                res.json({msg : "Ei voida poistaa asiakasta, sillä on varauksia"})
+            }
+            else {
+                let a = await sql.deleteAsiakas(asiakas_id);
+                res.statusCode = 200;
+                res.json({msg : "Poistaminen onnistui."});
+            }
             
-            // TÄHÄN VIRHEVIESTI JA KOODI JOS EI VOIDA PALAUTTAA
-
-            // jos voidaan poistaa, poistetaan
-            let a = await sql.deleteAsiakas(asiakas_id);
-
-            res.statusCode = 200;
-            res.json({msg : "Poistaminen onnistui."});
         }
         catch (err) {
             console.log("Error in server")
@@ -69,20 +80,27 @@ module.exports = {
         }
     },
 
-    muokkaaAsiakasta: async (req, res) => { // EI VALMIS
+    muokkaaAsiakasta: async (req, res) => {
         try {
-            let asiakas_id = req.params.asiakasid;
+            let asiakas_id = req.body.asiakas_id;
             let postinro = req.body.postinro;
+            let kaupunki = req.body.kaupunki;
             let etunimi = req.body.etunimi;
             let sukunimi = req.body.sukunimi;
             let lahiosoite = req.body.lahiosoite;
             let email = req.body.email;
             let puhelinnro = req.body.puhelinnro;
 
-            // tarkistus löytyykö postinumero jo kannasta, jos ei löydy niin luodaan se
+            let t = await postiSql.getPostinumero(postinro);
 
-            // sen jälkeen muokataan asiakas
-            let a = await sql.updateAsiakas(asiakas_id, postinro, etunimi, sukunimi, lahiosoite, email, puhelinnro);
+            if (t.length > 0) { // tarkistetaan löytyykö postinumero kannasta, jos ei löydy niin lisätään
+                let a = await sql.updateAsiakas(asiakas_id, postinro, etunimi, sukunimi, lahiosoite, email, puhelinnro);
+                
+            }
+            else {
+                let l = await postiSql.postPostinumero(postinro, kaupunki);
+                let a = await sql.updateAsiakas(asiakas_id, postinro, etunimi, sukunimi, lahiosoite, email, puhelinnro);
+            }
 
             res.statusCode = 200;
             res.json({msg : "Muokkaaminen onnistui."});

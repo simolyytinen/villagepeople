@@ -18,12 +18,12 @@ const executeSQL = (query, params) => {
 module.exports = {
 
     getAsiakkaat: (asiakas_id, etunimi, sukunimi) => {
-        let sql = "SELECT * FROM asiakas WHERE asiakas_id LIKE ? AND etunimi LIKE ? AND sukunimi LIKE ?";
+        let sql = "SELECT asiakas_id, etunimi, sukunimi, email, puhelinnro, lahiosoite, a.postinro, p.toimipaikka FROM asiakas a JOIN posti p ON a.postinro = p.postinro WHERE asiakas_id LIKE ? AND etunimi LIKE ? AND sukunimi LIKE ?";
         return executeSQL(sql, [asiakas_id, etunimi, sukunimi]);
     },
 
     postAsiakas: (asiakas) => {
-        let sql = "INSERT INTO asiakas (postinro, etunimi, sukunimi, lahiosoite, email, puhelinnumero) VALUES (?, ?, ?, ?, ?, ?)";
+        let sql = "INSERT INTO asiakas (postinro, etunimi, sukunimi, lahiosoite, email, puhelinnro) VALUES (?, ?, ?, ?, ?, ?)";
         return executeSQL(sql, asiakas)
     },
 

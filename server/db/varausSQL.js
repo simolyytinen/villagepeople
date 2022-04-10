@@ -17,9 +17,9 @@ const executeSQL = (query, params) => {
 
 module.exports = {
 
-    getVaraukset: (mokki_id) => {
-        let sql = "SELECT * FROM varaus WHERE mokki_id LIKE ?";
-        return executeSQL(sql, [mokki_id]);
+    getVaraukset: (mokki_id, asiakas_id) => {
+        let sql = "SELECT * FROM varaus WHERE mokki_id LIKE ? AND asiakas_id LIKE ?";
+        return executeSQL(sql, [mokki_id, asiakas_id]);
     },
 
 }

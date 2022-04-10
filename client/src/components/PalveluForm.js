@@ -9,17 +9,14 @@ export default function PalveluForm({
   muokataanko,
   palveluid,
   alueid,
-  sijainti,
   nimi,
   tyyppi,
   kuvaus,
   hinta,
   alv,
-  setPalveluId,
   setAlueId,
   setNimi,
   setTyyppi,
-  setSijainti,
   setKuvaus,
   setHinta,
   setAlv,
@@ -46,21 +43,7 @@ export default function PalveluForm({
       <Grid container spacing={4}>
         <Grid item xs={12} md={6}>
 
-       {/*  <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="palveluid"
-            label="PalveluId"
-            id="outlined"
-            value={palveluid}
-            onChange={(event) => { setPalveluId(event.target.value) }}
-          /> */}
-
-          {/* valikko ei vielä toimi */}
           <AlueDropBox 
-          // sijainti={sijainti} 
-          // setSijainti={setSijainti} 
           alueid={alueid}
           setAlueId={setAlueId}
           data={alueet}
@@ -77,38 +60,6 @@ export default function PalveluForm({
             onChange={(event) => { setNimi(event.target.value) }}
           />
 
-          {/* <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="alueid"
-            label="AlueID"
-            id="outlined"
-            value={alueid}
-            onChange={(event) => { setAlueId(event.target.value) }}
-          /> */}
-
-          {/* <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="sijainti"
-            label="Sijainti"
-            id="outlined"
-            value={sijainti}
-            onChange={(event) => { setSijainti(event.target.value) }}
-          />  */}
-
-          {/* <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="tyyppi"
-            label="Tyyppi: 1=saatavilla, 0=ei saatavilla"
-            id="outlined"
-            value={tyyppi}
-            onChange={(event) => { setTyyppi(event.target.value) }}
-          /> */}
           <TyyppiDropBox tyyppi={tyyppi} setTyyppi={setTyyppi}/>
         </Grid>
         <Grid item xs={12} md={6}>

@@ -71,10 +71,8 @@ const PalveluHallinta = () => {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(
                     {
-                        // palvelu_id: muokkausData.palveluId,
-                        nimi: muokkausData.nimi,
                         alue_id: muokkausData.alueId,
-                        // sijainti: muokkausData.sijainti,
+                        nimi: muokkausData.nimi,
                         tyyppi: muokkausData.tyyppi,
                         kuvaus: muokkausData.kuvaus,
                         hinta: muokkausData.hinta,
@@ -96,7 +94,6 @@ const PalveluHallinta = () => {
         setPalveluId(id);
         setNimi(nimi);
         setAlueId(alueId);
-        // setSijainti(sijainti);
         setTyyppi(tyyppi);
         setKuvaus(kuvaus);
         setHinta(hinta);
@@ -107,7 +104,6 @@ const PalveluHallinta = () => {
         console.log("Tallenna");
         setMuokkausData(data);
         setMuokkaus(false);
-        // setSijainti("");
         setNimi("");
         setAlueId("");
         setTyyppi("");
@@ -198,7 +194,7 @@ const PalveluHallinta = () => {
             </Typography>
             <Grid container spacing={4}>
                 <Grid item xs={12} md={12}>
-                    <PalveluForm alueet={toimipaikat} muokataanko={muokkaus} palveluid={palveluId} alueid={alueId} nimi={nimi} /* sijainti={sijainti} */ tyyppi={tyyppi} kuvaus={kuvaus} hinta={hinta} alv={alv} setPalveluId={setPalveluId} setAlueId={setAlueId} setNimi={setNimi} /* setSijainti={setSijainti} */ setTyyppi={setTyyppi} setKuvaus={setKuvaus} setHinta={setHinta} setAlv={setAlv} tallennaClick={tallennaClick} lisaaClick={lisaaClick} />
+                    <PalveluForm alueet={toimipaikat} muokataanko={muokkaus} palveluid={palveluId} alueid={alueId} nimi={nimi}  tyyppi={tyyppi} kuvaus={kuvaus} hinta={hinta} alv={alv} setPalveluId={setPalveluId} setAlueId={setAlueId} setNimi={setNimi} setTyyppi={setTyyppi} setKuvaus={setKuvaus} setHinta={setHinta} setAlv={setAlv} tallennaClick={tallennaClick} lisaaClick={lisaaClick} />
                 </Grid>
                 <Grid item xs={12} md={12}>
                     <PalveluTaulukko sarakkeet={sarakkeet} data={palvelut} poista={poistaPalvelu} muokkaa={muokkaaPalvelu} />

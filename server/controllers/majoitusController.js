@@ -1,4 +1,6 @@
 const sql = require('../db/majoitusSQL');
+const postiSql = require('../db/postiSQL');
+const alueSql = require('../db/toimipisteSQL');
 
 module.exports = {
 
@@ -20,7 +22,6 @@ module.exports = {
 
     lisaaMokki: async (req, res) => {
         try {
-            
             let alue_id = req.body.alue_id;
             let postinro = req.body.postinro; 
             let mokkinimi = req.body.mokkinimi; 
@@ -30,12 +31,21 @@ module.exports = {
             let henkilomaara = req.body.henkilomaara; 
             let varustelu = req.body.varustelu;
 
-            // Alue id:n tarkistus ?
-            // postinumeron tarkistus ?
-            let a = await sql.postMokki(alue_id, postinro, mokkinimi, katuosoite, hinta, kuvaus, henkilomaara, varustelu);
-
+            let t = await postiSql.getPostinumero(postinro);
+            if (t.length > 0) {
+                let a = await sql.postMokki(alue_id, postinro, mokkinimi, katuosoite, hinta, kuvaus, henkilomaara, varustelu);
+                
+            }
+            else {
+                let alue = await alueSql.getToimipisteet(alue_id);
+                let l = await postiSql.postPostinumero(postinro, alue[0].nimi);
+                let a = await sql.postMokki(alue_id, postinro, mokkinimi, katuosoite, hinta, kuvaus, henkilomaara, varustelu);
+            }
             res.statusCode = 201;
             res.json({msg : "Mökin lisääminen onnistui."});
+            
+
+            
         }
         catch (err) {
             console.log("Error in server")

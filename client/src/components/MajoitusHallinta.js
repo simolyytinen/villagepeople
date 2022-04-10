@@ -14,14 +14,15 @@ const MajoitusHallinta = () => {
 
     const [mokit, setMokit] = useState([]);
     const [toimipaikat, setToimipaikat] = useState([]);
-    //const [hae, setHae] = useState(0);
+    const [hae, setHae] = useState(0);
     const [poistaId, setPoistaId] = useState(-1);
     const [muokkaus, setMuokkaus] = useState(false);
     
     const [muokkausData, setMuokkausData] = useState("");
+    const [lisaysData, setLisaysData] = useState("");
 
     const [alueId, setAlueId] = useState("");
-    const [mokkinimi, setMokkinimi] = useState("");
+
 
     const sarakkeet = [
         "Mökin nimi", "Lähiosoite", "Postinumero", "Kuvaus", "Varustelu", "Henkilömäärä", "Hinta", "Muuta/Poista"
@@ -48,18 +49,15 @@ const MajoitusHallinta = () => {
                 setMokit(data)})
             .catch(err => console.log(err));
         }
-        if (alueId != "") funktio();
-    }, [alueId, server])
+        if (alueId !== "") funktio();
+    }, [hae, alueId, server])
 
 
-    const tallennaClick = () => {
-        console.log("Tallenna");
+    const tallennaClick = (data) => {
+        console.log("Tallenna", data);
+        setMuokkaus(false);
     }
     
-    const lisaaClick = () => {
-       console.log("Lisää");
-        
-    }
     
     // Mökin poistaminen
     const poistaClick = (id) => {
@@ -74,7 +72,7 @@ const MajoitusHallinta = () => {
             })
             .then((res) => {
                 console.log(res)
-                setAlueId(alueId => alueId); // laukaistaan toimipaikkojen hakeminen useEffect
+                setHae(hae => hae + 1); // laukaistaan mökkien hakeminen useEffect
             })
             .catch(err => console.log(err))
         }
@@ -83,6 +81,46 @@ const MajoitusHallinta = () => {
     }, [poistaId, server])
 
     // Mökin lisääminen
+    const lisaaClick = (data) => {
+        setLisaysData({
+            alue_id : alueId,
+            mokkinimi : data.mokkinimi,
+            katuosoite : data.katuosoite,
+            postinro : data.postinro,
+            hinta : data.hinta,
+            henkilomaara : data.henkilomaara,
+            varustelu : data.varustelu,
+            kuvaus : data.kuvaus
+        });
+         
+     }
+
+     useEffect(()=>{
+        const funktio = () => {
+            const api = server + "/api/mokit";
+            console.log("hep", JSON.stringify(lisaysData));
+            fetch(api, {
+                method: "POST",
+                headers: { 'Content-Type' : 'application/json'},
+                body: JSON.stringify(lisaysData)
+            })
+            .then((res) => {
+                setHae(hae => hae + 1); // laukaistaan mökkien hakeminen useEffect
+                setLisaysData("");
+            })
+            .catch(err => console.log(err))
+        }
+        
+        if (lisaysData !== "") funktio();
+    }, [lisaysData, server])
+
+
+     // Muokkaaminen
+     const muokkausClick = (id) => {
+         console.log("muokkasu", id);
+         setMuokkaus(true);
+     }
+
 
 
     return (
@@ -102,7 +140,7 @@ const MajoitusHallinta = () => {
                     <MajoitusForm muokataanko={muokkaus} tallennaClick={tallennaClick} lisaaClick={lisaaClick} />
                 </Grid>
                 <Grid item xs={12} md={12}>
-                    <MajoitusTaulukko sarakkeet={sarakkeet} data={mokit} poista={poistaClick} />
+                    <MajoitusTaulukko sarakkeet={sarakkeet} data={mokit} poista={poistaClick} muokkaa={muokkausClick} />
                 </Grid>
             </Grid>
             

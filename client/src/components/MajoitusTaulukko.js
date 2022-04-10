@@ -35,10 +35,10 @@ export default function MajoitusTaulukko({sarakkeet, data, poista, muokkaa}) {
               <TableCell align="center">{row.henkilomaara}</TableCell>
               <TableCell align="center">{row.hinta}</TableCell>
               <TableCell align="center">
-                  <IconButton onClick={()=>{poista(row.alue_id)}}>
+                  <IconButton onClick={()=>{poista(row.mokki_id)}}>
                     <Delete />
                   </IconButton>
-                  <IconButton onClick={()=>{muokkaa(row.alue_id)}}>
+                  <IconButton onClick={()=>{muokkaa(row.mokki_id)}}>
                     <Edit />
                   </IconButton>
               </TableCell>

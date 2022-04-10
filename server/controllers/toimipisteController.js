@@ -6,7 +6,8 @@ module.exports = {
 
     haeToimipisteet: async (req, res) => {
         try {
-            let toimipisteet = await sql.getToimipisteet();
+            let alue_id = "%";
+            let toimipisteet = await sql.getToimipisteet(alue_id);
 
             res.statusCode = 200;
             res.json(toimipisteet);

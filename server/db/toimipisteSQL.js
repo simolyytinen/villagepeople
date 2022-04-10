@@ -17,9 +17,9 @@ const executeSQL = (query, params) => {
 
 module.exports = {
 
-    getToimipisteet: () => {
-        let sql = "SELECT * FROM alue";
-        return executeSQL(sql, []);
+    getToimipisteet: (alue_id) => {
+        let sql = "SELECT * FROM alue WHERE alue_id LIKE ?";
+        return executeSQL(sql, [alue_id]);
     },
 
     postToimipiste: (nimi) => {

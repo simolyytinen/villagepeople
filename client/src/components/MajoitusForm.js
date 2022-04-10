@@ -1,7 +1,7 @@
 import { Box, Button, TextField, Grid } from "@mui/material";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-export default function AlueForm({ muokataanko, tallennaClick, lisaaClick }) {
+export default function AlueForm({ muokataanko, muokattavaMokki, tallennaClick, lisaaClick }) {
 
   const [mokkinimi, setMokkinimi] = useState("");
   const [katuosoite, setKatuosoite] = useState("");
@@ -10,6 +10,19 @@ export default function AlueForm({ muokataanko, tallennaClick, lisaaClick }) {
   const [kuvaus, setKuvaus] = useState("");
   const [henkilomaara, setHenkilomaara] = useState("");
   const [varustelu, setVarustelu] = useState("");
+
+  useEffect(()=>{
+      const funktio = () => {
+          setMokkinimi(muokattavaMokki.mokkinimi);
+          setKatuosoite(muokattavaMokki.katuosoite)
+          setPostinumero(muokattavaMokki.postinro)
+          setHinta(muokattavaMokki.hinta)
+          setKuvaus(muokattavaMokki.kuvaus);
+          setHenkilomaara(muokattavaMokki.henkilomaara);
+          setVarustelu(muokattavaMokki.varustelu);
+      }
+      if (muokataanko) funktio();
+  }, [muokataanko, muokattavaMokki])
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -58,6 +71,9 @@ export default function AlueForm({ muokataanko, tallennaClick, lisaaClick }) {
             margin="normal"
             fullWidth
             required
+            InputProps={{
+              readOnly: muokataanko ? true : false
+            }} // Mökkiä muokatessa ei voi muuttaa katuosoitetta
             name="katuosoite"
             label="Katuosoite"
             id="katuosoite"
@@ -68,6 +84,9 @@ export default function AlueForm({ muokataanko, tallennaClick, lisaaClick }) {
             margin="normal"
             fullWidth
             required
+            InputProps={{
+              readOnly: muokataanko ? true : false
+            }} // Mökkiä muokatessa ei voi muokata postinumeroa
             error={(postinumero.length > 5) || isNaN(postinumero)}
             helperText={((postinumero.length > 5) || isNaN(postinumero)) ? "Postinumero ei keplaa" : ""}
             name="postinumero"

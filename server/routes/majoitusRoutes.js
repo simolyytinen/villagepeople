@@ -17,7 +17,7 @@ router.route('/api/mokit').
 router.route('/api/mokit/:mokki_id').
     delete(ctrl.poistaMokki);
 
-router.route('/api/mokit/:mokki_id').
+router.route('/api/mokit').
     put(ctrl.muokkaaMokki);
 
 // Julkaistaan ao. funktiot tämän js-filun ulkopuolelle

@@ -83,7 +83,7 @@ module.exports = {
 
     muokkaaMokki: async (req, res) => {
         try {
-            let mokki_id = req.params.mokki_id;
+            let mokki_id = req.body.mokki_id;
             let alue_id = req.body.alue_id;
             let postinro = req.body.postinro; 
             let mokkinimi = req.body.mokkinimi; 

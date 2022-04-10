@@ -19,6 +19,7 @@ const MajoitusHallinta = () => {
     const [muokkaus, setMuokkaus] = useState(false);
     
     const [muokkausData, setMuokkausData] = useState("");
+    const [muokattavaMokki, setMuokattavaMokki] = useState("");
     const [lisaysData, setLisaysData] = useState("");
 
     const [alueId, setAlueId] = useState("");
@@ -52,12 +53,6 @@ const MajoitusHallinta = () => {
         }
         if (alueId !== "") funktio();
     }, [hae, alueId, server])
-
-
-    const tallennaClick = (data) => {
-        console.log("Tallenna", data);
-        setMuokkaus(false);
-    }
     
     
     // Mökin poistaminen
@@ -126,10 +121,37 @@ const MajoitusHallinta = () => {
 
 
      // Muokkaaminen
-     const muokkausClick = (id) => {
-         console.log("muokkasu", id);
+     const muokkausClick = (mokki) => {
+         setMuokattavaMokki(mokki)
          setMuokkaus(true);
      }
+
+     const tallennaClick = (data) => {
+        setMuokkausData({
+            alue_id: muokattavaMokki.alue_id,
+            mokki_id : muokattavaMokki.mokki_id,
+            ...data
+        });
+        setMuokkaus(false);
+    }
+
+    useEffect(()=>{
+        const funktio = () => {
+            const api = server + "/api/mokit";
+            console.log("hep", JSON.stringify(muokkausData));
+            fetch(api, {
+                method: "PUT",
+                headers: { 'Content-Type' : 'application/json'},
+                body: JSON.stringify(muokkausData)
+            })
+            .then((res) => {
+                setHae(hae => hae + 1); // laukaistaan mökkien hakeminen useEffect
+                setMuokkausData("");
+            })
+            .catch(err => console.log(err))
+        }
+        if (muokkausData !== "") funktio()
+    }, [muokkausData, server])
 
 
 
@@ -147,7 +169,7 @@ const MajoitusHallinta = () => {
                     <Typography variant="h4" align="left" color="text.primary" paragraph sx={{mt: 4}}>
                     {muokkaus ? "Muokkaa mökkiä" : "Lisää uusi mökki"}
                     </Typography>
-                    <MajoitusForm muokataanko={muokkaus} tallennaClick={tallennaClick} lisaaClick={lisaaClick} />
+                    <MajoitusForm muokataanko={muokkaus} muokattavaMokki={muokattavaMokki} tallennaClick={tallennaClick} lisaaClick={lisaaClick} />
                 </Grid>
                 <Grid item xs={12} md={12}>
                     <Typography variant="h6" align="left" color="red" paragraph sx={{mt: 4}}>

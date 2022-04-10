@@ -55,13 +55,14 @@ module.exports = {
     muokkaaPalvelu: async (req, res) => {
         try {
             let palveluid = req.params.palveluid;
+            let alueid = req.body.alueid;
             let nimi = req.body.nimi;
             let tyyppi = req.body.tyyppi;
             let kuvaus = req.body.kuvaus;
             let hinta = req.body.hinta;
             let alv = req.body.alv;
 
-            let a = await sql.updatePalvelu(nimi, tyyppi, kuvaus, hinta, alv, palveluid);
+            let a = await sql.updatePalvelu(alueid, nimi, tyyppi, kuvaus, hinta, alv, palveluid);
 
             res.statusCode = 200;
             res.json({ status: "OK"});

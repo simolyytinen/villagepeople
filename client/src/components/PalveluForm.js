@@ -15,7 +15,7 @@ export default function PalveluForm({
   kuvaus,
   hinta,
   alv,
-  // setPalveluId,
+  setPalveluId,
   setAlueId,
   setNimi,
   setTyyppi,
@@ -30,8 +30,14 @@ export default function PalveluForm({
   const handleSubmit = (event) => {
     event.preventDefault();
     muokataanko ? tallennaClick({
-
-    }) : lisaaClick();
+      palvelu_id : palveluid,
+      nimi : nimi,
+      alue_id : alueid,
+      tyyppi : tyyppi,
+      kuvaus : kuvaus,
+      hinta : hinta,
+      alv : alv
+    }) : lisaaClick(nimi, alueid, tyyppi, kuvaus, hinta, alv);
   };
   
 
@@ -40,10 +46,21 @@ export default function PalveluForm({
       <Grid container spacing={4}>
         <Grid item xs={12} md={6}>
 
+       {/*  <TextField
+            margin="normal"
+            required
+            fullWidth
+            name="palveluid"
+            label="PalveluId"
+            id="outlined"
+            value={palveluid}
+            onChange={(event) => { setPalveluId(event.target.value) }}
+          /> */}
+
           {/* valikko ei vielä toimi */}
           <AlueDropBox 
-          sijainti={sijainti} 
-          setSijainti={setSijainti} 
+          // sijainti={sijainti} 
+          // setSijainti={setSijainti} 
           alueid={alueid}
           setAlueId={setAlueId}
           data={alueet}

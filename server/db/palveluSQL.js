@@ -18,7 +18,7 @@ const executeSQL = (query, params) => {
 module.exports = {
 
     getPalvelut: (nimi) => {
-        let sql = "select p.palvelu_id as id, p.alue_id, a.nimi as sijainti, p.nimi, p.tyyppi, p.kuvaus, p.hinta, p.alv from palvelu p join alue a on a.alue_id = p.alue_id where 1=1 and p.nimi like ? '%'";
+        let sql = "select p.palvelu_id, p.alue_id, a.nimi as sijainti, p.nimi, p.tyyppi, p.kuvaus, p.hinta, p.alv from palvelu p join alue a on a.alue_id = p.alue_id where 1=1 and p.nimi like ? '%'";
         // let sql = "select a.nimi as sijainti, p.nimi, p.kuvaus, p.hinta from palvelu p join alue a on a.alue_id = p.alue_id where 1=1 and p.nimi like ? '%'";
         // let sql = "select palvelu_id, alue_id, nimi from palvelu where 1=1 and nimi like ? '%'";
         console.log("sql " + sql);
@@ -34,9 +34,9 @@ module.exports = {
         console.log("sql " + sql);
         return executeSQL(sql, palveluid);
     },
-    updatePalvelu: (nimi, tyyppi, kuvaus, hinta, alv, palveluid) => {
-        let sql = "update palvelu set nimi = ?, tyyppi = ?, kuvaus = ?, hinta = ?, alv = ? where palvelu_id = ?";
+    updatePalvelu: (alueid, nimi, tyyppi, kuvaus, hinta, alv, palveluid) => {
+        let sql = "update palvelu set alue_id= ?, nimi = ?, tyyppi = ?, kuvaus = ?, hinta = ?, alv = ? where palvelu_id = ?";
         console.log("sql " + sql);
-        return executeSQL(sql, [nimi, tyyppi, kuvaus, hinta, alv, palveluid]);
+        return executeSQL(sql, [alueid, nimi, tyyppi, kuvaus, hinta, alv, palveluid]);
     },
 }

@@ -27,19 +27,19 @@ export default function PalveluTaulukko({ sarakkeet, data, poista, muokkaa }) {
                 key={row.id}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
-                {/* <TableCell align="center">{row.id}</TableCell> */}
+                {/* <TableCell align="center">{row.palvelu_id}</TableCell> */}
                 <TableCell align="center">{row.nimi}</TableCell>
-                <TableCell align="center">{row.alue_id}</TableCell>
+                {/* <TableCell align="center">{row.alue_id}</TableCell> */}
                 <TableCell align="center">{row.sijainti}</TableCell>
                 <TableCell align="center">{row.tyyppi}</TableCell>
                 <TableCell align="center">{row.kuvaus}</TableCell>
                 <TableCell align="center">{row.hinta}</TableCell>
                 <TableCell align="center">{row.alv}</TableCell>
                 <TableCell align="center">
-                  <IconButton onClick={() => { poista(row.id) }}>
+                  <IconButton onClick={() => { poista(row.palvelu_id) }}>
                     <Delete />
                   </IconButton>
-                  <IconButton onClick={() => { muokkaa(/* row.id, */ row.nimi, row.alue_id, row.sijainti, row.tyyppi, row.kuvaus, row.hinta, row.alv) }}>
+                  <IconButton onClick={() => { muokkaa(row.palvelu_id, row.nimi, row.alue_id, row.tyyppi, row.kuvaus, row.hinta,  row.alv) }}>
                     <Edit />
                   </IconButton>
                 </TableCell>

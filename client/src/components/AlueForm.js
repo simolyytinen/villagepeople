@@ -1,6 +1,6 @@
 import { Box, Button, TextField } from "@mui/material";
 
-export default function AlueForm({ muokataanko, alueId, nimi, setAlueId, setNimi, tallennaClick, lisaaClick }) {
+export default function AlueForm({ muokataanko, alueId, nimi, setAlueId, setNimi, tallennaClick, lisaaClick, peruuta }) {
 
 
   const handleSubmit = (event) => {
@@ -35,6 +35,9 @@ export default function AlueForm({ muokataanko, alueId, nimi, setAlueId, setNimi
       />
       <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
         {muokataanko ? "Tallenna" : "Lisää"}
+      </Button>
+      <Button fullWidth onClick={()=>{peruuta()}} variant="outlined" sx={{ mb: 2 }}>
+        {muokataanko ? "Peruuta" : "Tyhjennä"}
       </Button>
     </Box>
   );

@@ -2,47 +2,44 @@ import { useState, useEffect, useContext } from "react";
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Grid from "@mui/material/Grid";
-import MajoitusTaulukko from "./MajoitusTaulukko";
-import MajoitusForm from "./MajoitusForm";
+import AsiakasTaulukko from "./AsiakasTaulukko";
+import AsiakasForm from "./AsiakasForm";
 import { DataContext } from "../App";
-import AlueDropBox from "./AlueDropBox";
 
 
 const AsiakasHallinta = () => {
     // tuodaan contextista serverin osoite
     const { server } = useContext(DataContext);
 
-    const [mokit, setMokit] = useState([]);
-    const [toimipaikat, setToimipaikat] = useState([]);
+    const [asiakkaat, setAsiakkaat] = useState([]);
     const [hae, setHae] = useState(0);
     const [poistaId, setPoistaId] = useState(-1);
     const [muokkaus, setMuokkaus] = useState(false);
     
     const [muokkausData, setMuokkausData] = useState("");
-    const [muokattavaMokki, setMuokattavaMokki] = useState("");
+    const [muokattavaAsiakas, setMuokattavaAsiakas] = useState("");
     const [lisaysData, setLisaysData] = useState("");
 
-    const [alueId, setAlueId] = useState("");
     const [virhe, setVirhe] = useState(false);
 
 
     const sarakkeet = [
-        "Asiakkaan ID", "Etunimi", "Sukunimi", "Email", "Puhelinnumero", "Kaupunki", "Lähiosoite", "Postinumero", "Muuta/Poista"
+        "Asiakkaan ID", "Etunimi", "Sukunimi", "Email", "Puhelinnumero", "Lähiosoite", "Postinumero", "Kaupunki", "Muuta/Poista"
     ];
 
-    // Mökkien hakeminen tietokannasta, haetaan vain jos alue on valittu
+    // Asiakkaiden hakeminen tietokannasta
     useEffect(()=>{
         const funktio = () => {
-            let api = server + "/api/mokit/" + alueId;
+            let api = server + "/api/asiakkaat/";
             fetch(api)
             .then(response => response.json())
             .then((data) => {
                 console.log(data);
-                setMokit(data)})
+                setAsiakkaat(data)})
             .catch(err => console.log(err));
         }
-        if (alueId !== "") funktio();
-    }, [hae, alueId, server])
+        funktio();
+    }, [hae, server])
     
     
     // Mökin poistaminen
@@ -52,21 +49,21 @@ const AsiakasHallinta = () => {
 
     useEffect(()=>{
         const funktio = () => {
-            const api = server + "/api/mokit/" + poistaId;
+            const api = server + "/api/asiakas/" + poistaId;
             fetch(api, {
                 method: "DELETE"
             })
             .then((res) => {
                 if (res.status === 600) {
                     setVirhe(true);
-                    console.log("Ei voida poistaa, mökkiin liittyy varauksia.") 
+                    console.log("Ei voida poistaa, asiakkaaseen liittyy varauksia.") 
                     setTimeout(()=>{
                         setVirhe(false);
                     }, 5000) 
                 }
                 else {
                     console.log(res)
-                    setHae(hae => hae + 1); // laukaistaan mökkien hakeminen useEffect
+                    setHae(hae => hae + 1); // laukaistaan asiakkaiden hakeminen useEffect
                 }
             })
             .catch(err => console.log(err))
@@ -78,29 +75,21 @@ const AsiakasHallinta = () => {
     // Mökin lisääminen
     const lisaaClick = (data) => {
         setLisaysData({
-            alue_id : alueId,
-            mokkinimi : data.mokkinimi,
-            katuosoite : data.katuosoite,
-            postinro : data.postinro,
-            hinta : data.hinta,
-            henkilomaara : data.henkilomaara,
-            varustelu : data.varustelu,
-            kuvaus : data.kuvaus
+            ...data
         });
          
      }
 
      useEffect(()=>{
         const funktio = () => {
-            const api = server + "/api/mokit";
-            console.log("hep", JSON.stringify(lisaysData));
+            const api = server + "/api/asiakas";
             fetch(api, {
                 method: "POST",
                 headers: { 'Content-Type' : 'application/json'},
                 body: JSON.stringify(lisaysData)
             })
             .then((res) => {
-                setHae(hae => hae + 1); // laukaistaan mökkien hakeminen useEffect
+                setHae(hae => hae + 1); // laukaistaan asiakkaiden hakeminen useEffect
                 setLisaysData("");
             })
             .catch(err => console.log(err))
@@ -111,15 +100,14 @@ const AsiakasHallinta = () => {
 
 
      // Muokkaaminen
-     const muokkausClick = (mokki) => {
-         setMuokattavaMokki(mokki)
+     const muokkausClick = (asiakas) => {
+         setMuokattavaAsiakas(asiakas)
          setMuokkaus(true);
      }
 
      const tallennaClick = (data) => {
         setMuokkausData({
-            alue_id: muokattavaMokki.alue_id,
-            mokki_id : muokattavaMokki.mokki_id,
+            asiakas_id : muokattavaAsiakas.asiakas_id,
             ...data
         });
         setMuokkaus(false);
@@ -127,15 +115,15 @@ const AsiakasHallinta = () => {
 
     useEffect(()=>{
         const funktio = () => {
-            const api = server + "/api/mokit";
-            console.log("hep", JSON.stringify(muokkausData));
+            const api = server + "/api/asiakas";
+            
             fetch(api, {
                 method: "PUT",
                 headers: { 'Content-Type' : 'application/json'},
                 body: JSON.stringify(muokkausData)
             })
             .then((res) => {
-                setHae(hae => hae + 1); // laukaistaan mökkien hakeminen useEffect
+                setHae(hae => hae + 1); // laukaistaan asiakkaiden hakeminen useEffect
                 setMuokkausData("");
             })
             .catch(err => console.log(err))
@@ -154,15 +142,15 @@ const AsiakasHallinta = () => {
             <Grid container spacing={4}>
                 <Grid item xs={12} md={12}>
                     <Typography variant="h4" align="left" color="text.primary" paragraph sx={{mt: 4}}>
-                    {muokkaus ? "Muokkaa mökkiä" : "Lisää uusi mökki"}
+                    {muokkaus ? "Muokkaa asiakasta" : "Lisää uusi asiakas"}
                     </Typography>
-                    <MajoitusForm muokataanko={muokkaus} muokattavaMokki={muokattavaMokki} tallennaClick={tallennaClick} lisaaClick={lisaaClick} />
+                    <AsiakasForm muokataanko={muokkaus} setMuokataanko={setMuokkaus} muokattavaAsiakas={muokattavaAsiakas} tallennaClick={tallennaClick} lisaaClick={lisaaClick}/>
                 </Grid>
                 <Grid item xs={12} md={12}>
                     <Typography variant="h6" align="left" color="red" paragraph sx={{mt: 4}}>
                     {virhe ? "Asiakasta ei voida poistaa, siihen liittyy varauksia" : ""}
                     </Typography>
-                    <MajoitusTaulukko sarakkeet={sarakkeet} data={mokit} poista={poistaClick} muokkaa={muokkausClick} />
+                    <AsiakasTaulukko sarakkeet={sarakkeet} data={asiakkaat} poista={poistaClick} muokkaa={muokkausClick} />
                 </Grid>
             </Grid>
             

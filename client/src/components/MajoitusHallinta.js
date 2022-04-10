@@ -169,7 +169,7 @@ const MajoitusHallinta = () => {
                     <Typography variant="h4" align="left" color="text.primary" paragraph sx={{mt: 4}}>
                     {muokkaus ? "Muokkaa mökkiä" : "Lisää uusi mökki"}
                     </Typography>
-                    <MajoitusForm muokataanko={muokkaus} muokattavaMokki={muokattavaMokki} tallennaClick={tallennaClick} lisaaClick={lisaaClick} />
+                    <MajoitusForm muokataanko={muokkaus} setMuokataanko={setMuokkaus} muokattavaMokki={muokattavaMokki} tallennaClick={tallennaClick} lisaaClick={lisaaClick} />
                 </Grid>
                 <Grid item xs={12} md={12}>
                     <Typography variant="h6" align="left" color="red" paragraph sx={{mt: 4}}>

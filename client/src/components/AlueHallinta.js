@@ -124,6 +124,11 @@ const AlueHallinta = () => {
         setNimi("");
     }
 
+    const peruuta = () => {
+        setNimi("");
+        setMuokkaus(false);
+    }
+
     return (
         <Container maxWidth="xl">
             <Typography variant="h3" align="center" color="text.primary" paragraph sx={{mt: 4}}>
@@ -134,7 +139,7 @@ const AlueHallinta = () => {
                     <Typography variant="h4" align="left" color="text.primary" paragraph sx={{mt: 4}}>
                     {muokkaus ? "Muokkaa toimipaikkaa" : "Lisää uusi toimipaikka"}
                     </Typography>
-                    <AlueForm muokataanko={muokkaus} alueId={alueId} nimi={nimi} setAlueId={setAlueId} setNimi={setNimi} tallennaClick={tallennaClick} lisaaClick={lisaaClick} />
+                    <AlueForm muokataanko={muokkaus} alueId={alueId} nimi={nimi} setAlueId={setAlueId} setNimi={setNimi} tallennaClick={tallennaClick} lisaaClick={lisaaClick} peruuta={peruuta} />
                     <Typography variant="h6" align="left" color="red" paragraph sx={{mt: 4}}>
                     {virhe ? "Toimipaikkaa ei voida poistaa, siihen liittyy mökkejä" : ""}
                     </Typography>

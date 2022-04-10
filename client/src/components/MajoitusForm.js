@@ -1,7 +1,7 @@
 import { Box, Button, TextField, Grid } from "@mui/material";
 import { useEffect, useState } from 'react';
 
-export default function AlueForm({ muokataanko, muokattavaMokki, tallennaClick, lisaaClick }) {
+export default function MajoitusForm({ muokataanko, setMuokataanko, muokattavaMokki, tallennaClick, lisaaClick }) {
 
   const [mokkinimi, setMokkinimi] = useState("");
   const [katuosoite, setKatuosoite] = useState("");
@@ -52,6 +52,17 @@ export default function AlueForm({ muokataanko, muokattavaMokki, tallennaClick, 
     setHenkilomaara("");
     setVarustelu("");
   };
+
+  const peruuta = () => {
+    setMokkinimi("");
+    setKatuosoite("");
+    setPostinumero("");
+    setHinta("");
+    setKuvaus("");
+    setHenkilomaara("");
+    setVarustelu("");
+    setMuokataanko(false);
+  }
 
   return (
     <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
@@ -147,6 +158,9 @@ export default function AlueForm({ muokataanko, muokattavaMokki, tallennaClick, 
       </Grid>
       <Button fullWidth type="submit" variant="contained" sx={{ mt: 3, mb: 2 }}>
         {muokataanko ? "Tallenna" : "Lisää"}
+      </Button>
+      <Button fullWidth onClick={()=>{peruuta()}} variant="outlined" sx={{ mb: 2 }}>
+        {muokataanko ? "Peruuta" : "Tyhjennä"}
       </Button>
     </Box>
   );

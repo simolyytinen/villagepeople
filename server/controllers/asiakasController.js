@@ -31,7 +31,7 @@ module.exports = {
             let postinro = req.body.postinro;
             let etunimi = req.body.etunimi;
             let sukunimi = req.body.sukunimi;
-            let kaupunki = req.body.kaupunki;
+            let toimipaikka = req.body.toimipaikka;
             let lahiosoite = req.body.lahiosoite;
             let email = req.body.email;
             let puhelinnro = req.body.puhelinnro;
@@ -42,7 +42,7 @@ module.exports = {
                 
             }
             else {
-                let l = await postiSql.postPostinumero(postinro, kaupunki);
+                let l = await postiSql.postPostinumero(postinro, toimipaikka);
                 let a = await sql.postAsiakas([postinro, etunimi, sukunimi, lahiosoite, email, puhelinnro]);
             }
 
@@ -84,7 +84,7 @@ module.exports = {
         try {
             let asiakas_id = req.body.asiakas_id;
             let postinro = req.body.postinro;
-            let kaupunki = req.body.kaupunki;
+            let toimipaikka = req.body.toimipaikka;
             let etunimi = req.body.etunimi;
             let sukunimi = req.body.sukunimi;
             let lahiosoite = req.body.lahiosoite;
@@ -98,7 +98,7 @@ module.exports = {
                 
             }
             else {
-                let l = await postiSql.postPostinumero(postinro, kaupunki);
+                let l = await postiSql.postPostinumero(postinro, toimipaikka);
                 let a = await sql.updateAsiakas(asiakas_id, postinro, etunimi, sukunimi, lahiosoite, email, puhelinnro);
             }
 

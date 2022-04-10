@@ -18,6 +18,7 @@ const AlueHallinta = () => {
     const [nimi, setNimi] = useState("");
     const [muokkausData, setMuokkausData] = useState("");
     const [lisaaNimi, setLisaaNimi] = useState("");
+    const [virhe, setVirhe] = useState(false);
 
     const sarakkeet = [
         "Alueen ID", "Nimi", "Muuta/Poista"
@@ -42,8 +43,17 @@ const AlueHallinta = () => {
                 method: "DELETE"
             })
             .then((res) => {
-                console.log(res)
-                setHae(hae => hae+1); // laukaistaan toimipaikkojen hakeminen useEffect
+                if(res.status === 600) {
+                    setVirhe(true);
+                    console.log("Ei voida poistaa, toimipaikkaan liittyy mökkejä.") 
+                    setTimeout(()=>{
+                        setVirhe(false);
+                    }, 5000)  
+                }
+                else {
+                    console.log(res)
+                    setHae(hae => hae+1); // laukaistaan toimipaikkojen hakeminen useEffect
+                }
             })
             .catch(err => console.log(err))
         }
@@ -125,6 +135,9 @@ const AlueHallinta = () => {
                     {muokkaus ? "Muokkaa toimipaikkaa" : "Lisää uusi toimipaikka"}
                     </Typography>
                     <AlueForm muokataanko={muokkaus} alueId={alueId} nimi={nimi} setAlueId={setAlueId} setNimi={setNimi} tallennaClick={tallennaClick} lisaaClick={lisaaClick} />
+                    <Typography variant="h6" align="left" color="red" paragraph sx={{mt: 4}}>
+                    {virhe ? "Toimipaikkaa ei voida poistaa, siihen liittyy mökkejä" : ""}
+                    </Typography>
                 </Grid>
                 <Grid item xs={12} md={4}>
                     <AlueTaulukko sarakkeet={sarakkeet} data={toimipaikat} poista={poistaToimipaikka} muokkaa={muokkaaToimipaikka} />

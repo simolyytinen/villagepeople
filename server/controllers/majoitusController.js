@@ -1,6 +1,7 @@
 const sql = require('../db/majoitusSQL');
 const postiSql = require('../db/postiSQL');
 const alueSql = require('../db/toimipisteSQL');
+const varausSql = require('../db/varausSQL');
 
 module.exports = {
 
@@ -58,12 +59,20 @@ module.exports = {
         try {
             let mokki_id = req.params.mokki_id;
 
-            // TARKASTUS ETTÄ ONKO MÖKKIIN OLEMASSA VARAUKSIA?
+            let v = await varausSql.getVaraukset(mokki_id);
+            
+            if (v.length == 0) {
+                let a = await sql.deleteMokki(mokki_id);
 
-            let a = await sql.deleteMokki(mokki_id);
+                res.statusCode = 200;
+                res.json({msg : "Mökin poistaminen onnistui."});
+            }
+            else {
+                res.statusCode = 600;
+                res.json({msg : "Mökkiä ei voida poistaa, siihen liittyy varauksia"});
+            }
 
-            res.statusCode = 200;
-            res.json({msg : "Mökin poistaminen onnistui."});
+            
         }
         catch (err) {
             console.log("Error in server")

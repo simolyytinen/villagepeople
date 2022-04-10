@@ -44,7 +44,8 @@ module.exports = {
                 res.json({msg : "Poistaminen onnistui."});
             }
             else {
-                res.statusCode = 400;
+                res.statusCode = 600;
+                console.log("hep");
                 res.json({msg : "Aluetta ei voida poistaa, siihen liittyy mökkejä."});
             }
             

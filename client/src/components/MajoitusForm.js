@@ -30,7 +30,14 @@ export default function AlueForm({ muokataanko, tallennaClick, lisaaClick }) {
       henkilomaara : henkilomaara,
       varustelu : varustelu,
       kuvaus : kuvaus
-    });
+    })
+    setMokkinimi("");
+    setKatuosoite("");
+    setPostinumero("");
+    setHinta("");
+    setKuvaus("");
+    setHenkilomaara("");
+    setVarustelu("");
   };
 
   return (

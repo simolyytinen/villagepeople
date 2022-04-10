@@ -22,6 +22,7 @@ const MajoitusHallinta = () => {
     const [lisaysData, setLisaysData] = useState("");
 
     const [alueId, setAlueId] = useState("");
+    const [virhe, setVirhe] = useState(false);
 
 
     const sarakkeet = [
@@ -71,8 +72,17 @@ const MajoitusHallinta = () => {
                 method: "DELETE"
             })
             .then((res) => {
-                console.log(res)
-                setHae(hae => hae + 1); // laukaistaan mökkien hakeminen useEffect
+                if (res.status === 600) {
+                    setVirhe(true);
+                    console.log("Ei voida poistaa, mökkiin liittyy varauksia.") 
+                    setTimeout(()=>{
+                        setVirhe(false);
+                    }, 5000) 
+                }
+                else {
+                    console.log(res)
+                    setHae(hae => hae + 1); // laukaistaan mökkien hakeminen useEffect
+                }
             })
             .catch(err => console.log(err))
         }
@@ -140,6 +150,9 @@ const MajoitusHallinta = () => {
                     <MajoitusForm muokataanko={muokkaus} tallennaClick={tallennaClick} lisaaClick={lisaaClick} />
                 </Grid>
                 <Grid item xs={12} md={12}>
+                    <Typography variant="h6" align="left" color="red" paragraph sx={{mt: 4}}>
+                    {virhe ? "Mökkiä ei voida poistaa, siihen liittyy varauksia" : ""}
+                    </Typography>
                     <MajoitusTaulukko sarakkeet={sarakkeet} data={mokit} poista={poistaClick} muokkaa={muokkausClick} />
                 </Grid>
             </Grid>

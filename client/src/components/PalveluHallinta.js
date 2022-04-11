@@ -71,7 +71,7 @@ const PalveluHallinta = () => {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(
                     {
-                        alue_id: muokkausData.alue_id,
+                        alue_id: muokkausData.alueid,
                         nimi: muokkausData.nimi,
                         tyyppi: muokkausData.tyyppi,
                         kuvaus: muokkausData.kuvaus,
@@ -82,14 +82,7 @@ const PalveluHallinta = () => {
             })
                 .then((res) => {
                     setHae(hae => hae + 1)
-                    console.log(
-                        "palveluid: " + muokkausData.palvelu_id +
-                        " alueid: " +muokkausData.alue_id +
-                        " nimi: "+muokkausData.nimi +
-                        " tyyppi: "+muokkausData.tyyppi +
-                        " kuvaus: "+muokkausData.kuvaus +
-                        " hinta: "+muokkausData.hinta +
-                        " alv: "+muokkausData.alv);
+                    console.log("palveluid: " + muokkausData.palvelu_id +" alueid: " +muokkausData.alue_id +" nimi: "+muokkausData.nimi +" tyyppi: "+muokkausData.tyyppi +" kuvaus: "+muokkausData.kuvaus + " hinta: "+muokkausData.hinta + " alv: "+muokkausData.alv);
                     setMuokkausData("");
                 })
                 .catch(err => console.log(err))

@@ -14,7 +14,7 @@ module.exports = {
             // console.log("Next")
 
             res.status = 200;
-            res.json( c );
+            res.json(c);
         }
         catch (err) {
             console.log("Error in server")
@@ -53,24 +53,26 @@ module.exports = {
         }
     },
     muokkaaPalvelu: async (req, res) => {
+        let { alue_id, nimi, tyyppi, kuvaus, hinta, alv } = req.body;
+
+        let palveluid = req.params.palveluid;
+        // let alueid = req.body.alueid;
+        // let nimi = req.body.nimi;
+        // let tyyppi = req.body.tyyppi;
+        // let kuvaus = req.body.kuvaus;
+        // let hinta = req.body.hinta;
+        // let alv = req.body.alv;
+
         try {
-            let palveluid = req.params.palveluid;
-            let alueid = req.body.alueid;
-            let nimi = req.body.nimi;
-            let tyyppi = req.body.tyyppi;
-            let kuvaus = req.body.kuvaus;
-            let hinta = req.body.hinta;
-            let alv = req.body.alv;
 
-            let a = await sql.updatePalvelu(alueid, nimi, tyyppi, kuvaus, hinta, alv, palveluid);
-
+            let a = await sql.updatePalvelu(palveluid, req.body);
             res.statusCode = 200;
-            res.json({ status: "OK"});
+            res.json({ status: "OK" });
         }
         catch (err) {
             console.log("Error in server")
             res.statusCode = 400;
-            res.json({msg : err});
+            res.json({ msg: err });
         }
     },
 }

@@ -34,9 +34,9 @@ module.exports = {
         console.log("sql " + sql);
         return executeSQL(sql, palveluid);
     },
-    updatePalvelu: (alueid, nimi, tyyppi, kuvaus, hinta, alv, palveluid) => {
-        let sql = "update palvelu set alue_id= ?, nimi = ?, tyyppi = ?, kuvaus = ?, hinta = ?, alv = ? where palvelu_id = ?";
+    updatePalvelu: (alue_id, nimi, tyyppi, kuvaus, hinta, alv, palveluid) => {
+        let sql = "update palvelu set alue_id = ?, nimi = ?, tyyppi = ?, kuvaus = ?, hinta = ?, alv = ? where palvelu_id = ?";
         console.log("sql " + sql);
-        return executeSQL(sql, [alueid, nimi, tyyppi, kuvaus, hinta, alv, palveluid]);
+        return executeSQL(sql, [alue_id, nimi, tyyppi, kuvaus, hinta, alv, palveluid]);
     },
 }

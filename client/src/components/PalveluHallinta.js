@@ -36,7 +36,7 @@ const PalveluHallinta = () => {
     const [lisaaAlv, setlisaaAlv] = useState("");
 
     const sarakkeet = [
-        /* "ID", */ "Nimi", /* "AlueId", */ "Sijainti", "Tyyppi", "Kuvaus", "Hinta", "Alv", "Poista/Muokkaa"
+        "Nimi", "Sijainti", "Tyyppi", "Kuvaus", "Hinta", "Alv", "Poista/Muokkaa"
     ];
 
      // Toimipisteiden hakeminen tietokannasta droppivalikkoa varten
@@ -65,13 +65,13 @@ const PalveluHallinta = () => {
     useEffect(() => {
         const funktio = () => {
             const api = server + "/api/palvelut/" + muokkausData.palvelu_id;
-            console.log("id " + muokkausData.palvelu_id)
+
             fetch(api, {
                 method: "PUT",
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(
                     {
-                        alue_id: muokkausData.alueId,
+                        alue_id: muokkausData.alue_id,
                         nimi: muokkausData.nimi,
                         tyyppi: muokkausData.tyyppi,
                         kuvaus: muokkausData.kuvaus,
@@ -82,6 +82,14 @@ const PalveluHallinta = () => {
             })
                 .then((res) => {
                     setHae(hae => hae + 1)
+                    console.log(
+                        "palveluid: " + muokkausData.palvelu_id +
+                        " alueid: " +muokkausData.alue_id +
+                        " nimi: "+muokkausData.nimi +
+                        " tyyppi: "+muokkausData.tyyppi +
+                        " kuvaus: "+muokkausData.kuvaus +
+                        " hinta: "+muokkausData.hinta +
+                        " alv: "+muokkausData.alv);
                     setMuokkausData("");
                 })
                 .catch(err => console.log(err))
@@ -89,11 +97,11 @@ const PalveluHallinta = () => {
         if (muokkausData !== "") funktio();
     }, [muokkausData, server])
 
-    const muokkaaPalvelu = (id, nimi, alueId, tyyppi, kuvaus, hinta, alv) => {
+    const muokkaaPalvelu = (id, nimi, alueid, tyyppi, kuvaus, hinta, alv) => {
         setMuokkaus(true);
         setPalveluId(id);
         setNimi(nimi);
-        setAlueId(alueId);
+        setAlueId(alueid);
         setTyyppi(tyyppi);
         setKuvaus(kuvaus);
         setHinta(hinta);
@@ -104,6 +112,7 @@ const PalveluHallinta = () => {
         console.log("Tallenna");
         setMuokkausData(data);
         setMuokkaus(false);
+        setPalveluId("");
         setNimi("");
         setAlueId("");
         setTyyppi("");
@@ -125,7 +134,6 @@ const PalveluHallinta = () => {
                         nimi: lisaaNimi,
                         alue_id: lisaaAlueId,
                         tyyppi: lisaaTyyppi,
-                        // sijainti: lisaaSijainti,
                         kuvaus: lisaaKuvaus,
                         hinta: lisaaHinta,
                         alv: lisaaAlv
@@ -133,7 +141,6 @@ const PalveluHallinta = () => {
             })
                 .then((res) => {
                     setHae(hae => hae + 1)
-                    // setSijainti("");
                     setNimi("");
                     setAlueId("");
                     setTyyppi("");
@@ -144,20 +151,18 @@ const PalveluHallinta = () => {
                 .catch(err => console.log(err))
         }
 
-        if (lisaaNimi !== "" && lisaaAlueId !== "" &&  lisaaTyyppi !== "" /* && lisaaSijainti !== "" */ && lisaaKuvaus !== "" && lisaaHinta !== "" && lisaaAlv !== "") funktio();
-    }, [lisaaAlueId, lisaaNimi, lisaaTyyppi, /* lisaaSijainti, */ lisaaKuvaus, lisaaHinta, lisaaAlv, server])
+        if (lisaaNimi !== "" && lisaaAlueId !== "" && lisaaTyyppi !== "" && lisaaKuvaus !== "" && lisaaHinta !== "" && lisaaAlv !== "") funktio();
+    }, [lisaaAlueId, lisaaNimi, lisaaTyyppi, lisaaKuvaus, lisaaHinta, lisaaAlv, server])
 
     const lisaaClick = () => {
         console.log("Lisää");
         setLisaaNimi(nimi);
         setLisaaAlueId(alueId);
         setlisaaTyyppi(tyyppi);
-        // setlisaaSijainti(sijainti);
         setlisaaKuvaus(kuvaus);
         setlisaaHinta(hinta);
         setlisaaAlv(alv);
 
-        // setSijainti("");
         setNimi("");
         setAlueId("");
         setTyyppi("");

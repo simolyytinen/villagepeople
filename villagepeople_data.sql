@@ -22,10 +22,15 @@ values (12100, "Harri", "Hursten", "Olarinkatu 77", "harski@gmail.com", "0405215
 (95980, "Seija", "Sailas", "Tunturitue 92", "seija.s@hotmail.com", "0502020213");
 
 insert into varaus (asiakas_id, mokki_id, varattu_pvm, vahvistus_pvm, varattu_alkupvm, varattu_loppupvm)
-values (), (), (), (), (), (), (), (), ();
+values (1, 1, "2022-04-11", "2022-04-12", "2022-06-01", "2022-06-14");
 
 insert into palvelu (alue_id, nimi, tyyppi, kuvaus, hinta, alv)
-values (1, ""), (2, ""), (3, ""), (4, ""), (5, ""), (6, ""), (7, ""), (8, "");
+values (1, "Paljun vuokraus", 1, "3h vuokra", 350, 24),
+ (2, "Hiihtokoulu", 1, "1h hiihtokoulua ammattilaisen kanssa", 70, 24),
+  (3, "Rekiajelu", 0, "6 koiran valjakko, kesto n. 2h", 300, 24),
+   (4, "Paljuvuokra", 1, "3h vuokra, sis. vedet ja lämmityspuut", 270, 24),
+    (5, "Lumikenkäily tunturissa", 0, "2h lumikenkäily oppaan kanssa", 250, 24),
+     (6, "Jäärata carting", 1, "1h vuoro jääradalle cartin-autoilla, max. 5 hlö", 600, 24);
 
 insert into lasku (varaus_id, summa, alv)
 values (), (), (), (), ();

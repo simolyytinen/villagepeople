@@ -38,12 +38,3 @@ export default function AlueDropBox({ alueid, setAlueId, data }) {
   );
 }
 
-// {options?.map(option => {
-//   return (
-//     <MenuItem key={option.value} value={option.nimi}>
-//       {/* {option.id ?? option.nimi} */}
-//       {option.id} - {option.nimi}
-//     </MenuItem>
-//   );
-// })}
-

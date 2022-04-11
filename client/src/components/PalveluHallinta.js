@@ -71,7 +71,7 @@ const PalveluHallinta = () => {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(
                     {
-                        alue_id: muokkausData.alueid,
+                        alue_id: muokkausData.alue_id,
                         nimi: muokkausData.nimi,
                         tyyppi: muokkausData.tyyppi,
                         kuvaus: muokkausData.kuvaus,
@@ -90,11 +90,11 @@ const PalveluHallinta = () => {
         if (muokkausData !== "") funktio();
     }, [muokkausData, server])
 
-    const muokkaaPalvelu = (id, nimi, alueid, tyyppi, kuvaus, hinta, alv) => {
+    const muokkaaPalvelu = (id, nimi, alue_id, tyyppi, kuvaus, hinta, alv) => {
         setMuokkaus(true);
         setPalveluId(id);
         setNimi(nimi);
-        setAlueId(alueid);
+        setAlueId(alue_id);
         setTyyppi(tyyppi);
         setKuvaus(kuvaus);
         setHinta(hinta);

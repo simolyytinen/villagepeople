@@ -11,18 +11,6 @@ import TextField from '@material-ui/core/TextField';
 import { DataContext } from "../App";
 
 
-// const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-
-const tieto =
-  [
-    { "id": 1, "data": "eka" },
-    { "id": 2, "data": "toka" },
-    { "id": 3, "data": "kolmas" },
-    { "id": 4, "data": "nelkku" },
-    { "id": 5, "data": "viis" },
-    { "id": 6, "data": "kuusi" },
-  ]
-
 const theme = createTheme();
 
 export default function Palvelut() {
@@ -37,10 +25,9 @@ export default function Palvelut() {
     setHakuehto("");
   }
 
-
-   // Palvelut tietokannasta
+   // Palvelut tietokannasta hakuehdoilla
    useEffect(() => {
-    fetch(server + "/api/palvelut")
+    fetch(server + "/api/palvelut/")
       .then(response => response.json())
       .then((data) => {
         console.log(data);
@@ -50,12 +37,13 @@ export default function Palvelut() {
   }, [hae, server])
 
 
-
   // const handleSubmit = (event) => {
   //   event.preventDefault();
   // };
 
-  
+  const palveluHaku = () =>{
+
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -94,7 +82,7 @@ export default function Palvelut() {
               spacing={2}
               justifyContent="center"
             >
-              <Button variant="contained" /* onClick={hae} */>Hae palvelut</Button>
+              <Button variant="contained" onClick={palveluHaku}>Hae palvelut</Button>
               <Button variant="outlined" onClick={tyhjenna}>Tyhjennä</Button>
             </Stack>
           </Container>

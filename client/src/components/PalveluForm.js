@@ -14,6 +14,7 @@ export default function PalveluForm({
   kuvaus,
   hinta,
   alv,
+  setMuokataanko,
   setAlueId,
   setNimi,
   setTyyppi,
@@ -36,6 +37,16 @@ export default function PalveluForm({
       alv : alv
     }) : lisaaClick(nimi, alueid, tyyppi, kuvaus, hinta, alv);
   };
+
+  const peruuta = () =>{
+    setAlueId("");
+    setNimi("");
+    setTyyppi("");
+    setKuvaus("");
+    setHinta("");
+    setAlv("");
+    setMuokataanko(false);
+  }
   
 
   return (
@@ -98,6 +109,9 @@ export default function PalveluForm({
       </Grid>
       <Button fullWidth type="submit" variant="contained" sx={{ mt: 3, mb: 2 }}>
         {muokataanko ? "Tallenna" : "Lisää"}
+      </Button>
+      <Button fullWidth onClick={()=>{peruuta()}} variant="outlined" sx={{ mb: 2 }}>
+        {muokataanko ? "Peruuta" : "Tyhjennä"}
       </Button>
     </Box>
   );

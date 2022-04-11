@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, { useContext } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -24,15 +24,15 @@ const hallinta = [
   { otsikko: "Alueiden hallinta", reitti: "/alue/hallinta" },
   { otsikko: "Majoituskohteiden hallinta", reitti: "/majoitus/hallinta" },
   { otsikko: "Palveluiden hallinta", reitti: "/palvelut/hallinta" },
-  { otsikko: "Varausten hallinta", reitti: "/varaukset"},
+  { otsikko: "Varausten hallinta", reitti: "/varaukset" },
   { otsikko: "Asiakkaiden hallinta", reitti: "/asiakkaat/hallinta" },
   { otsikko: "Laskujen hallinta", reitti: "/laskut/hallinta" },
-  { otsikko: "Raportointi", reitti: "/raportointi"}
+  { otsikko: "Raportointi", reitti: "/raportointi" }
 ];
 const kayttaja = ["Profiili", "Varaukset", "Kirjaudu ulos"];
 
 const Navbar = () => {
-  const {login, admin} = useContext(DataContext);
+  const { login, admin } = useContext(DataContext);
 
   let navigate = useNavigate();
 
@@ -104,15 +104,15 @@ const Navbar = () => {
                   <Typography textAlign="center">{sivu.otsikko}</Typography>
                 </MenuItem>
               ))}
-              {admin ? 
-              (hallinta.map((sivu) => (
-                <MenuItem
-                  key={sivu.reitti}
-                  onClick={() => handleCloseNavMenu(sivu.reitti)}
-                >
-                  <Typography textAlign="center">{sivu.otsikko}</Typography>
-                </MenuItem>
-              ))) : <></>
+              {admin ?
+                (hallinta.map((sivu) => (
+                  <MenuItem
+                    key={sivu.reitti}
+                    onClick={() => handleCloseNavMenu(sivu.reitti)}
+                  >
+                    <Typography textAlign="center">{sivu.otsikko}</Typography>
+                  </MenuItem>
+                ))) : <></>
               }
             </Menu>
           </Box>
@@ -135,17 +135,17 @@ const Navbar = () => {
               </Button>
             ))}
             {/*Hallintamenun kondtionaalinen renderöinti on tehty itse komponentissa */}
-            <HallintaMenu hallinta={hallinta}/>
+            <HallintaMenu hallinta={hallinta} />
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
             {login ? <Tooltip title="Oma tili">
-            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-              <Avatar alt="Käyttäjä" />
-            </IconButton>
-          </Tooltip> : <Button sx={{ my: 2, color: "white", display: "block" }} onClick={()=>{navigate("/kirjaudu")}}>Kirjaudu</Button> 
-          }
-            
+              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                <Avatar alt="Käyttäjä" />
+              </IconButton>
+            </Tooltip> : <Button sx={{ my: 2, color: "white", display: "block" }} onClick={() => { navigate("/kirjaudu") }}>Kirjaudu</Button>
+            }
+
             <Menu
               sx={{ mt: "45px" }}
               id="menu-appbar"

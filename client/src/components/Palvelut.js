@@ -9,7 +9,17 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import PalveluKortti from './PalveluKortti';
 import TextField from '@material-ui/core/TextField';
 
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+// const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+const tieto =
+  [
+    { "id": 1, "data": "eka" },
+    { "id": 2, "data": "toka" },
+    { "id": 3, "data": "kolmas" },
+    { "id": 4, "data": "nelkku" },
+    { "id": 5, "data": "viis" },
+    { "id": 6, "data": "kuusi" },
+  ]
 
 const theme = createTheme();
 
@@ -73,7 +83,7 @@ export default function Palvelut() {
             </Stack>
           </Container>
         </Box>
-        <PalveluKortti data={cards} />
+        <PalveluKortti data={tieto} />
       </main>
     </ThemeProvider>
   );

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import Stack from '@mui/material/Stack';
@@ -8,6 +8,8 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import PalveluKortti from './PalveluKortti';
 import TextField from '@material-ui/core/TextField';
+import { DataContext } from "../App";
+
 
 // const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
@@ -25,15 +27,29 @@ const theme = createTheme();
 
 export default function Palvelut() {
 
+  const { server } = useContext(DataContext);
+  const [hae, setHae] = useState(0);
+  const [palvelut, setPalvelut] = useState([]);
+
   const [hakuehto, setHakuehto] = useState("");
 
   const tyhjenna = () =>{
     setHakuehto("");
   }
 
-  const hae = () =>{
-    //haetaan hakuehdon mukaiset palvelut
-  }
+
+   // Palvelut tietokannasta
+   useEffect(() => {
+    fetch(server + "/api/palvelut")
+      .then(response => response.json())
+      .then((data) => {
+        console.log(data);
+        setPalvelut(data)
+      })
+      .catch(err => console.log(err));
+  }, [hae, server])
+
+
 
   // const handleSubmit = (event) => {
   //   event.preventDefault();
@@ -78,12 +94,12 @@ export default function Palvelut() {
               spacing={2}
               justifyContent="center"
             >
-              <Button variant="contained" onClick={hae}>Hae palvelut</Button>
+              <Button variant="contained" /* onClick={hae} */>Hae palvelut</Button>
               <Button variant="outlined" onClick={tyhjenna}>Tyhjennä</Button>
             </Stack>
           </Container>
         </Box>
-        <PalveluKortti data={tieto} />
+        <PalveluKortti data={palvelut} />
       </main>
     </ThemeProvider>
   );

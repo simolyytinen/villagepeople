@@ -1,6 +1,5 @@
 import { Box, Button, TextField, Grid } from "@mui/material";
 import AlueDropBox from "./AlueDropBox";
-import MenuItem from '@mui/material/MenuItem';
 import TyyppiDropBox from "./TyyppiDropBox";
 
 

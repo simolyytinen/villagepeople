@@ -24,6 +24,13 @@ module.exports = {
         console.log("sql " + sql);
         return executeSQL(sql, nimi);
     },
+
+    getPalveluKortit: (nimi) => {
+        let sql = "select p.palvelu_id, p.alue_id, a.nimi as sijainti, p.nimi, p.tyyppi, p.kuvaus, p.hinta, p.alv from palvelu p join alue a on a.alue_id = p.alue_id where 1=1 and p.nimi like ? '%' and tyyppi=1";
+        console.log("sql " + sql);
+        return executeSQL(sql, nimi);
+    },
+
     postPalvelu: ({alue_id, nimi, tyyppi, kuvaus, hinta, alv}) =>{
         let sql = "insert into palvelu (alue_id, nimi, tyyppi, kuvaus, hinta, alv) values (?, ?, ?, ?, ?, ?);";
         console.log("sql " + sql);

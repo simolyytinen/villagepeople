@@ -8,6 +8,9 @@ let ctrl = require('../controllers/palveluController');
 router.route('/api/palvelut').
     get(ctrl.haePalvelut);
 
+router.route('/api/palvelut/kortit').
+get(ctrl.haePalveluKortit);
+
 router.route('/api/palvelut').
     post(ctrl.lisaaPalvelu);
 

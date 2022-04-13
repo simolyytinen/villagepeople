@@ -23,6 +23,25 @@ module.exports = {
         }
     },
 
+    haePalveluKortit: async (req, res) => {
+
+        let nimi = req.query.nimi || "";
+
+        try {
+
+            console.log("haetaan palveluja kortteihin");
+            let c = await sql.getPalveluKortit(nimi);
+
+            res.status = 200;
+            res.json(c);
+        }
+        catch (err) {
+            console.log("Error in server")
+            res.status = 400;
+            res.json({ status: "NOT OK", msg: err });
+        }
+    },
+
     lisaaPalvelu: async (req, res) => {
         let { alue_id, nimi, tyyppi, kuvaus, hinta, alv } = req.body;
 

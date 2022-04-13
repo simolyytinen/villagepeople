@@ -27,7 +27,7 @@ export default function Palvelut() {
 
    // Palvelut tietokannasta hakuehdoilla
    useEffect(() => {
-    fetch(server + "/api/palvelut" + "?nimi=" + hakuehto)
+    fetch(server + "/api/palvelut/kortit" + "?nimi=" + hakuehto)
       .then(response => response.json())
       .then((data) => {
         console.log(data);

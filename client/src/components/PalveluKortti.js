@@ -35,7 +35,7 @@ const PalveluKortti = ({ data }) => {
                 <Typography>
                   {a.kuvaus}<br/>
                   Sijainti: {a.sijainti}<br/>
-                  Hinta: {a.hinta * ((a.alv/100)+1)} € {/* tämä täytyy tehdä jossain muualla */}
+                  Hinta: {a.hinta * ((a.alv/100)+1)} € {/* tämä täytyy tehdä jossain muualla? */}
                 </Typography>
 
               </CardContent>

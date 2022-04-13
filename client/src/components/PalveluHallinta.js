@@ -82,7 +82,7 @@ const PalveluHallinta = () => {
             })
                 .then((res) => {
                     setHae(hae => hae + 1)
-                    console.log("palveluid: " + muokkausData.palvelu_id +" alueid: " +muokkausData.alue_id +" nimi: "+muokkausData.nimi +" tyyppi: "+muokkausData.tyyppi +" kuvaus: "+muokkausData.kuvaus + " hinta: "+muokkausData.hinta + " alv: "+muokkausData.alv);
+                    console.log("palveluid:" + muokkausData.palvelu_id +" alueid:" +muokkausData.alue_id +" nimi:"+muokkausData.nimi +" tyyppi:"+muokkausData.tyyppi +" kuvaus:"+muokkausData.kuvaus + " hinta:"+muokkausData.hinta + " alv:"+muokkausData.alv);
                     setMuokkausData("");
                 })
                 .catch(err => console.log(err))
@@ -90,15 +90,15 @@ const PalveluHallinta = () => {
         if (muokkausData !== "") funktio();
     }, [muokkausData, server])
 
-    const muokkaaPalvelu = (palvelu_id, nimi, alue_id, tyyppi, kuvaus, hinta, alv) => {
+    const muokkaaPalvelu = (alue_id, nimi, tyyppi, kuvaus, hinta, alv, palvelu_id) => {
         setMuokkaus(true);
-        setPalveluId(palvelu_id);
-        setNimi(nimi);
         setAlueId(alue_id);
+        setNimi(nimi);
         setTyyppi(tyyppi);
         setKuvaus(kuvaus);
         setHinta(hinta);
         setAlv(alv);
+        setPalveluId(palvelu_id);
     }
 
     const tallennaClick = (data) => {

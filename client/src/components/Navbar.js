@@ -24,7 +24,7 @@ const hallinta = [
   { otsikko: "Alueiden hallinta", reitti: "/alue/hallinta" },
   { otsikko: "Majoituskohteiden hallinta", reitti: "/majoitus/hallinta" },
   { otsikko: "Palveluiden hallinta", reitti: "/palvelut/hallinta" },
-  { otsikko: "Varausten hallinta", reitti: "/varaukset" },
+  { otsikko: "Varausten hallinta", reitti: "/varaukset/hallinta" },
   { otsikko: "Asiakkaiden hallinta", reitti: "/asiakkaat/hallinta" },
   { otsikko: "Laskujen hallinta", reitti: "/laskut/hallinta" },
   { otsikko: "Raportointi", reitti: "/raportointi" }

@@ -18,14 +18,23 @@ export const DataContext = createContext({});
 const App = () => {
 
   const [login, setLogin] = useState(false); // onko käyttäjä kirjaututunut vai ei
+  const [kayttaja, setKayttaja] = useState(""); // Kirjautuneen käyttäjän ID tai joku muu?
   const [admin, setAdmin] = useState(true); // onko käyttäjä admin, autentikoidaan serverin päässä
+  const [majoitus, setMajoitus] = useState(); // tähän tallennetaan varattavan/varattavien kohteen/kohteiden tiedot taulukkoon
+  const [palvelut, setPalvelut] = useState(); // tähän tallennetaan taulukkoon varattavat palvelut
 
   const intialValue = {
     server: "http://127.0.0.1:3004",
     login: login,
     setLogin: setLogin,
+    kayttaja: kayttaja,
+    setKayttaja: setKayttaja,
     admin: admin,
-    setAdmin: setAdmin
+    setAdmin: setAdmin,
+    majoitus: majoitus,
+    setMajoitus : setMajoitus,
+    palvelut: palvelut,
+    setPalvelut: setPalvelut
   };
 
   return (
@@ -34,7 +43,7 @@ const App = () => {
         <Navbar />
 
         <Routes>
-          <Route path="/" element={<Haku />} />
+          <Route path="/" element={<Majoitus />} />
           <Route path="/majoitus" element={<Majoitus />} />
           <Route path="/palvelut" element={<Palvelut />} />
           <Route path="/alue/hallinta" element={<AlueHallinta />} />

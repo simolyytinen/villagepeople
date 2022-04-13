@@ -4,7 +4,7 @@ import Container from '@mui/material/Container';
 import { Button, Box, Grid, TextField } from "@mui/material";
 import { DataContext } from "../App";
 import { useNavigate } from "react-router-dom";
-
+import Dialogi from './Dialogi';
 
 const UusiAsiakas = () => {
     // tuodaan contextista serverin osoite
@@ -18,6 +18,7 @@ const UusiAsiakas = () => {
     const [lahiosoite, setLahiosoite] = useState("");
     const [postinumero, setPostinumero] = useState("");
     const [toimipaikka, setToimipaikka] = useState("");
+    const [openDialog, setOpenDialog] = useState(false);
 
     const navigate = useNavigate();
 
@@ -31,6 +32,7 @@ const UusiAsiakas = () => {
                 body: JSON.stringify(asiakas)
             })
             .then((res) => {
+                setOpenDialog(()=>true)
             })
             .catch(err => console.log(err))
         }
@@ -80,7 +82,7 @@ const UusiAsiakas = () => {
             <Typography variant="h3" align="center" color="text.primary" paragraph sx={{mt: 4}}>
               Uusi asiakas
             </Typography>
-            
+            <Dialogi open={openDialog} setOpen={setOpenDialog} otsikko={"Rekisteröinti onnistui!"} viesti={"Kiitos, kun rekisteröidyit asiakkaaksemme. Mukavia lomahetkiä!"} />
             <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
             <Grid container spacing={4}>
                 <Grid item xs={12} md={6}>

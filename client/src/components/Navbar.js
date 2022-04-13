@@ -14,6 +14,7 @@ import MenuItem from "@mui/material/MenuItem";
 import { useNavigate } from "react-router-dom";
 import HallintaMenu from "./HallintaMenu";
 import { DataContext } from "../App";
+import PersonIcon from '@mui/icons-material/Person';
 
 // reitit ja otsikot voisi tallentaa contextAPI niin olisi yhdessä paikassa
 const sivut = [
@@ -141,9 +142,13 @@ const Navbar = () => {
           <Box sx={{ flexGrow: 0 }}>
             {login ? <Tooltip title="Oma tili">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Käyttäjä" />
+                <PersonIcon fontSize="large" sx={{color: "white"}}/>
               </IconButton>
-            </Tooltip> : <Button sx={{ my: 2, color: "white", display: "block" }} onClick={() => { navigate("/kirjaudu") }}>Kirjaudu</Button>
+            </Tooltip> : 
+            <>
+            <Button sx={{ my: 2, color: "white", display: "inline" }} onClick={() => { navigate("/kirjaudu") }}>Kirjaudu</Button>
+            <Button sx={{ my: 2, color: "white", display: "inline" }} onClick={() => { navigate("/uusiasiakas") }}>Rekisteröidy</Button>
+            </>
             }
 
             <Menu
@@ -164,7 +169,7 @@ const Navbar = () => {
             >
               {kayttaja.map((a) => (
                 <MenuItem key={a} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{a}</Typography>
+                  <Button>{a}</Button>
                 </MenuItem>
               ))}
             </Menu>

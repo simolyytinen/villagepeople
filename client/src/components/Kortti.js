@@ -16,8 +16,8 @@ const Kortti = ({data}) => {
         <Container sx={{ py: 8 }} maxWidth="md">
           {/* End hero unit */}
           <Grid container spacing={4}>
-            {data.map((card) => (
-              <Grid item key={card} xs={12} sm={6} md={4}>
+            {data.map((a, index) => (
+              <Grid item key={a.mokki_id} xs={12} sm={6} md={4}>
                 <Card
                   sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
                 >
@@ -32,11 +32,13 @@ const Kortti = ({data}) => {
                   />
                   <CardContent sx={{ flexGrow: 1 }}>
                     <Typography gutterBottom variant="h5" component="h2">
-                      Heading
+                      {a.mokkinimi}
                     </Typography>
                     <Typography>
-                      This is a media card. You can use this section to describe the
-                      content.
+                      {a.kuvaus}<br/>
+                      Varustelu: {a.varustelu}<br/>
+                      Max.hlo: {a.henkilomaara}<br/>
+                      Hinta: {a.hinta} €
                     </Typography>
                   </CardContent>
                   <CardActions>

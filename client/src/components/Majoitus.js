@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState, useEffect, useContext } from 'react';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import Stack from '@mui/material/Stack';
@@ -8,6 +8,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Kortti from './Kortti';
 import DatePickers from './DatePicker';
+import { DataContext } from "../App";
 
 
 const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
@@ -15,6 +16,29 @@ const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 const theme = createTheme();
 
 export default function Majoitus() {
+
+  const { server } = useContext(DataContext);
+  const [hae, setHae] = useState(0);
+  const [mokit, setMokit] = useState([]);
+
+  const [hakuehto, setHakuehto] = useState("");
+
+  // const tyhjenna = () =>{
+  //   setHakuehto("");
+  // }
+
+  useEffect(()=>{
+    const funktio = () => {
+        let api = server + "/api/mokit/"/*  + alueId */;
+        fetch(api)
+        .then(response => response.json())
+        .then((data) => {
+            console.log(data);
+            setMokit(data)})
+        .catch(err => console.log(err));
+    }
+    /* if (alueId !== "")  */funktio();
+}, [hae, /* alueId, */ server])
 
   return (
     <ThemeProvider theme={theme}>
@@ -59,7 +83,7 @@ export default function Majoitus() {
             </Stack>
           </Container>
         </Box>
-        <Kortti data={cards} />
+        <Kortti data={mokit} />
       </main>
     </ThemeProvider>
   );

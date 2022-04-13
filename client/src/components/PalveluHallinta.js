@@ -90,9 +90,9 @@ const PalveluHallinta = () => {
         if (muokkausData !== "") funktio();
     }, [muokkausData, server])
 
-    const muokkaaPalvelu = (id, nimi, alue_id, tyyppi, kuvaus, hinta, alv) => {
+    const muokkaaPalvelu = (palvelu_id, nimi, alue_id, tyyppi, kuvaus, hinta, alv) => {
         setMuokkaus(true);
-        setPalveluId(id);
+        setPalveluId(palvelu_id);
         setNimi(nimi);
         setAlueId(alue_id);
         setTyyppi(tyyppi);

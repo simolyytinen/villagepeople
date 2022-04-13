@@ -27,23 +27,23 @@ export default function Palvelut() {
 
    // Palvelut tietokannasta hakuehdoilla
    useEffect(() => {
-    fetch(server + "/api/palvelut/")
+    fetch(server + "/api/palvelut" + "?nimi=" + hakuehto)
       .then(response => response.json())
       .then((data) => {
         console.log(data);
         setPalvelut(data)
       })
       .catch(err => console.log(err));
-  }, [hae, server])
+  }, [hae, hakuehto, server])
 
 
   // const handleSubmit = (event) => {
   //   event.preventDefault();
   // };
 
-  const palveluHaku = () =>{
-
-  }
+  // const palveluHaku = (event) =>{
+  //   // setHakuehto(hakuehto);
+  // }
 
   return (
     <ThemeProvider theme={theme}>
@@ -82,7 +82,7 @@ export default function Palvelut() {
               spacing={2}
               justifyContent="center"
             >
-              <Button variant="contained" onClick={palveluHaku}>Hae palvelut</Button>
+              {/* <Button variant="contained" onClick={palveluHaku}>Hae palvelut</Button> */}
               <Button variant="outlined" onClick={tyhjenna}>Tyhjennä</Button>
             </Stack>
           </Container>

@@ -22,4 +22,14 @@ module.exports = {
         return executeSQL(sql, [mokki_id, asiakas_id]);
     },
 
+    deleteVaraus: (varaus_id) => {
+        let sql = "DELETE FROM varaus WHERE varaus_id=?";
+        return executeSQL(sql, [varaus_id]);
+    },
+
+    insertVaraus: (asiakas_id, mokki_id, /* varattu_pvm, vahvistus_pvm, */ varattu_alkupvm, varattu_loppupvm) =>{
+        let sql = "INSERT INTO varaus (asiakas_id, mokki_id, varattu_pvm, vahvistus_pvm, varattu_alkupvm, varattu_loppupvm) values (asiakas_id=?, mokki_id=?, varattu_pvm=CURRENT_TIMESTAMP(), vahvistus_pvm=CURRENT_TIMESTAMP()+INTERVAL 1 DAY, varattu_alkupvm=?, varattu_loppupvm=?)"
+        return executeSQL(sql, [asiakas_id, mokki_id, /* varattu_pvm, vahvistus_pvm, */ varattu_alkupvm, varattu_loppupvm]);
+    },
+
 }

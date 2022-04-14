@@ -22,8 +22,8 @@ export default function TyyppiDropBox({tyyppi, setTyyppi}) {
           label="Tyyppi"
           onChange={handleChange}
         >
-          <MenuItem value={0}>Ei saatavilla</MenuItem>
-          <MenuItem value={1}>Saatavilla</MenuItem>
+          <MenuItem value={0}>0 - Ei saatavilla</MenuItem>
+          <MenuItem value={1}>1 - Saatavilla</MenuItem>
         </Select>
       </FormControl>
     </Box>

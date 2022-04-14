@@ -9,12 +9,14 @@ module.exports = {
         try {
             let asiakas_id;
             let etunimi;
-            let sukunimi; 
+            let sukunimi;
+            let email; 
             req.body.asiakas_id ? asiakas_id = req.body.asiakas_id : asiakas_id = "%";
             req.body.etunimi ? etunimi = req.body.etunimi + "%" : etunimi = "%";
             req.body.sukunimi ? sukunimi = req.body.sukunimi + "%" : sukunimi = "%";
+            req.body.email ? email = req.body.email : email = "%";
 
-            let asiakkaat = await sql.getAsiakkaat(asiakas_id, etunimi, sukunimi);
+            let asiakkaat = await sql.getAsiakkaat(asiakas_id, etunimi, sukunimi, email);
 
             res.statusCode = 200;
             res.json(asiakkaat);

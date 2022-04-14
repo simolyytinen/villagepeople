@@ -7,7 +7,6 @@ import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
@@ -16,26 +15,28 @@ import HallintaMenu from "./HallintaMenu";
 import { DataContext } from "../App";
 import PersonIcon from '@mui/icons-material/Person';
 
-// reitit ja otsikot voisi tallentaa contextAPI niin olisi yhdessä paikassa
-const sivut = [
-  { otsikko: "Majoitus", reitti: "/majoitus" },
-  { otsikko: "Palvelut", reitti: "/palvelut" },
-];
-const hallinta = [
-  { otsikko: "Alueiden hallinta", reitti: "/alue/hallinta" },
-  { otsikko: "Majoituskohteiden hallinta", reitti: "/majoitus/hallinta" },
-  { otsikko: "Palveluiden hallinta", reitti: "/palvelut/hallinta" },
-  { otsikko: "Varausten hallinta", reitti: "/varaukset/hallinta" },
-  { otsikko: "Asiakkaiden hallinta", reitti: "/asiakkaat/hallinta" },
-  { otsikko: "Laskujen hallinta", reitti: "/laskut/hallinta" },
-  { otsikko: "Raportointi", reitti: "/raportointi" }
-];
-const kayttaja = ["Profiili", "Varaukset", "Kirjaudu ulos"];
+
 
 const Navbar = () => {
-  const { login, admin } = useContext(DataContext);
+  const { login, admin, setLogin, setAdmin, setKayttaja, setToken } = useContext(DataContext);
 
   let navigate = useNavigate();
+
+  // reitit ja otsikot voisi tallentaa contextAPI niin olisi yhdessä paikassa
+  const sivut = [
+    { otsikko: "Majoitus", reitti: "/majoitus" },
+    { otsikko: "Palvelut", reitti: "/palvelut" },
+  ];
+  const hallinta = [
+    { otsikko: "Alueiden hallinta", reitti: "/alue/hallinta" },
+    { otsikko: "Majoituskohteiden hallinta", reitti: "/majoitus/hallinta" },
+    { otsikko: "Palveluiden hallinta", reitti: "/palvelut/hallinta" },
+    { otsikko: "Varausten hallinta", reitti: "/varaukset/hallinta" },
+    { otsikko: "Asiakkaiden hallinta", reitti: "/asiakkaat/hallinta" },
+    { otsikko: "Laskujen hallinta", reitti: "/laskut/hallinta" },
+    { otsikko: "Raportointi", reitti: "/raportointi" }
+  ];
+  
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -54,6 +55,19 @@ const Navbar = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  const logout = () => {
+    setLogin(false);
+    setAdmin(false);
+    setToken("");
+    setKayttaja("");
+
+  }
+  const kayttaja = [
+    {id: 1, otsikko: "Profiili", onclick: ()=>{navigate()}}, 
+    {id: 2, otsikko: "Varaukset", onclick: ()=>{navigate()}}, 
+    {id: 3, otsikko: "Kirjaudu ulos", onclick: ()=>{logout()}}
+  ];
 
   return (
     <AppBar position="static">
@@ -113,7 +127,7 @@ const Navbar = () => {
                   >
                     <Typography textAlign="center">{sivu.otsikko}</Typography>
                   </MenuItem>
-                ))) : <></>
+                ))) : <div></div>
               }
             </Menu>
           </Box>
@@ -167,11 +181,16 @@ const Navbar = () => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {kayttaja.map((a) => (
-                <MenuItem key={a} onClick={handleCloseUserMenu}>
-                  <Button>{a}</Button>
+              {admin ? 
+              <MenuItem key={1} onClick={handleCloseUserMenu}>
+                  <Button onClick={()=>{logout()}}>Kirjaudu Ulos</Button>
+              </MenuItem> :
+              (kayttaja.map((a) => (
+                <MenuItem key={a.id} onClick={handleCloseUserMenu}>
+                  <Button onClick={a.onclick}>{a.otsikko}</Button>
                 </MenuItem>
-              ))}
+              )))
+              }
             </Menu>
           </Box>
         </Toolbar>

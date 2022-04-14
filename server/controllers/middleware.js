@@ -39,7 +39,7 @@ module.exports = {
                     let token = jwt.sign({admin: false, user: username, id: asiakas[0].asiakas_id}, "tosi-salainen-avain")
             
                     res.statusCode = 200;
-                    res.json({token: token});
+                    res.json({token: token, id: asiakas[0].asiakas_id});
                     
                 }   
             }

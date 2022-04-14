@@ -8,13 +8,58 @@ import { useNavigate } from "react-router-dom";
 
 const Kirjaudu = () => {
     // tuodaan contextista serverin osoite
-    const { server } = useContext(DataContext);
+    const { server, setToken, setAdmin, setLogin, setKayttaja } = useContext(DataContext);
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const [tunnus, setTunnus] = useState("");
+    const [virhe, setVirhe] = useState(false);
 
     const navigate = useNavigate();
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        setTunnus({
+            username: username,
+            password: password
+        })
+        setUsername("");
+        setPassword("");
+
     }
+
+    useEffect(()=>{
+        const funktio = async () => {
+            const api = server + "/api/authenticate"; 
+            let response = await fetch(api, {
+                method: "POST",
+                headers: { 'Content-Type' : 'application/json'},
+                body: JSON.stringify(tunnus)
+            })
+
+            if (response.status != 200) setVirhe(true);
+            else if (response.status == 200 && tunnus.username === "admin") {
+                let data = await response.json();
+                console.log("admin");
+                setToken(data.token);
+                setAdmin(true);
+                setLogin(true);
+                setTunnus("");
+            }
+            else {
+                let data = await response.json();
+                console.log("peruskäyttäjä");
+                setToken(data.token);
+                setLogin(true);
+                setKayttaja(data.id);
+                setTunnus("");
+                
+            }
+
+        }
+
+        if (tunnus != "") funktio();
+
+    }, [tunnus])
 
     /*
     Tähän logiikka millä tarkistetaan kirjautuminen kannasta
@@ -26,6 +71,9 @@ const Kirjaudu = () => {
             <Typography variant="h3" align="center" color="text.primary" paragraph sx={{mt: 4}}>
               Kirjaudu
             </Typography>
+            <Typography variant="h5" align="left" color="red" paragraph sx={{mt: 2}}>
+                {virhe ? "Tunnus tai salasana virheellinen" : ""}
+            </Typography>
             
             <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
                 <TextField
@@ -33,8 +81,12 @@ const Kirjaudu = () => {
                 required
                 fullWidth
                 id="kayttaja"
-                label="Käyttäjä"
+                label="Sähköposti"
                 name="kayttaja"
+                value={username}
+                onChange={e=>{
+                    setVirhe(false);
+                    setUsername(e.target.value)}}
                 />
                 <TextField
                 margin="normal"
@@ -44,6 +96,10 @@ const Kirjaudu = () => {
                 label="Salasana"
                 type="password"
                 id="password"
+                value={password}
+                onChange={e=>{
+                    setVirhe(false);
+                    setPassword(e.target.value)}}
                 />
                 <Button
                 type="submit"

@@ -87,12 +87,14 @@ app.use(asiakasRoutes);
 const majoitusRoutes = require('./routes/majoitusRoutes')
 app.use(majoitusRoutes);
 
+const varauksetRoutes = require('./routes/varauksetRoutes')
+app.use(varauksetRoutes);
+
 app.use(function(err, req, res, next){
   res.status(err.status || 500);
   res.send({ error: err.message });
 });
-const varauksetRoutes = require('./routes/varauksetRoutes')
-app.use(varauksetRoutes);
+
 
 app.listen(port, hostname, () => {
   console.log(`Server running at http://${hostname}:${port}/`);

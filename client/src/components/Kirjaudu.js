@@ -59,7 +59,7 @@ const Kirjaudu = () => {
 
         if (tunnus != "") funktio();
 
-    }, [tunnus])
+    }, [tunnus, server])
 
     /*
     Tähän logiikka millä tarkistetaan kirjautuminen kannasta

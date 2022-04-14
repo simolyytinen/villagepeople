@@ -10,7 +10,7 @@ import AlueDropBox from "./AlueDropBox";
 
 const MajoitusHallinta = () => {
     // tuodaan contextista serverin osoite
-    const { server } = useContext(DataContext);
+    const { server, token } = useContext(DataContext);
 
     const [mokit, setMokit] = useState([]);
     const [toimipaikat, setToimipaikat] = useState([]);
@@ -29,6 +29,8 @@ const MajoitusHallinta = () => {
     const sarakkeet = [
         "Mökin nimi", "Lähiosoite", "Postinumero", "Kuvaus", "Varustelu", "Henkilömäärä", "Hinta", "Muuta/Poista"
     ];
+
+    const auth = "Bearer " + token;
 
     // Toimipisteiden hakeminen tietokannasta droppivalikkoa varten
     useEffect(()=>{
@@ -63,8 +65,10 @@ const MajoitusHallinta = () => {
     useEffect(()=>{
         const funktio = () => {
             const api = server + "/api/mokit/" + poistaId;
+
             fetch(api, {
-                method: "DELETE"
+                method: "DELETE",
+
             })
             .then((res) => {
                 if (res.status === 600) {
@@ -74,6 +78,7 @@ const MajoitusHallinta = () => {
                         setVirhe(false);
                     }, 5000) 
                 }
+                else if ( res.status === 401) console.log("Käyttöoikeus ei riitä");
                 else {
                     console.log(res)
                     setHae(hae => hae + 1); // laukaistaan mökkien hakeminen useEffect

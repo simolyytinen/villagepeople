@@ -27,9 +27,14 @@ module.exports = {
         return executeSQL(sql, [varaus_id]);
     },
 
-    insertVaraus: (asiakas_id, mokki_id, /* varattu_pvm, vahvistus_pvm, */ varattu_alkupvm, varattu_loppupvm) =>{
-        let sql = "INSERT INTO varaus (asiakas_id, mokki_id, varattu_pvm, vahvistus_pvm, varattu_alkupvm, varattu_loppupvm) values (asiakas_id=?, mokki_id=?, varattu_pvm=CURRENT_TIMESTAMP(), vahvistus_pvm=CURRENT_TIMESTAMP()+INTERVAL 1 DAY, varattu_alkupvm=?, varattu_loppupvm=?)"
-        return executeSQL(sql, [asiakas_id, mokki_id, /* varattu_pvm, vahvistus_pvm, */ varattu_alkupvm, varattu_loppupvm]);
+    insertVaraus: (asiakas_id, mokki_id, /* varattu_pvm, vahvistus_pvm, */varattu_alkupvm, varattu_loppupvm) => {
+        let sql = "INSERT INTO varaus (asiakas_id, mokki_id, varattu_pvm, vahvistus_pvm, varattu_alkupvm, varattu_loppupvm) values (?, ?, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP()+INTERVAL 1 DAY, ?, ?)"
+        return executeSQL(sql, [asiakas_id, mokki_id, /* varattu_pvm, vahvistus_pvm, */varattu_alkupvm, varattu_loppupvm]);
+    },
+
+    updateVaraus: (varattu_alkupvm, varattu_loppupvm, varaus_id) => {
+        let sql = "UPDATE varaus SET varattu_alkupvm=?, varattu_loppupvm=? WHERE varaus_id=?";
+        return executeSQL(sql, [varattu_alkupvm, varattu_loppupvm, varaus_id]);
     },
 
 }

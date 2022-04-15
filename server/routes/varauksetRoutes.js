@@ -14,8 +14,8 @@ router.route('/api/varaukset/:varaus_id').
 router.route('/api/varaukset').
     post(ctrl.lisaaVaraus);
 
-// router.route('/api/varaukset').
-//     put(ctrl.muokkaaVaraus);
+router.route('/api/varaukset').
+    put(ctrl.muokkaaVaraus);
 
 // Julkaistaan ao. funktiot tämän js-filun ulkopuolelle
 module.exports = router;

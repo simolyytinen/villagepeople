@@ -7,6 +7,7 @@ import MajoitusForm from "./MajoitusForm";
 import { DataContext } from "../App";
 import AlueDropBox from "./AlueDropBox";
 import VarausTaulukko from "./VarausTaulukko";
+import VarausForm from "./VarausForm";
 
 
 const VarausHallinta = () => {
@@ -69,6 +70,14 @@ const VarausHallinta = () => {
 
     }
 
+    const tallennaClick = () => {
+
+    }
+
+    const lisaaClick = () => {
+
+    }
+
     return (
         <Container maxWidth="xl">
             <Typography variant="h3" align="center" color="text.primary" paragraph sx={{ mt: 4 }}>
@@ -81,9 +90,9 @@ const VarausHallinta = () => {
             <Grid container spacing={4}>
                 <Grid item xs={12} md={12}>
                     <Typography variant="h4" align="left" color="text.primary" paragraph sx={{ mt: 4 }}>
-                        {/* {muokkaus ? "Muokkaa mökkiä" : "Lisää uusi mökki"} */}
+                        {/* {muokkaus ? "Muokkaa varausta" : "Lisää varaus"} */}
                     </Typography>
-                    {/* <MajoitusForm muokataanko={muokkaus} setMuokataanko={setMuokkaus} muokattavaMokki={muokattavaMokki} tallennaClick={tallennaClick} lisaaClick={lisaaClick} /> */}
+                    <VarausForm muokataanko={muokkaus} setMuokataanko={setMuokkaus} muokattavaMokki={muokattavaVaraus} tallennaClick={tallennaClick} lisaaClick={lisaaClick} />
                 </Grid>
                 <Grid item xs={12} md={12}>
                     <Typography variant="h6" align="left" color="red" paragraph sx={{ mt: 4 }}>

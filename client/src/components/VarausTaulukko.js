@@ -30,7 +30,7 @@ export default function VarausTaulukko({ sarakkeet, data, poista, muokkaa }) {
                 >
                   <TableCell align="center">{row.varaus_id}</TableCell>
                   <TableCell align="center">{row.etunimi} {row.sukunimi}</TableCell>
-                  <TableCell align="center">{row.mokki_id} - {row.mokkinimi}</TableCell>
+                  <TableCell align="center">{row.mokki_id} / {row.mokkinimi}</TableCell>
                   <TableCell align="center">{row.sijainti}</TableCell>
                   <TableCell align="center">{moment(row.varattu_pvm).format("DD.MM.YYYY HH:mm:ss")}</TableCell>
                   <TableCell align="center">{moment(row.vahvistus_pvm).format("DD.MM.YYYY HH:mm:ss")}</TableCell>

@@ -22,6 +22,13 @@ module.exports = {
         return executeSQL(sql, [mokki_id, asiakas_id]);
     },
 
+    getKaikkiVaraukset: () => {
+        let sql = "SELECT varaus_id, v.asiakas_id, v.mokki_id, m.mokkinimi, varattu_pvm, vahvistus_pvm, varattu_alkupvm, varattu_loppupvm, a.etunimi, a.sukunimi, al.nimi as sijainti FROM varaus v ";
+        sql = sql + "JOIN asiakas a ON v.asiakas_id = a.asiakas_id ";
+        sql = sql + "JOIN mokki m on v.mokki_id = m.mokki_id JOIN alue al on m.alue_id = al.alue_id";
+        return executeSQL(sql, []);
+    },
+
     deleteVaraus: (varaus_id) => {
         let sql = "DELETE FROM varaus WHERE varaus_id=?";
         return executeSQL(sql, [varaus_id]);

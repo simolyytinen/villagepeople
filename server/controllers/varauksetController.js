@@ -6,10 +6,10 @@ module.exports = {
 
         let asiakas_id;
 
-        if (req.body.asiakas_id == ""){
+        if (req.params.asiakas_id == "") {
             asiakas_id = '%';
-        }else{
-            asiakas_id = req.body.asiakas_id;
+        } else {
+            asiakas_id = req.params.asiakas_id;
         }
 
         try {
@@ -17,13 +17,31 @@ module.exports = {
             console.log("haetaan varaukset asiakaalle: " + asiakas_id);
             let c = await varausSql.getVaraukset('%', asiakas_id);
 
-            if (c.length == 0){
+            if (c.length == 0) {
                 res.statusCode = 400;
-                res.json({msg: "Ei varauksia", asiakas_id});
-            }else{
+                res.json({ msg: "Ei varauksia", asiakas_id });
+            } else {
                 res.status = 200;
                 res.json(c);
             }
+        }
+        catch (err) {
+            console.log("Error in server")
+            res.status = 400;
+            res.json({ status: "NOT OK", msg: err });
+        }
+    },
+
+    haeKaikkiVaraukset: async (req, res) => {
+
+        try {
+
+            console.log("haetaan kaikki varaukset");
+            let c = await varausSql.getKaikkiVaraukset();
+
+            res.status = 200;
+            res.json(c);
+
         }
         catch (err) {
             console.log("Error in server")

@@ -11,7 +11,7 @@ import PalveluHallinta from "./components/PalveluHallinta.js";
 import AsiakasHallinta from "./components/AsiakasHallinta.js";
 import Kirjaudu from "./components/Kirjaudu.js";
 import UusiAsiakas from "./components/UusiAsiakas.js";
-import VarauksetHallinta from "./components/VarauksetHallinta.js";
+import VarausHallinta from "./components/VarausHallinta.js";
 
 export const DataContext = createContext({});
 
@@ -19,7 +19,7 @@ const App = () => {
 
   const [login, setLogin] = useState(false); // onko käyttäjä kirjaututunut vai ei
   const [kayttaja, setKayttaja] = useState(""); // Kirjautuneen käyttäjän ID tai joku muu?
-  const [admin, setAdmin] = useState(false); // onko käyttäjä admin, autentikoidaan serverin päässä
+  const [admin, setAdmin] = useState(true); // onko käyttäjä admin, autentikoidaan serverin päässä
   const [majoitus, setMajoitus] = useState(); // tähän tallennetaan varattavan/varattavien kohteen/kohteiden tiedot taulukkoon
   const [palvelut, setPalvelut] = useState(); // tähän tallennetaan taulukkoon varattavat palvelut
   const [token, setToken] = useState("");
@@ -53,7 +53,7 @@ const App = () => {
           <Route path="/majoitus/hallinta" element={<MajoitusHallinta />} />
           <Route path="/palvelut/hallinta" element={<PalveluHallinta />} />
           <Route path="/asiakkaat/hallinta" element={<AsiakasHallinta />} />
-          <Route path="/varaukset/hallinta" element={<VarauksetHallinta />} />
+          <Route path="/varaukset/hallinta" element={<VarausHallinta />} />
           <Route path="/kirjaudu" element={<Kirjaudu />} />
           <Route path="/uusiasiakas" element={<UusiAsiakas />} />
         </Routes>

@@ -5,7 +5,10 @@ var router = express.Router();
 let ctrl = require('../controllers/varauksetController');
 
 
-router.route('/api/varaukset/:asiakas_id').
+// router.route('/api/varaukset/:asiakas_id').
+//     get(ctrl.haeVaraukset);
+
+router.route('/api/varaukset').
     get(ctrl.haeVaraukset);
 
 router.route('/api/varaukset/:varaus_id').

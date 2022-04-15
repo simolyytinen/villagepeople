@@ -4,15 +4,26 @@ module.exports = {
 
     haeVaraukset: async (req, res) => {
 
-        let asiakas_id = req.params.asiakas_id;
+        let asiakas_id;
+
+        if (req.body.asiakas_id == ""){
+            asiakas_id = '%';
+        }else{
+            asiakas_id = req.body.asiakas_id;
+        }
 
         try {
 
-            console.log("haetaan asiakkaan varaukset");
+            console.log("haetaan varaukset asiakaalle: " + asiakas_id);
             let c = await varausSql.getVaraukset('%', asiakas_id);
 
-            res.status = 200;
-            res.json(c);
+            if (c.length == 0){
+                res.statusCode = 400;
+                res.json({msg: "Ei varauksia", asiakas_id});
+            }else{
+                res.status = 200;
+                res.json(c);
+            }
         }
         catch (err) {
             console.log("Error in server")

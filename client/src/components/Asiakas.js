@@ -18,6 +18,8 @@ const Asiakas = () => {
         "Varaus ID", "Asiakas", "Mökki ID/Nimi", "Sijainti", "Varattu", "Vahvistettu", "Varaus alkaa", "Varaus loppuu", "Poista/Muokkaa"
     ];
 
+    //haetaan kannasta ko. käyttäjän ID:llä kaikki varaukset ja mapataan taulukkoon
+
     return (
         <TableContainer style={{ marginTop: 32 }} component={Paper}>
             {/* ehdollinen renderöinti taulukolle, jos palvelut sisältää jotain*/}

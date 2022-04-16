@@ -12,16 +12,48 @@ import Dialogi from "./Dialogi";
 
 const PalveluKortti = ({ data }) => {
 
-  const {login, setLogin} = useContext(DataContext);
-  const {palvelut, setPalvelut} = useContext(DataContext);
+  const { login, setLogin } = useContext(DataContext);
+  const { palvelut, setPalvelut } = useContext(DataContext);
+  const { kayttaja, setkayttaja } = useContext(DataContext);
   const [openDialog, setOpenDialog] = useState(false);
 
-  const varaa = (e) =>{
+  //Varauksen lisääminen kantaan varauksen_palvelut tauluun
+  // useEffect(() => {
+  //   const funktio = () => {
+  //     const api = server + "/api/XXXXXXXXXXXXXXX";
+
+  //     fetch(api, {
+  //       method: "POST",
+  //       headers: { 'Content-Type': 'application/json' },
+  //       body: JSON.stringify(
+  //         {
+  //           varaus_id: varaus_id, //tää tulee mökkivarauksesta
+  //           palvelu_id: palvelu_id,
+  //           lkm : lkm, // aina yksi?
+  //         })
+  //     })
+  //       .then((res) => {
+  //         // setHae(hae => hae + 1)
+  //         // setNimi("");
+  //         // setAlueId("");
+          
+  //       })
+  //       .catch(err => console.log(err))
+  //   }
+
+  //   if () funktio();
+  // }, [server])
+
+  const varaa = (e) => {
+    //tallennus kantaan ko. asiakkaan ID:llä
     setPalvelut(e);
+    // console.log(palvelut.a.nimi);
     console.log(palvelut);
-    setOpenDialog(()=>true)
+    setOpenDialog(() => true)
   }
 
+
+  //Jostain syystä ensimmäinen varaus ei toimi, kun sivulle tullaan
   return (
     <Container sx={{ py: 8 }} maxWidth="md">
       {/* End hero unit */}
@@ -42,27 +74,25 @@ const PalveluKortti = ({ data }) => {
               />
               <CardContent sx={{ flexGrow: 1 }}>
                 <Typography gutterBottom variant="h5" component="h2">
-                  {a.nimi}
+                  {a.nimi} - {a.sijainti}
                 </Typography>
                 <Typography>
                   {a.kuvaus}<br/>
-                  Sijainti: {a.sijainti}<br/>
                   Hinta: {a.hintayhteensa} €
                 </Typography>
-
               </CardContent>
               <CardActions>
                 {login ?
-                <Button size="small" onClick={(e)=>{varaa({a})}}>Varaa</Button>
-                : null }
+                  <Button size="small" onClick={(e) => { varaa({ a }) }}>Varaa</Button>
+                  : null}
               </CardActions>
             </Card>
           </Grid>
         ))}
       </Grid>
-      <Dialogi open={openDialog} setOpen={setOpenDialog} otsikko={"Varaus onnistui"} viesti={"Tähän palvelun tiedot?"} reitti={"/palvelut"} />
+      <Dialogi open={openDialog} setOpen={setOpenDialog} otsikko={"Varaus onnistui!"} viesti={"Kiitos varauksesta!"} reitti={"/palvelut"} />
     </Container>
-    
+
   )
 }
 

@@ -10,9 +10,6 @@ import Kortti from './Kortti';
 import DatePickers from './DatePicker';
 import { DataContext } from "../App";
 
-
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-
 const theme = createTheme();
 
 export default function Majoitus() {
@@ -22,6 +19,8 @@ export default function Majoitus() {
   const [mokit, setMokit] = useState([]);
 
   const [hakuehto, setHakuehto] = useState("");
+  const [mokkiAlku, setMokkiAlku] = useState("");
+  const [mokkiLoppu, setMokkiLoppu] = useState("");
 
   // const tyhjenna = () =>{
   //   setHakuehto("");
@@ -70,7 +69,8 @@ export default function Majoitus() {
               spacing={2}
               justifyContent="center"
             >
-              <DatePickers />
+              {/* propsit datepickerille varauksen ajoista */}
+              <DatePickers mokkiAlku={mokkiAlku} mokkiLoppu={mokkiLoppu} setMokkiAlku={setMokkiAlku} setMokkiLoppu={setMokkiLoppu}/>
             </Stack>
             <Stack
               sx={{ pt: 4 }}

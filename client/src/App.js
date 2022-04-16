@@ -21,8 +21,8 @@ const App = () => {
   const [login, setLogin] = useState(false); // onko käyttäjä kirjaututunut vai ei
   const [kayttaja, setKayttaja] = useState(""); // Kirjautuneen käyttäjän ID tai joku muu?
   const [admin, setAdmin] = useState(false); // onko käyttäjä admin, autentikoidaan serverin päässä
-  const [majoitus, setMajoitus] = useState(); // tähän tallennetaan varattavan/varattavien kohteen/kohteiden tiedot taulukkoon
-  const [palvelut, setPalvelut] = useState(); // tähän tallennetaan taulukkoon varattavat palvelut
+  const [majoitus, setMajoitus] = useState(""); // tähän tallennetaan varattavan/varattavien kohteen/kohteiden tiedot taulukkoon
+  const [palvelut, setPalvelut] = useState(""); // tähän tallennetaan taulukkoon varattavat palvelut
   const [token, setToken] = useState("");
 
   const intialValue = {

@@ -65,7 +65,7 @@ const Navbar = () => {
   }
   const kayttaja = [
     {id: 1, otsikko: "Profiili", onclick: ()=>{navigate()}}, 
-    {id: 2, otsikko: "Varaukset", onclick: ()=>{navigate()}}, 
+    {id: 2, otsikko: "Varaukset", onclick: ()=>{navigate("/varaukset/asiakas")}}, 
     {id: 3, otsikko: "Kirjaudu ulos", onclick: ()=>{logout()}}
   ];
 

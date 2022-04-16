@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -7,8 +7,20 @@ import CardMedia from '@mui/material/CardMedia';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import { DataContext } from "../App";
+import Dialogi from "./Dialogi";
 
 const PalveluKortti = ({ data }) => {
+
+  const {login, setLogin} = useContext(DataContext);
+  const {palvelut, setPalvelut} = useContext(DataContext);
+  const [openDialog, setOpenDialog] = useState(false);
+
+  const varaa = (e) =>{
+    setPalvelut(e);
+    console.log(palvelut);
+    setOpenDialog(()=>true)
+  }
 
   return (
     <Container sx={{ py: 8 }} maxWidth="md">
@@ -35,18 +47,22 @@ const PalveluKortti = ({ data }) => {
                 <Typography>
                   {a.kuvaus}<br/>
                   Sijainti: {a.sijainti}<br/>
-                  Hinta: {a.hinta * ((a.alv/100)+1)} € {/* tämä täytyy tehdä jossain muualla? */}
+                  Hinta: {a.hintayhteensa} €
                 </Typography>
 
               </CardContent>
               <CardActions>
-                <Button size="small">Varaa</Button>
+                {login ?
+                <Button size="small" onClick={(e)=>{varaa({a})}}>Varaa</Button>
+                : null }
               </CardActions>
             </Card>
           </Grid>
         ))}
       </Grid>
+      <Dialogi open={openDialog} setOpen={setOpenDialog} otsikko={"Varaus onnistui"} viesti={"Tähän palvelun tiedot?"} reitti={"/palvelut"} />
     </Container>
+    
   )
 }
 

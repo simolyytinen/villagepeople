@@ -26,7 +26,7 @@ module.exports = {
     },
 
     getPalveluKortit: (nimi) => {
-        let sql = "select p.palvelu_id, p.alue_id, a.nimi as sijainti, p.nimi, p.tyyppi, p.kuvaus, p.hinta, p.alv from palvelu p join alue a on a.alue_id = p.alue_id where 1=1 and p.nimi like ? '%' and tyyppi=1";
+        let sql = "select p.palvelu_id, p.alue_id, a.nimi as sijainti, p.nimi, p.tyyppi, p.kuvaus, p.hinta, p.alv, round((hinta*(alv/100+1)), 2) as hintayhteensa from palvelu p join alue a on a.alue_id = p.alue_id where 1=1 and p.nimi like ? '%' and tyyppi=1";
         console.log("sql " + sql);
         return executeSQL(sql, nimi);
     },

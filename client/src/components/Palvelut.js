@@ -82,8 +82,9 @@ export default function Palvelut() {
               spacing={2}
               justifyContent="center"
             >
-              {/* <Button variant="contained" onClick={palveluHaku}>Hae palvelut</Button> */}
+              {hakuehto ?
               <Button variant="outlined" onClick={tyhjenna}>Tyhjennä</Button>
+              : null}
             </Stack>
           </Container>
         </Box>

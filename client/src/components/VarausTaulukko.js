@@ -40,7 +40,7 @@ export default function VarausTaulukko({ sarakkeet, data, poista, muokkaa }) {
                       <IconButton onClick={()=>{poista(row.varaus_id)}}>
                         <Delete />
                       </IconButton>
-                      <IconButton onClick={()=>{muokkaa(row)}}>
+                      <IconButton onClick={()=>{muokkaa(row.varattu_alkupvm, row.varattu_loppupvm)}}>
                         <Edit />
                       </IconButton>
                   </TableCell>

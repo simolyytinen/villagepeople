@@ -62,8 +62,8 @@ const VarausHallinta = () => {
 
     // Muokkaaminen
     const muokkausClick = (varaus) => {
-        // setMuokattavaVaraus(varaus)
-        // setMuokkaus(true);
+        setMuokattavaVaraus(varaus)
+        setMuokkaus(true);
     }
 
     const poistaClick = (id) => {
@@ -90,9 +90,8 @@ const VarausHallinta = () => {
             <Grid container spacing={4}>
                 <Grid item xs={12} md={12}>
                     <Typography variant="h4" align="left" color="text.primary" paragraph sx={{ mt: 4 }}>
-                        {/* {muokkaus ? "Muokkaa varausta" : "Lisää varaus"} */}
                     </Typography>
-                    <VarausForm muokataanko={muokkaus} setMuokataanko={setMuokkaus} muokattavaMokki={muokattavaVaraus} tallennaClick={tallennaClick} lisaaClick={lisaaClick} />
+                    <VarausForm muokataanko={muokkaus} setMuokataanko={setMuokkaus} muokattavaVaraus={muokattavaVaraus} tallennaClick={tallennaClick} lisaaClick={lisaaClick} />
                 </Grid>
                 <Grid item xs={12} md={12}>
                     <Typography variant="h6" align="left" color="red" paragraph sx={{ mt: 4 }}>

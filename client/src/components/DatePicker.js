@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function DatePickers() {
+export default function DatePickers(alkuPvm, loppuPvm, setAlkuPvm, setLoppuPvm) {
   const classes = useStyles();
 
   return (
@@ -23,7 +23,8 @@ export default function DatePickers() {
         id="dateArrival"
         label="Saapuminen"
         type="date"
-        // defaultValue= {new Date().getDate()+"-"+(new Date().getMonth()+1)+"-"+new Date().getFullYear()}
+        // value={alkuPvm ? alkuPvm : ""}
+        // onChange={setAlkuPvm}
         className={classes.textField}
         InputLabelProps={{
           shrink: true,
@@ -33,7 +34,8 @@ export default function DatePickers() {
         id="dateLeave"
         label="Lähtö"
         type="date"
-        // defaultValue= ""
+        // value={loppuPvm ? loppuPvm : ""}
+        // onChange={setLoppuPvm}
         className={classes.textField}
         InputLabelProps={{
           shrink: true,

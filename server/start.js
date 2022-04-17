@@ -90,6 +90,9 @@ app.use(majoitusRoutes);
 const varauksetRoutes = require('./routes/varauksetRoutes')
 app.use(varauksetRoutes);
 
+const varauksenPalvelutRoutes = require('./routes/varauksenPalvelutRoutes')
+app.use(varauksenPalvelutRoutes);
+
 app.use(function(err, req, res, next){
   res.status(err.status || 500);
   res.send({ error: err.message });

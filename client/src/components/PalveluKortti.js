@@ -17,6 +17,14 @@ const PalveluKortti = ({ data }) => {
   const { kayttaja, setkayttaja } = useContext(DataContext);
   const [openDialog, setOpenDialog] = useState(false);
 
+
+
+  // ********** PALVELUVARAUKSEN VIEMINEN KANTAAN **********
+  //VARAUS_ID tulee käyttäjän tekemästä mökkivarauksesta, tehdään haku kantaan käyttäjä ID:llä?
+  //PALVELU_ID tulee kortin tiedoista
+  //LKM, onko tämä palvelun lukumäärä vai henkilöiden? Tähän droppivalikko?
+
+
   //Varauksen lisääminen kantaan varauksen_palvelut tauluun
   // useEffect(() => {
   //   const funktio = () => {

@@ -13,22 +13,25 @@ import Dialogi from "./Dialogi";
 
 const Kortti = ({data}) => {
 
-  const {server} = useContext(DataContext);
-  const { login, setLogin } = useContext(DataContext);
-  const { majoitus, setMajoitus } = useContext(DataContext);
-  const { kayttaja, setkayttaja } = useContext(DataContext);
+  const {server, login, setLogin, majoitus, setMajoitus, kayttaja, setKayttaja} = useContext(DataContext);
   const [openDialog, setOpenDialog] = useState(false);
 
-  const [hae, setHae] = useState(0);
+  // const [hae, setHae] = useState(0);
   const [asiakas_id, setAsiakas_id] = useState("");
   const [mokki_id, setMokki_id] = useState("");
   const [varattu_alkupvm, setVarattu_alkupvm] = useState("");
   const [varattu_loppupvm, setVarattu_loppupvm] = useState("");
 
+  
+  // ********** VARAUKSEN VIEMINEN KANTAAN**********
+  //majoituskohteet mapataan kortteihin objektiin a. Varausnappi kutsuu metodia "varaa", joka asettaa context muuttujaan "majoitus" objektin a tiedot. UseEffect laukeaa, kun majoitus muuttuu.
+  //varattu ajankohta täytyisi vielä muuttaa siten, että arvot tulee datepickeristä..
+
+
   // Varauksen lisääminen kantaan varaus-tauluun
-  //toimii kovakoodatuilla arvoilla, hieman vielä säätämistä...
   useEffect(() => {
     const funktio = () => {
+      console.log("useEffect varaus käyttäjälle " + kayttaja)
       const api = server + "/api/varaukset";
 
       fetch(api, {
@@ -36,8 +39,8 @@ const Kortti = ({data}) => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(
           {
-            asiakas_id: 1, //tähän kirjautuneen asiakkaan ID kayttaja.asiakas_id tms....
-            mokki_id: 1, //majoitus.a.mokki_id,
+            asiakas_id: kayttaja, //kirjautuneen käyttäjän ID contextista
+            mokki_id: majoitus.a.mokki_id, //mökin ID contextista
            /*  varattu_pvm : varattu_pvm, //tulee SQL-lauseessa
             vahvistus_pvm : vahvistus_pvm, //tulee SQL-lauseessa */
             varattu_alkupvm : "2022-01-25 14:00:00", //varattu_alkupvm datetimepickeristä
@@ -45,24 +48,24 @@ const Kortti = ({data}) => {
           })
       })
         .then((res) => {
-          setHae(hae => hae + 1)
+          // setHae(hae => hae + 1)
+          console.log("mokki_id " + majoitus.a.mokki_id)
           setAsiakas_id("");
           setMokki_id("");
           setVarattu_alkupvm("");
           setVarattu_loppupvm("");
+          setMajoitus("");
           
         })
         .catch(err => console.log(err))
     }
 
-    funktio();
-  }, [server, majoitus])
+      if (majoitus != "")
+     funktio();
+  }, [majoitus, server])
 
   const varaa = (e) => {
-    //tallennus kantaan ko. asiakkaan ID:llä
     setMajoitus(e);
-    // console.log(majoitus.a.nimi);
-    console.log(majoitus);
     setOpenDialog(() => true)
   }
 

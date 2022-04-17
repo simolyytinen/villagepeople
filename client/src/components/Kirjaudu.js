@@ -22,7 +22,6 @@ const Kirjaudu = () => {
             username: username,
             password: password
         })
-        // setKayttaja() //määritetään käyttäjän ID?
         setUsername("");
         setPassword("");
 

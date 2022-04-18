@@ -21,7 +21,7 @@ const Asiakas = () => {
         "Varaus ID", "Asiakas", "Mökki ID", "Mökin nimi", "Sijainti", "Varattu", "Vahvistettu", "Varaus alkaa", "Varaus loppuu", "Poista/Muokkaa"
     ];
 
-    //Varauksien haku kannasta
+    //Varauksien haku kannasta kirjautuneelle käyttäjälle
     useEffect(() => {
         console.log("fetch varaukset " + kayttaja)
         fetch(server + "/api/varaukset/" + kayttaja)
@@ -33,11 +33,10 @@ const Asiakas = () => {
             .catch(err => console.log(err));
     }, [server])
 
-    //haetaan kannasta ko. käyttäjän ID:llä majoitusvaraukset ja palveluvaraukset
 
     return (
         <TableContainer style={{ marginTop: 32 }} component={Paper}>
-            
+
             {/* EHDOLLINEN RENDERÖINTI TAULUKOLLE, RIIPPUEN ONKO VARAUKSIA VAI EI */}
 
             {varaukset ?
@@ -52,29 +51,29 @@ const Asiakas = () => {
                     </TableHead>
                     <TableBody>
                         {varaukset.map((row) => (
-                        <TableRow
-                            key={row.varaus_id}
-                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                        >
-                            <TableCell align="center">{row.varaus_id}</TableCell>
-                            <TableCell align="center">{row.etunimi} {row.sukunimi}</TableCell>
-                            <TableCell align="center">{row.mokki_id}</TableCell>
-                            <TableCell align="center">{row.mokkinimi}</TableCell>
-                            <TableCell align="center">{row.sijainti}</TableCell>
-                            <TableCell align="center">{moment(row.varattu_pvm).format("DD.MM.YYYY HH:mm:ss")}</TableCell>
-                            <TableCell align="center">{moment(row.vahvistus_pvm).format("DD.MM.YYYY HH:mm:ss")}</TableCell>
-                            <TableCell align="center">{moment(row.varattu_alkupvm).format("DD.MM.YYYY HH:mm:ss")}</TableCell>
-                            <TableCell align="center">{moment(row.varattu_loppupvm).format("DD.MM.YYYY HH:mm:ss")}</TableCell>
-                            <TableCell align="center">
-                                <IconButton /* onClick={()=>{poista(row.varaus_id)}} */>
-                                    <Delete />
-                                </IconButton>
-                                <IconButton /* onClick={()=>{muokkaa(row.varattu_alkupvm, row.varattu_loppupvm)}} */>
-                                    <Edit />
-                                </IconButton>
-                            </TableCell>
-                        </TableRow>
-))}
+                            <TableRow
+                                key={row.varaus_id}
+                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                            >
+                                <TableCell align="center">{row.varaus_id}</TableCell>
+                                <TableCell align="center">{row.etunimi} {row.sukunimi}</TableCell>
+                                <TableCell align="center">{row.mokki_id}</TableCell>
+                                <TableCell align="center">{row.mokkinimi}</TableCell>
+                                <TableCell align="center">{row.sijainti}</TableCell>
+                                <TableCell align="center">{moment(row.varattu_pvm).format("DD.MM.YYYY HH:mm:ss")}</TableCell>
+                                <TableCell align="center">{moment(row.vahvistus_pvm).format("DD.MM.YYYY HH:mm:ss")}</TableCell>
+                                <TableCell align="center">{moment(row.varattu_alkupvm).format("DD.MM.YYYY HH:mm:ss")}</TableCell>
+                                <TableCell align="center">{moment(row.varattu_loppupvm).format("DD.MM.YYYY HH:mm:ss")}</TableCell>
+                                <TableCell align="center">
+                                    <IconButton /* onClick={()=>{poista(row.varaus_id)}} */>
+                                        <Delete />
+                                    </IconButton>
+                                    <IconButton /* onClick={()=>{muokkaa(row.varattu_alkupvm, row.varattu_loppupvm)}} */>
+                                        <Edit />
+                                    </IconButton>
+                                </TableCell>
+                            </TableRow>
+                        ))}
                     </TableBody>
                 </Table>
 

@@ -35,7 +35,8 @@ const VarausHallinta = () => {
 
     const auth = "Bearer " + token;
 
-    // Toimipisteiden hakeminen tietokannasta droppivalikkoa varten
+    // Toimipisteiden hakeminen tietokannasta droppivalikkoa varten. 
+    // *****Hakua ei vielä muokattu toimimaan tämä kanssa*****
     useEffect(() => {
         fetch(server + "/api/toimipisteet")
             .then(response => response.json())
@@ -83,10 +84,10 @@ const VarausHallinta = () => {
             <Typography variant="h3" align="center" color="text.primary" paragraph sx={{ mt: 4 }}>
                 Varausten hallinta
             </Typography>
-            {/* <Typography variant="h4" align="left" color="text.primary" paragraph sx={{mt: 4}}>
+            <Typography variant="h4" align="left" color="text.primary" paragraph sx={{mt: 4}}>
                 Valitse alue
-            </Typography> */}
-            {/* <AlueDropBox alueid={alueId} setAlueId={setAlueId} data={toimipaikat}/> */}
+            </Typography>
+            <AlueDropBox alueid={alueId} setAlueId={setAlueId} data={toimipaikat}/>
             <Grid container spacing={4}>
                 <Grid item xs={12} md={12}>
                     <Typography variant="h4" align="left" color="text.primary" paragraph sx={{ mt: 4 }}>

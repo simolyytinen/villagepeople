@@ -43,8 +43,8 @@ const Kortti = ({data}) => {
             mokki_id: majoitus.a.mokki_id, //mökin ID contextista
            /*  varattu_pvm : varattu_pvm, //tulee SQL-lauseessa
             vahvistus_pvm : vahvistus_pvm, //tulee SQL-lauseessa */
-            varattu_alkupvm : "2022-01-25 14:00:00", //varattu_alkupvm datetimepickeristä
-            varattu_loppupvm : "2022-01-28 10:00:00" //varattu_loppupvm datetimepickeristä
+            varattu_alkupvm : "2022-01-25 14:00:00", //pitäs saada tuleen datetimepickeristä
+            varattu_loppupvm : "2022-01-28 10:00:00" 
           })
       })
         .then((res) => {

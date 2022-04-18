@@ -20,9 +20,9 @@ const PalveluKortti = ({ data }) => {
 
 
   // ********** PALVELUVARAUKSEN VIEMINEN KANTAAN **********
-  //VARAUS_ID tulee käyttäjän tekemästä mökkivarauksesta, tehdään haku kantaan käyttäjä ID:llä?
-  //PALVELU_ID tulee kortin tiedoista
-  //LKM, onko tämä palvelun lukumäärä vai henkilöiden? Tähän droppivalikko?
+  //VARAUS_ID tulee käyttäjän tekemästä mökkivarauksesta, tehdään haku kantaan käyttäjä ID:llä ja kohdennetaan palvelun varaus tietylle majoitusvaraukselle?
+  //PALVELU_ID tulee palvelukortin tiedoista
+  //LKM, Tähän droppivalikko lukumäärästä. Jos sovitaan, että se tarkoittaa henkilöiden määrää ko. palvelulle? Hinta on sitten hinta*lkm
 
 
   //Varauksen lisääminen kantaan varauksen_palvelut tauluun
@@ -36,8 +36,8 @@ const PalveluKortti = ({ data }) => {
   //       body: JSON.stringify(
   //         {
   //           varaus_id: varaus_id, //tää tulee mökkivarauksesta
-  //           palvelu_id: palvelu_id,
-  //           lkm : lkm, // aina yksi?
+  //           palvelu_id: palvelut.a.palvelu_id,
+  //           lkm : lkm, // 
   //         })
   //     })
   //       .then((res) => {
@@ -56,7 +56,7 @@ const PalveluKortti = ({ data }) => {
     //tallennus kantaan ko. asiakkaan ID:llä
     setPalvelut(e);
     // console.log(palvelut.a.nimi);
-    console.log(palvelut);
+    // console.log(palvelut);
     setOpenDialog(() => true)
   }
 

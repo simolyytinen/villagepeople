@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function DatePickers(alkuPvm, loppuPvm, setAlkuPvm, setLoppuPvm, mokkiAlku, mokkiLoppu, setMokkiAlku, setMokkiLoppu) {
+export default function DatePickers(alkuPvm, loppuPvm, setAlkuPvm, setLoppuPvm) {
   const classes = useStyles();
 
   return (

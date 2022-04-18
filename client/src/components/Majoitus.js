@@ -19,8 +19,8 @@ export default function Majoitus() {
   const [mokit, setMokit] = useState([]);
 
   const [hakuehto, setHakuehto] = useState("");
-  const [mokkiAlku, setMokkiAlku] = useState("");
-  const [mokkiLoppu, setMokkiLoppu] = useState("");
+  const [alkuPvm, setAlkuPvm] = useState("");
+  const [loppuPvm, setLoppuPvm] = useState("");
 
   // const tyhjenna = () =>{
   //   setHakuehto("");
@@ -69,8 +69,8 @@ export default function Majoitus() {
               spacing={2}
               justifyContent="center"
             >
-              {/* propsit datepickerille varauksen ajoista */}
-              <DatePickers mokkiAlku={mokkiAlku} mokkiLoppu={mokkiLoppu} setMokkiAlku={setMokkiAlku} setMokkiLoppu={setMokkiLoppu}/>
+              {/* propsit datepickerille varauksen ajoista. TÄMÄKIN KESKEN!!!!*/}
+              <DatePickers alkuPvm={alkuPvm} loppuPvm={loppuPvm} setAlkuPvm={setAlkuPvm} setLoppuPvm={setLoppuPvm}/>
             </Stack>
             <Stack
               sx={{ pt: 4 }}

@@ -13,6 +13,7 @@ import Kirjaudu from "./components/Kirjaudu.js";
 import UusiAsiakas from "./components/UusiAsiakas.js";
 import VarausHallinta from "./components/VarausHallinta.js";
 import Asiakas from "./components/Asiakas.js";
+import Profiili from "./components/Profiili";
 
 export const DataContext = createContext({});
 
@@ -58,6 +59,7 @@ const App = () => {
           <Route path="/kirjaudu" element={<Kirjaudu />} />
           <Route path="/uusiasiakas" element={<UusiAsiakas />} />
           <Route path="/varaukset/asiakas" element={<Asiakas />} />
+          <Route path="/profiili" element={<Profiili />} />
         </Routes>
 
         <Footer />

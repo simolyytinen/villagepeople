@@ -11,7 +11,9 @@ module.exports = {
             let etunimi;
             let sukunimi;
             let email; 
-            req.body.asiakas_id ? asiakas_id = req.body.asiakas_id : asiakas_id = "%";
+            if (req.params.asiakas_id) asiakas_id = req.params.asiakas_id;
+            else if (req.body.asiakas_id) asiakas_id = req.body.asiakas_id
+            else asiakas_id = "%";
             req.body.etunimi ? etunimi = req.body.etunimi + "%" : etunimi = "%";
             req.body.sukunimi ? sukunimi = req.body.sukunimi + "%" : sukunimi = "%";
             req.body.email ? email = req.body.email : email = "%";

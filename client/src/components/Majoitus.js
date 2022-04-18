@@ -62,6 +62,7 @@ export default function Majoitus() {
 
 const haeClicked = () => {
   let alueet = [];
+
   for (let i=0; i<isChecked.length; i++) {
     if (isChecked[i]) alueet.push(i+1);
   }
@@ -128,7 +129,7 @@ const isCheckboxChecked = (index, value) => {
                   <FormControlLabel
                   key={a.alue_id}
                   label={a.nimi}
-                  control={<Checkbox checked={isChecked[index] ? isChecked[index] : false} onChange={(e) => isCheckboxChecked(index, e.target.checked)} />}
+                  control={<Checkbox checked={isChecked[index]} onChange={(e) => isCheckboxChecked(index, e.target.checked)} />}
                   /> 
                 )
             })}

@@ -61,12 +61,12 @@ const Navbar = () => {
     setAdmin(false);
     setToken("");
     setKayttaja("");
-
+    navigate("/majoitus")
   }
   const kayttaja = [
-    {id: 1, otsikko: "Profiili", onclick: ()=>{navigate()}}, 
+    {id: 1, otsikko: "Profiili", onclick: ()=>{navigate("/profiili")}}, 
     {id: 2, otsikko: "Varaukset", onclick: ()=>{navigate("/varaukset/asiakas")}}, 
-    {id: 3, otsikko: "Kirjaudu ulos", onclick: ()=>{logout()}}
+    {id: 3, otsikko: "Kirjaudu ulos", onclick: ()=>{logout();}}
   ];
 
   return (

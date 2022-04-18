@@ -24,6 +24,7 @@ const Kirjaudu = () => {
         })
         setUsername("");
         setPassword("");
+        
 
     }
 
@@ -52,6 +53,7 @@ const Kirjaudu = () => {
                 setLogin(true);
                 setKayttaja(data.id);
                 setTunnus("");
+                navigate("/majoitus");
                 
             }
 

@@ -6,7 +6,10 @@ let ctrl = require('../controllers/asiakasController');
 
 router.route('/api/asiakkaat').
     get(ctrl.haeAsiakkaat);
-    
+
+router.route('/api/asiakas/:asiakas_id').
+    get(ctrl.haeAsiakkaat);
+
 router.route('/api/asiakas').
     post(ctrl.lisaaAsiakas);
 

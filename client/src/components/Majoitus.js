@@ -8,8 +8,13 @@ import Container from '@mui/material/Container';
 import { FormControlLabel, Checkbox } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Kortti from './Kortti';
-import DatePickers from './DatePicker';
 import { DataContext } from "../App";
+import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import TextField from '@material-ui/core/TextField';
+import moment from 'moment';
+
 
 const theme = createTheme();
 
@@ -20,8 +25,8 @@ export default function Majoitus() {
   const [toimipaikat, setToimipaikat] = useState([]);
 
   const [hakuehto, setHakuehto] = useState("");
-  const [alkuPvm, setAlkuPvm] = useState("");
-  const [loppuPvm, setLoppuPvm] = useState("");
+  const [alkuPvm, setAlkuPvm] = useState(null);
+  const [loppuPvm, setLoppuPvm] = useState(null);
 
   const [isChecked, setIsChecked] = useState([]);
 
@@ -30,7 +35,6 @@ export default function Majoitus() {
     fetch(server + "/api/toimipisteet")
     .then(response => response.json())
     .then((data) => {
-        console.log(data)
         setToimipaikat(data)
         setIsChecked(() => toimipaikat.map((i) => false))
       }
@@ -60,14 +64,16 @@ const haeClicked = () => {
   
   setHakuehto({
     alueet: alueet,
-    alkupvm: alkuPvm,
-    loppupvm: loppuPvm
+    alkupvm: moment(alkuPvm).format("DD.MM.YYYY HH:mm:ss"),
+    loppupvm: moment(loppuPvm).format("DD.MM.YYYY HH:mm:ss")
   });  
 }
 
 
 const Tyhjenna = () =>{
   setHakuehto("");
+  setAlkuPvm(null);
+  setLoppuPvm(null);
   setIsChecked(() => {
     return isChecked.map((c) => {
       return false;
@@ -128,8 +134,25 @@ const isCheckboxChecked = (index, value) => {
               spacing={2}
               justifyContent="center"
             >
-              {/* propsit datepickerille varauksen ajoista. TÄMÄKIN KESKEN!!!!*/}
-              <DatePickers alkuPvm={alkuPvm} loppuPvm={loppuPvm} setAlkuPvm={setAlkuPvm} setLoppuPvm={setLoppuPvm}/>
+              {/* Otin tämän suoraan tähän, kun ei jostain syystä muuten ruennut pelaamaan.. */}
+                <LocalizationProvider dateAdapter={AdapterMoment}>
+                    <DatePicker
+                      label="Saapuminen"
+                      value={alkuPvm}
+                      onChange={(newValue) => {
+                        setAlkuPvm(newValue);
+                      }}
+                      renderInput={(params) => <TextField {...params} />}
+                    />
+                    <DatePicker
+                      label="Lähteminen"
+                      value={loppuPvm}
+                      onChange={(newValue) => {
+                        setLoppuPvm(newValue);
+                      }}
+                      renderInput={(params) => <TextField {...params} />}
+                    />
+              </LocalizationProvider>
             </Stack>
             <Stack
               sx={{ pt: 4 }}

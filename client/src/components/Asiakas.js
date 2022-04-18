@@ -16,6 +16,7 @@ const Asiakas = () => {
     const [hae, setHae] = useState("");
     const [varaukset, setVaraukset] = useState("");
 
+    //Osa sarakkeista tyhjiä, koska SQL lause ei tuo ko tietoja. Täytyy muokata / tehdä uus lauseke tälle haulle. Kaikki sarakkeetkaan ei välttämättä tarpeellisia
     const sarakkeet = [
         "Varaus ID", "Asiakas", "Mökki ID", "Mökin nimi", "Sijainti", "Varattu", "Vahvistettu", "Varaus alkaa", "Varaus loppuu", "Poista/Muokkaa"
     ];

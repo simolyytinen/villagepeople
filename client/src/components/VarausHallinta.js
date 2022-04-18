@@ -49,7 +49,7 @@ const VarausHallinta = () => {
     //Varauksien haku kannasta
     useEffect(()=>{
         const funktio = () => {
-            let api = server + "/api/varaukset";
+            let api = server + "/api/varaukset/";
             fetch(api)
             .then(response => response.json())
             .then((data) => {

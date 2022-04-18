@@ -32,6 +32,7 @@ module.exports = {
         }
     },
 
+    //Admin käyttäjän varaushallintaa varten
     haeKaikkiVaraukset: async (req, res) => {
 
         try {

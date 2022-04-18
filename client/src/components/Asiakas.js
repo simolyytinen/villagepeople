@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { DataContext } from "../App";
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -12,18 +12,35 @@ import { Delete, Edit } from '@mui/icons-material';
 import moment from 'moment';
 
 const Asiakas = () => {
-    const { palvelut, setPalvelut } = useContext(DataContext);
+    const { server, kayttaja } = useContext(DataContext);
+    const [hae, setHae] = useState("");
+    const [varaukset, setVaraukset] = useState("");
 
     const sarakkeet = [
-        "Varaus ID", "Asiakas", "Mökki ID/Nimi", "Sijainti", "Varattu", "Vahvistettu", "Varaus alkaa", "Varaus loppuu", "Poista/Muokkaa"
+        "Varaus ID", "Asiakas", "Mökki ID", "Mökin nimi", "Sijainti", "Varattu", "Vahvistettu", "Varaus alkaa", "Varaus loppuu", "Poista/Muokkaa"
     ];
 
-    //haetaan kannasta ko. käyttäjän ID:llä kaikki varaukset ja mapataan taulukkoon
+    //Varauksien haku kannasta
+    useEffect(() => {
+        console.log("fetch varaukset " + kayttaja)
+        fetch(server + "/api/varaukset/" + kayttaja)
+            .then(response => response.json())
+            .then((data) => {
+                console.log(data);
+                setVaraukset(data)
+            })
+            .catch(err => console.log(err));
+    }, [server])
+
+    //haetaan kannasta ko. käyttäjän ID:llä majoitusvaraukset ja palveluvaraukset
 
     return (
         <TableContainer style={{ marginTop: 32 }} component={Paper}>
-            {/* ehdollinen renderöinti taulukolle, jos palvelut sisältää jotain*/}
-            {palvelut ?
+            
+            {/* EHDOLLINEN RENDERÖINTI TAULUKOLLE, RIIPPUEN ONKO VARAUKSIA VAI EI */}
+
+            {varaukset ?
+
                 <Table aria-label="simple table">
                     <TableHead>
                         <TableRow key={0}>
@@ -32,45 +49,40 @@ const Asiakas = () => {
                             ))}
                         </TableRow>
                     </TableHead>
-                    {<TableBody>
-                        {/* ********EI TOIMI******** */}
-                        {palvelut.map((row) => (
-                            <TableRow
-                                key={row.varaus_id}
-                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                            >
-                                <TableCell align="center">{row.varaus_id}</TableCell>
-                                <TableCell align="center">{row.etunimi} {row.sukunimi}</TableCell>
-                                <TableCell align="center">{row.mokki_id} / {row.mokkinimi}</TableCell>
-                                <TableCell align="center">{row.sijainti}</TableCell>
-                                <TableCell align="center">{moment(row.varattu_pvm).format("DD.MM.YYYY HH:mm:ss")}</TableCell>
-                                <TableCell align="center">{moment(row.vahvistus_pvm).format("DD.MM.YYYY HH:mm:ss")}</TableCell>
-                                <TableCell align="center">{moment(row.varattu_alkupvm).format("DD.MM.YYYY HH:mm:ss")}</TableCell>
-                                <TableCell align="center">{moment(row.varattu_loppupvm).format("DD.MM.YYYY HH:mm:ss")}</TableCell>
-                                <TableCell align="center">
-                                    <IconButton /* onClick={()=>{poista(row.varaus_id)}} */>
-                                        <Delete />
-                                    </IconButton>
-                                    <IconButton /* onClick={()=>{muokkaa(row.varattu_alkupvm, row.varattu_loppupvm)}} */>
-                                        <Edit />
-                                    </IconButton>
-                                </TableCell>
-                            </TableRow>
-                        ))}
-
-                    </TableBody>}
-
+                    <TableBody>
+                        {varaukset.map((row) => (
+                        <TableRow
+                            key={row.varaus_id}
+                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                        >
+                            <TableCell align="center">{row.varaus_id}</TableCell>
+                            <TableCell align="center">{row.etunimi} {row.sukunimi}</TableCell>
+                            <TableCell align="center">{row.mokki_id}</TableCell>
+                            <TableCell align="center">{row.mokkinimi}</TableCell>
+                            <TableCell align="center">{row.sijainti}</TableCell>
+                            <TableCell align="center">{moment(row.varattu_pvm).format("DD.MM.YYYY HH:mm:ss")}</TableCell>
+                            <TableCell align="center">{moment(row.vahvistus_pvm).format("DD.MM.YYYY HH:mm:ss")}</TableCell>
+                            <TableCell align="center">{moment(row.varattu_alkupvm).format("DD.MM.YYYY HH:mm:ss")}</TableCell>
+                            <TableCell align="center">{moment(row.varattu_loppupvm).format("DD.MM.YYYY HH:mm:ss")}</TableCell>
+                            <TableCell align="center">
+                                <IconButton /* onClick={()=>{poista(row.varaus_id)}} */>
+                                    <Delete />
+                                </IconButton>
+                                <IconButton /* onClick={()=>{muokkaa(row.varattu_alkupvm, row.varattu_loppupvm)}} */>
+                                    <Edit />
+                                </IconButton>
+                            </TableCell>
+                        </TableRow>
+))}
+                    </TableBody>
                 </Table>
+
                 :
-                <Typography
-                    component="h1"
-                    variant="h2"
-                    align="center"
-                    color="text.primary"
-                    gutterBottom
-                >
-                    Ei olemassa olevia varauksia
-                </Typography> }
+                <Typography variant="h3" align="center" color="text.primary" paragraph sx={{ mt: 4 }}>
+                    SINULLA EI OLE VARAUKSIA
+                </Typography>
+            }
+
         </TableContainer>
     )
 }

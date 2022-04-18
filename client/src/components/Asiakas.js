@@ -7,7 +7,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { IconButton, Typography } from '@mui/material';
+import { IconButton, Typography, Container } from '@mui/material';
 import { Delete, Edit } from '@mui/icons-material';
 import moment from 'moment';
 
@@ -35,55 +35,57 @@ const Asiakas = () => {
 
 
     return (
-        <TableContainer style={{ marginTop: 32 }} component={Paper}>
+        <Container maxWidth="lg">
+            <TableContainer style={{ marginTop: 32 }} component={Paper}>
 
-            {/* EHDOLLINEN RENDERÖINTI TAULUKOLLE, RIIPPUEN ONKO VARAUKSIA VAI EI */}
+                {/* EHDOLLINEN RENDERÖINTI TAULUKOLLE, RIIPPUEN ONKO VARAUKSIA VAI EI */}
 
-            {varaukset ?
+                {varaukset ?
 
-                <Table aria-label="simple table">
-                    <TableHead>
-                        <TableRow key={0}>
-                            {sarakkeet.map((sarake) => (
-                                <TableCell component="th" align="center">{sarake}</TableCell>
-                            ))}
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {varaukset.map((row) => (
-                            <TableRow
-                                key={row.varaus_id}
-                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                            >
-                                <TableCell align="center">{row.varaus_id}</TableCell>
-                                <TableCell align="center">{row.etunimi} {row.sukunimi}</TableCell>
-                                <TableCell align="center">{row.mokki_id}</TableCell>
-                                <TableCell align="center">{row.mokkinimi}</TableCell>
-                                <TableCell align="center">{row.sijainti}</TableCell>
-                                <TableCell align="center">{moment(row.varattu_pvm).format("DD.MM.YYYY HH:mm:ss")}</TableCell>
-                                <TableCell align="center">{moment(row.vahvistus_pvm).format("DD.MM.YYYY HH:mm:ss")}</TableCell>
-                                <TableCell align="center">{moment(row.varattu_alkupvm).format("DD.MM.YYYY HH:mm:ss")}</TableCell>
-                                <TableCell align="center">{moment(row.varattu_loppupvm).format("DD.MM.YYYY HH:mm:ss")}</TableCell>
-                                <TableCell align="center">
-                                    <IconButton /* onClick={()=>{poista(row.varaus_id)}} */>
-                                        <Delete />
-                                    </IconButton>
-                                    <IconButton /* onClick={()=>{muokkaa(row.varattu_alkupvm, row.varattu_loppupvm)}} */>
-                                        <Edit />
-                                    </IconButton>
-                                </TableCell>
+                    <Table aria-label="simple table">
+                        <TableHead>
+                            <TableRow key={0}>
+                                {sarakkeet.map((sarake) => (
+                                    <TableCell component="th" align="center">{sarake}</TableCell>
+                                ))}
                             </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
+                        </TableHead>
+                        <TableBody>
+                            {varaukset.map((row) => (
+                                <TableRow
+                                    key={row.varaus_id}
+                                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                >
+                                    <TableCell align="center">{row.varaus_id}</TableCell>
+                                    <TableCell align="center">{row.etunimi} {row.sukunimi}</TableCell>
+                                    <TableCell align="center">{row.mokki_id}</TableCell>
+                                    <TableCell align="center">{row.mokkinimi}</TableCell>
+                                    <TableCell align="center">{row.sijainti}</TableCell>
+                                    <TableCell align="center">{moment(row.varattu_pvm).format("DD.MM.YYYY HH:mm:ss")}</TableCell>
+                                    <TableCell align="center">{moment(row.vahvistus_pvm).format("DD.MM.YYYY HH:mm:ss")}</TableCell>
+                                    <TableCell align="center">{moment(row.varattu_alkupvm).format("DD.MM.YYYY HH:mm:ss")}</TableCell>
+                                    <TableCell align="center">{moment(row.varattu_loppupvm).format("DD.MM.YYYY HH:mm:ss")}</TableCell>
+                                    <TableCell align="center">
+                                        <IconButton /* onClick={()=>{poista(row.varaus_id)}} */>
+                                            <Delete />
+                                        </IconButton>
+                                        <IconButton /* onClick={()=>{muokkaa(row.varattu_alkupvm, row.varattu_loppupvm)}} */>
+                                            <Edit />
+                                        </IconButton>
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
 
-                :
-                <Typography variant="h3" align="center" color="text.primary" paragraph sx={{ mt: 4 }}>
-                    SINULLA EI OLE VARAUKSIA
-                </Typography>
-            }
+                    :
+                    <Typography variant="h3" align="center" color="text.primary" paragraph sx={{ mt: 4 }}>
+                        SINULLA EI OLE VARAUKSIA
+                    </Typography>
+                }
 
-        </TableContainer>
+            </TableContainer>
+        </Container>
     )
 }
 

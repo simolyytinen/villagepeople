@@ -36,11 +36,13 @@ export default function Majoitus() {
     .then(response => response.json())
     .then((data) => {
         setToimipaikat(data)
-        setIsChecked(() => toimipaikat.map((i) => false))
-      }
-      ) 
+      }) 
     .catch(err => console.log(err));
 }, [server])
+
+useEffect(()=>{
+  setIsChecked(() => toimipaikat.map((i) => false))
+}, [toimipaikat])
 
   useEffect(()=>{
     console.log(hakuehto);
@@ -126,11 +128,13 @@ const isCheckboxChecked = (index, value) => {
             <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: "center"}}>
               {toimipaikat.map((a, index)=>{
                 return (
-                  <FormControlLabel
-                  key={a.alue_id}
-                  label={a.nimi}
-                  control={<Checkbox checked={isChecked[index]} onChange={(e) => isCheckboxChecked(index, e.target.checked)} />}
-                  /> 
+                   
+                    <FormControlLabel
+                    key={a.alue_id}
+                    label={a.nimi}
+                    control={<Checkbox checked={isChecked[index] ? isChecked[index] : false} onChange={(e) => isCheckboxChecked(index, e.target.checked)} />}
+                    />
+                  
                 )
             })}
     

@@ -22,6 +22,15 @@ module.exports = {
         return executeSQL(sql, [alue_id]);
     },
 
+    getVapaatMokit: (alue_id_taulukko, alkuPvm, loppuPvm) => {
+        let sql = "SELECT a.*, b.nimi FROM mokki a JOIN alue b ON a.alue_id = b.alue_id " +
+        "WHERE a.alue_id IN (?) AND a.mokki_id NOT IN " +
+        "(SELECT mokki_id FROM varaus WHERE " +
+        "varattu_alkupvm BETWEEN ? AND ? OR varattu_loppupvm BETWEEN ? AND ?) " +
+       "ORDER BY a.mokki_id";
+       return executeSQL(sql, [alue_id_taulukko, alkuPvm, loppuPvm, alkuPvm, loppuPvm]);
+    },
+
     postMokki: (alue_id, postinro, mokkinimi, katuosoite, hinta, kuvaus, henkilomaara, varustelu) => {
         let sql = "INSERT INTO mokki (alue_id, postinro, mokkinimi, katuosoite, hinta, kuvaus, henkilomaara, varustelu) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         return executeSQL(sql, [alue_id, postinro, mokkinimi, katuosoite, hinta, kuvaus, henkilomaara, varustelu])

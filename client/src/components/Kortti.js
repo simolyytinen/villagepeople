@@ -91,6 +91,9 @@ const Kortti = ({data}) => {
                     <Typography gutterBottom variant="h5" component="h2">
                       {a.mokkinimi}
                     </Typography>
+                    <Typography gutterBottom variant="h6" component="h3">
+                      {a.nimi}
+                    </Typography>
                     <Typography>
                       {a.kuvaus}<br/>
                       Varustelu: {a.varustelu}<br/>

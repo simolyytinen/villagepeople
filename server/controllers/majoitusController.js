@@ -21,6 +21,26 @@ module.exports = {
         }
     },
 
+    haeVapaatMokit: async (req, res) => {
+        try {
+            let alue_id_taulukko = req.body.alueet;
+            let alkuPvm = req.body.alkuPvm;
+            let loppuPvm = req.body.loppuPvm;
+            
+            console.log(req.body);
+
+            let mokit = await sql.getVapaatMokit(alue_id_taulukko, alkuPvm, loppuPvm);
+            
+            res.statusCode = 200;
+            res.json(mokit);
+        }
+        catch (err) {
+            console.log("Error in server")
+            res.statusCode = 400;
+            res.json({msg : err});
+        }
+    },
+
     lisaaMokki: async (req, res) => {
         try {
             let alue_id = req.body.alue_id;

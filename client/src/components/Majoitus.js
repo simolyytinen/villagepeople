@@ -45,8 +45,12 @@ export default function Majoitus() {
   useEffect(()=>{
     console.log(hakuehto);
     const funktio = () => {
-        let api = server + "/api/mokit/";
-        fetch(api)
+        let api = server + "/api/vapaatmokit";
+        fetch(api, {
+          method: "POST",
+          headers: { 'Content-Type' : 'application/json'},
+          body: JSON.stringify(hakuehto)
+        })
         .then(response => response.json())
         .then((data) => {
             console.log(data);
@@ -62,10 +66,14 @@ const haeClicked = () => {
     if (isChecked[i]) alueet.push(i+1);
   }
   
+  if (alueet.length == 0) {
+    alueet = toimipaikat.map((a)=> a.alue_id)
+  }
+  
   setHakuehto({
     alueet: alueet,
-    alkupvm: moment(alkuPvm).format("DD.MM.YYYY HH:mm:ss"),
-    loppupvm: moment(loppuPvm).format("DD.MM.YYYY HH:mm:ss")
+    alkuPvm: moment(alkuPvm).format("YYYY-MM-DD"),
+    loppuPvm: moment(loppuPvm).format("YYYY-MM-DD")
   });  
 }
 

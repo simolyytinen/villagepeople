@@ -10,6 +10,9 @@ router.route('/api/mokit/:alue_id').
     
 router.route('/api/mokit/').
     get(ctrl.haeMokit);
+
+router.route('/api/vapaatmokit').
+    post(ctrl.haeVapaatMokit);
     
 router.route('/api/mokit').
     post(ctrl.lisaaMokki);

@@ -9,11 +9,11 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { DataContext } from "../App";
 import Dialogi from "./Dialogi";
+import moment from 'moment';
 
+const Kortti = ({data, alkuPvm, loppuPvm}) => {
 
-const Kortti = ({data}) => {
-
-  const {server, login, setLogin, majoitus, setMajoitus, kayttaja, setKayttaja} = useContext(DataContext);
+  const {server, login, majoitus, setMajoitus, kayttaja } = useContext(DataContext);
   const [openDialog, setOpenDialog] = useState(false);
 
   // const [hae, setHae] = useState(0);
@@ -25,7 +25,6 @@ const Kortti = ({data}) => {
   
   // ********** VARAUKSEN VIEMINEN KANTAAN**********
   //majoituskohteet mapataan kortteihin objektiin a. Varausnappi kutsuu metodia "varaa", joka asettaa context muuttujaan "majoitus" objektin a tiedot. UseEffect laukeaa, kun majoitus muuttuu.
-  //varattu ajankohta täytyisi vielä muuttaa siten, että arvot tulee datepickeristä..
 
 
   // Varauksen lisääminen kantaan varaus-tauluun
@@ -43,8 +42,8 @@ const Kortti = ({data}) => {
             mokki_id: majoitus.a.mokki_id, //mökin ID contextista
            /*  varattu_pvm : varattu_pvm, //tulee SQL-lauseessa
             vahvistus_pvm : vahvistus_pvm, //tulee SQL-lauseessa */
-            varattu_alkupvm : "2022-01-25 14:00:00", //pitäs saada tuleen datetimepickeristä
-            varattu_loppupvm : "2022-01-28 10:00:00" 
+            varattu_alkupvm : moment(alkuPvm).format("YYYY-MM-DD"),
+            varattu_loppupvm : moment(loppuPvm).format("YYYY-MM-DD") 
           })
       })
         .then((res) => {

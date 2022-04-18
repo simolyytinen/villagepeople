@@ -173,7 +173,7 @@ const isCheckboxChecked = (index, value) => {
             </Stack>
           </Container>
         </Box>
-        <Kortti data={mokit} />
+        <Kortti data={mokit} alkuPvm={alkuPvm} loppuPvm={loppuPvm} />
       </main>
     </ThemeProvider>
   );

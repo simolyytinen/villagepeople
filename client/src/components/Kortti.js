@@ -24,7 +24,7 @@ const Kortti = ({data, alkuPvm, loppuPvm}) => {
 
   
   // ********** VARAUKSEN VIEMINEN KANTAAN**********
-  //majoituskohteet mapataan kortteihin objektiin a. Varausnappi kutsuu metodia "varaa", joka asettaa context muuttujaan "majoitus" objektin a tiedot. UseEffect laukeaa, kun majoitus muuttuu.
+  //majoituskohteet mapataan kortteihin objektiin a. Varausnappi kutsuu metodia "varaa", joka asettaa context muuttujaan "majoitus" objektin a tiedot -> UseEffect laukeaa, kun majoitus muuttuu.
 
 
   // Varauksen lisääminen kantaan varaus-tauluun
@@ -42,8 +42,8 @@ const Kortti = ({data, alkuPvm, loppuPvm}) => {
             mokki_id: majoitus.a.mokki_id, //mökin ID contextista
            /*  varattu_pvm : varattu_pvm, //tulee SQL-lauseessa
             vahvistus_pvm : vahvistus_pvm, //tulee SQL-lauseessa */
-            varattu_alkupvm : moment(alkuPvm).format("YYYY-MM-DD"),
-            varattu_loppupvm : moment(loppuPvm).format("YYYY-MM-DD") 
+            varattu_alkupvm : moment(alkuPvm).format("YYYY-MM-DD 14:00"),
+            varattu_loppupvm : moment(loppuPvm).format("YYYY-MM-DD 12:00") 
           })
       })
         .then((res) => {

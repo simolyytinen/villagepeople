@@ -40,10 +40,10 @@ module.exports = {
     //     return executeSQL(sql, [varaus_id]);
     // },
 
-    // insertVaraus: (asiakas_id, mokki_id, /* varattu_pvm, vahvistus_pvm, */varattu_alkupvm, varattu_loppupvm) => {
-    //     let sql = "INSERT INTO varaus (asiakas_id, mokki_id, varattu_pvm, vahvistus_pvm, varattu_alkupvm, varattu_loppupvm) values (?, ?, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP()+INTERVAL 1 DAY, ?, ?)"
-    //     return executeSQL(sql, [asiakas_id, mokki_id, /* varattu_pvm, vahvistus_pvm, */varattu_alkupvm, varattu_loppupvm]);
-    // },
+    insertVarauksenPalvelut: (varaus_id, palvelu_id, lkm) => {
+        let sql = "INSERT INTO varauksen_palvelut (varaus_id, palvelu_id, lkm) values (?, ?, ?)"
+        return executeSQL(sql, [varaus_id, palvelu_id, lkm]);
+    },
 
     // updateVaraus: (varattu_alkupvm, varattu_loppupvm, varaus_id) => {
     //     let sql = "UPDATE varaus SET varattu_alkupvm=?, varattu_loppupvm=? WHERE varaus_id=?";

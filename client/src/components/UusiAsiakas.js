@@ -82,7 +82,7 @@ const UusiAsiakas = () => {
             <Typography variant="h3" align="center" color="text.primary" paragraph sx={{mt: 4}}>
               Uusi asiakas
             </Typography>
-            <Dialogi open={openDialog} setOpen={setOpenDialog} otsikko={"Rekisteröinti onnistui!"} viesti={"Kiitos, kun rekisteröidyit asiakkaaksemme. Mukavia lomahetkiä!"} />
+            <Dialogi open={openDialog} setOpen={setOpenDialog} otsikko={"Rekisteröinti onnistui!"} viesti={"Kiitos, kun rekisteröidyit asiakkaaksemme. Mukavia lomahetkiä!"} reitti={"/kirjaudu"} />
             <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
             <Grid container spacing={4}>
                 <Grid item xs={12} md={6}>

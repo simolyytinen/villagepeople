@@ -9,6 +9,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import PalveluKortti from './PalveluKortti';
 import TextField from '@material-ui/core/TextField';
 import { DataContext } from "../App";
+import AlueDropBox from './AlueDropBox';
 
 
 const theme = createTheme();
@@ -18,12 +19,27 @@ export default function Palvelut() {
   const { server } = useContext(DataContext);
   const [hae, setHae] = useState(0);
   const [palvelut, setPalvelut] = useState([]);
-
+  const [toimipaikat, setToimipaikat] = useState([]);
+  const [alueId, setAlueId] = useState("");
   const [hakuehto, setHakuehto] = useState("");
 
   const tyhjenna = () =>{
     setHakuehto("");
   }
+
+  // *****JOS EHTII, NIIN VAIHDAN TÄHÄN VIELÄ ALUEHAUN MUKAAN*****
+
+    // Toimipisteiden hakeminen tietokannasta droppivalikkoa varten
+  //   useEffect(()=>{
+  //     fetch(server + "/api/toimipisteet")
+  //     .then(response => response.json())
+  //     .then((data) => {
+  //         console.log(data);
+  //         setToimipaikat(data)})
+  //     .catch(err => console.log(err));
+  // }, [server])
+
+
 
    // Palvelut tietokannasta hakuehdoilla
    useEffect(() => {
@@ -67,6 +83,8 @@ export default function Palvelut() {
             >
               Palvelut
             </Typography>
+            {/* <AlueDropBox alueid={alueId} setAlueId={setAlueId} data={toimipaikat}/> */}
+
             <TextField
               margin="normal"
               fullWidth

@@ -23,25 +23,23 @@ const Asiakas = () => {
 
     //Varauksien haku kannasta kirjautuneelle käyttäjälle
     useEffect(() => {
-        console.log("fetch varaukset " + kayttaja)
-        fetch(server + "/api/varaukset/" + kayttaja)
-            .then(response => response.json())
-            .then((data) => {
-                console.log(data);
-                setVaraukset(data)
-            })
-            .catch(err => console.log(err));
+            console.log("fetch varaukset " + kayttaja)
+            fetch(server + "/api/varaukset/" + kayttaja)
+                .then(response => response.json())
+                .then((data) => {
+                    console.log(data);
+                    setVaraukset(data)
+                })
+                .catch(err => console.log(err));
     }, [server])
 
 
     return (
         <Container maxWidth="lg">
-            <TableContainer style={{ marginTop: 32 }} component={Paper}>
+            {/* EHDOLLINEN RENDERÖINTI TAULUKOLLE, RIIPPUEN ONKO VARAUKSIA VAI EI */}
+            {varaukset.length > 0 ?
 
-                {/* EHDOLLINEN RENDERÖINTI TAULUKOLLE, RIIPPUEN ONKO VARAUKSIA VAI EI */}
-
-                {varaukset ?
-
+                <TableContainer style={{ marginTop: 32 }} component={Paper}>
                     <Table aria-label="simple table">
                         <TableHead>
                             <TableRow key={0}>
@@ -77,14 +75,18 @@ const Asiakas = () => {
                             ))}
                         </TableBody>
                     </Table>
+                </TableContainer>
 
-                    :
+                : <div>
                     <Typography variant="h3" align="center" color="text.primary" paragraph sx={{ mt: 4 }}>
-                        SINULLA EI OLE VARAUKSIA
+                        Tervetuloa varaus-sivulle!
                     </Typography>
-                }
+                    <Typography style={{ marginTop: 80 }} variant="h4" align="center" color="text.primary" paragraph sx={{ mt: 4 }}>
+                        Sinulla ei ole aktiivisia varauksia.
+                    </Typography>
+                </div>
+            }
 
-            </TableContainer>
         </Container>
     )
 }

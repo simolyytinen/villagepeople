@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -12,56 +12,75 @@ import Dialogi from "./Dialogi";
 
 const PalveluKortti = ({ data }) => {
 
-  const { login, setLogin } = useContext(DataContext);
-  const { palvelut, setPalvelut } = useContext(DataContext);
-  const { kayttaja, setkayttaja } = useContext(DataContext);
+  const { login, setLogin, palvelut, setPalvelut, kayttaja, setkayttaja, server } = useContext(DataContext);
   const [openDialog, setOpenDialog] = useState(false);
-
+  const [varaus_id, setVaraus_id] = useState("");
+  const [palvelu_id, setPalvelu_id] = useState("");
+  const [lkm, setLkm] = useState("");
+  const [varaukset, setVaraukset] = useState("");
 
 
   // ********** PALVELUVARAUKSEN VIEMINEN KANTAAN **********
-  //VARAUS_ID tulee käyttäjän tekemästä mökkivarauksesta, tehdään haku kantaan käyttäjä ID:llä ja kohdennetaan palvelun varaus tietylle majoitusvaraukselle?
+  //VARAUS_ID tulee käyttäjän tekemästä mökkivarauksesta, tehdään haku kantaan käyttäjä ID:llä ja kohdennetaan palvelun varaus tietylle majoitusvaraukselle? Tähän droppivalikko, josta asiakas valitsee mille varaukselle haluaa palvelun lisätä? value={varaus_id}
   //PALVELU_ID tulee palvelukortin tiedoista
-  //LKM, Tähän droppivalikko lukumäärästä. Jos sovitaan, että se tarkoittaa henkilöiden määrää ko. palvelulle? Hinta on sitten hinta*lkm
+  //LKM, Tähän droppivalikko/valitsinrulla lukumäärästä. Jos sovitaan, että se tarkoittaa henkilöiden määrää ko. palvelulle? Hinta on sitten hinta*lkm
+  
+
+  // Käyttäjän varauksien haku kannasta
+  useEffect(()=>{
+    const funktio = () => {
+        let api = server + "/api/varaukset/"+kayttaja;
+        fetch(api)
+        .then(response => response.json())
+        .then((data) => {
+            console.log(data);
+            setVaraukset(data)})
+        .catch(err => console.log(err));
+    }
+    /* if (alueId !== "") */ funktio();
+}, [server])
 
 
   //Varauksen lisääminen kantaan varauksen_palvelut tauluun
-  // useEffect(() => {
-  //   const funktio = () => {
-  //     const api = server + "/api/XXXXXXXXXXXXXXX";
+  useEffect(() => {
+    const funktio = () => {
+      console.log("useEffect palveluvaraus majoitusvaraukselle "/*  + varaus_id */)
+      const api = server + "/api/varauksenPalvelut";
 
-  //     fetch(api, {
-  //       method: "POST",
-  //       headers: { 'Content-Type': 'application/json' },
-  //       body: JSON.stringify(
-  //         {
-  //           varaus_id: varaus_id, //tää tulee mökkivarauksesta
-  //           palvelu_id: palvelut.a.palvelu_id,
-  //           lkm : lkm, // 
-  //         })
-  //     })
-  //       .then((res) => {
-  //         // setHae(hae => hae + 1)
-  //         // setNimi("");
-  //         // setAlueId("");
-          
-  //       })
-  //       .catch(err => console.log(err))
-  //   }
+      fetch(api, {
+        method: "POST",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(
+          {
+            varaus_id: 1/* varaus_id */,
+            palvelu_id: palvelut.a.palvelu_id, 
+            lkm : 1
+           
+          })
+      })
+        .then((res) => {
+          // setHae(hae => hae + 1)
+          console.log("");
+          setPalvelut("");
+          setVaraus_id("");
+          setPalvelu_id("");
+          setLkm("");
+        })
+        .catch(err => console.log(err))
+    }
 
-  //   if () funktio();
-  // }, [server])
+      if (varaus_id && palvelu_id && lkm)
+     funktio();
+  }, [palvelut, server])
 
   const varaa = (e) => {
-    //tallennus kantaan ko. asiakkaan ID:llä
     setPalvelut(e);
-    // console.log(palvelut.a.nimi);
+    console.log("id "+palvelut.a.palvelu_id + palvelut.a.nimi);
     // console.log(palvelut);
     setOpenDialog(() => true)
   }
 
 
-  //Jostain syystä ensimmäinen varaus ei toimi, kun sivulle tullaan
   return (
     <Container sx={{ py: 8 }} maxWidth="md">
       {/* End hero unit */}

@@ -17,5 +17,21 @@ module.exports = {
             res.json({msg : err});
         }
     },
+    lisaaVarauksenPalvelut: async (req, res) => {
+        try {
+            let varaus_id = req.body.varaus_id;
+            let palvelu_id = req.body.palvelu_id;
+            let lkm = req.body.lkm;
 
+            let v = await sql.insertVarauksenPalvelut(varaus_id, palvelu_id, lkm);
+
+            res.statusCode = 200;
+            res.json(v);
+        }
+        catch (err) {
+            console.log("Error in server")
+            res.statusCode = 400;
+            res.json({msg : err});
+        }
+    },
 }

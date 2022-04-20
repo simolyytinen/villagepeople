@@ -8,8 +8,8 @@ let ctrl = require('../controllers/varauksenPalvelutController');
 router.route('/api/varauksenPalvelut/:asiakas_id').
     get(ctrl.haeVarauksenPalvelut);
     
-// router.route('/api/varauksenPalvelut').
-//     post(ctrl.lisaaVarauksenPalvelut);
+router.route('/api/varauksenPalvelut').
+    post(ctrl.lisaaVarauksenPalvelut);
 
 // router.route('/api/varauksenPalvelut/varaus_id').
 //     delete(ctrl.poistaVarauksenPalvelut);

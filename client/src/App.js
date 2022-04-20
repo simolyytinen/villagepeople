@@ -4,7 +4,6 @@ import Navbar from "./components/Navbar.js";
 import Majoitus from "./components/Majoitus.js";
 import Footer from "./components/Footer.js";
 import Palvelut from "./components/Palvelut.js";
-import Haku from "./components/Haku.js";
 import AlueHallinta from "./components/AlueHallinta.js";
 import MajoitusHallinta from "./components/MajoitusHallinta.js";
 import PalveluHallinta from "./components/PalveluHallinta.js";

@@ -18,7 +18,7 @@ module.exports = {
             let c = await varausSql.getVaraukset('%', asiakas_id);
 
             if (c.length == 0) {
-                res.statusCode = 400;
+                res.statusCode = 201;
                 res.json({ msg: "Ei varauksia", asiakas_id });
             } else {
                 res.status = 200;

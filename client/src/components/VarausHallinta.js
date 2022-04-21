@@ -8,6 +8,7 @@ import { DataContext } from "../App";
 import AlueDropBox from "./AlueDropBox";
 import VarausTaulukko from "./VarausTaulukko";
 import VarausForm from "./VarausForm";
+import Dialogi from "./Dialogi";
 
 
 const VarausHallinta = () => {
@@ -28,6 +29,7 @@ const VarausHallinta = () => {
 
     const [alueId, setAlueId] = useState("");
     const [virhe, setVirhe] = useState(false);
+    const [openDialog, setOpenDialog] = useState(false);
 
 
     const sarakkeet = [
@@ -64,6 +66,7 @@ const VarausHallinta = () => {
     }, [hae, /* alueId, */ server])
 
 
+    //Varauksen muokkaus
     useEffect(()=>{
         const funktio = () => {
             const api = server + "/api/varaukset";
@@ -81,6 +84,25 @@ const VarausHallinta = () => {
         }
         if (muokkausData !== "") funktio()
     }, [muokkausData, server])
+
+    //Varauksen poisto
+    useEffect(()=>{
+        const funktio = () => {
+            const api = server + "/api/varaukset/" + poistaId;
+            console.log("varauksen poisto " + poistaId);
+
+            fetch(api, {
+                method: "DELETE",
+
+            })
+            .then((res) => {
+                setHae(hae => hae + 1);
+            })
+            .catch(err => console.log(err))
+        }
+        if (poistaId > 0 && openDialog == false) funktio();
+
+    }, [/* poistaId,  */openDialog, server])
 
 
     // Muokkaaminen
@@ -100,7 +122,8 @@ const VarausHallinta = () => {
     }
 
     const poistaClick = (id) => {
-
+        setOpenDialog(() => true);
+        setPoistaId(id);
     }
 
 
@@ -126,7 +149,7 @@ const VarausHallinta = () => {
                     <VarausTaulukko sarakkeet={sarakkeet} data={varaukset} poista={poistaClick} muokkaa={muokkausClick} />
                 </Grid>
             </Grid>
-
+            <Dialogi open={openDialog} setOpen={setOpenDialog} otsikko={"Varauksen poisto"} viesti={"Poistetaanko varaus? Myös kyseiseen varaukseen liittyvät palveluvaraukset poistetaan."} reitti={"/varaukset/hallinta"} />
         </Container>
     )
 

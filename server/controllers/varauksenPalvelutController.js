@@ -34,4 +34,22 @@ module.exports = {
             res.json({msg : err});
         }
     },
+
+    poistaVarauksenPalvelut: async (req, res) =>{
+        let varaus_id = req.params.varaus_id;
+
+        try {
+            console.log("poistetaan palveluvaraus: " + varaus_id);
+            let c = await sql.deleteVarauksenPalvelu(varaus_id);
+
+            res.status = 200;
+            res.json(c);
+        }
+        catch (err) {
+            console.log("Error in server")
+            res.status = 400;
+            res.json({ status: "NOT OK", msg: err });
+        }
+    },
+ 
 }

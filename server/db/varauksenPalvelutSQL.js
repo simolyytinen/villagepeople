@@ -29,17 +29,11 @@ module.exports = {
         return executeSQL(sql, [asiakas_id]);
     },
 
-
-
-    // getKaikkiVaraukset: () => {
-    //     let sql = ;
-    //     return executeSQL(sql, []);
-    // },
-
-    // deleteVaraus: (varaus_id) => {
-    //     let sql = "DELETE FROM varaus WHERE varaus_id=?";
-    //     return executeSQL(sql, [varaus_id]);
-    // },
+    deleteVarauksenPalvelu: (varaus_id) => {
+        let sql = "DELETE FROM varauksen_palvelut WHERE varaus_id=?";
+        console.log(sql);
+        return executeSQL(sql, [varaus_id]);
+    },
 
     insertVarauksenPalvelut: (varaus_id, palvelu_id, lkm) => {
         let sql = "INSERT INTO varauksen_palvelut (varaus_id, palvelu_id, lkm) values (?, ?, ?)";

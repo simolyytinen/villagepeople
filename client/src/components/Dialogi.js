@@ -7,7 +7,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useNavigate } from 'react-router-dom';
 
-export default function Dialogi({open, setOpen, otsikko, viesti, reitti}) {
+export default function Dialogi({open, setOpen, otsikko, viesti, reitti, openPalvelu, setOpenPalvelu}) {
 
   const navigate = useNavigate();
 

@@ -17,7 +17,9 @@ const Asiakas = () => {
     const [varaukset, setVaraukset] = useState("");
     const [hae, setHae] = useState(0);
     const [poistaId, setPoistaId] = useState(-1);
+    const [poistaPalveluId, setPoistaPalveluId] = useState("");
     const [openDialog, setOpenDialog] = useState(false);
+    const [openDialogPalvelu, setOpenDialogPalvelu] = useState(false);
     const [varauksenPalvelut, setVarauksenPalvelut] = useState("");
 
 
@@ -53,11 +55,11 @@ const Asiakas = () => {
             .catch(err => console.log(err));
     }, [hae, server])
 
-    //Varauksen poisto
+    //Majoitusvarauksen poisto
     useEffect(() => {
         const funktio = () => {
             const api = server + "/api/varaukset/" + poistaId;
-            console.log("varauksen poisto " + poistaId);
+            console.log("majoitusvarauksen poisto " + poistaId);
 
             fetch(api, {
                 method: "DELETE",
@@ -73,9 +75,32 @@ const Asiakas = () => {
     }, [/* poistaId,  */openDialog, server])
 
 
-    const poista = (id) => {
+    const poistaMajoitusVaraus = (id) => {
         setOpenDialog(() => true);
         setPoistaId(id);
+    }
+
+    //Palveluvarauksen poisto
+    useEffect(() => {
+        const funktio = () => {
+            const api = server + "/api/varauksenPalvelut/" + poistaPalveluId;
+            console.log("palveluvarauksen poisto " + poistaPalveluId);
+
+            fetch(api, {
+                method: "DELETE",
+            })
+                .then((res) => {
+                    setHae(hae => hae + 1);
+                })
+                .catch(err => console.log(err))
+        }
+        if (poistaPalveluId > 0 && openDialog == false) funktio();
+
+    }, [/* poistaId,  */openDialogPalvelu, server])
+
+    const poistaPalveluVaraus = (id) =>{
+        setOpenDialogPalvelu(() => true);
+        setPoistaPalveluId(id);
     }
 
 
@@ -115,7 +140,7 @@ const Asiakas = () => {
                                     <TableCell align="center">{moment(row.varattu_alkupvm).format("DD.MM.YYYY HH:mm:ss")}</TableCell>
                                     <TableCell align="center">{moment(row.varattu_loppupvm).format("DD.MM.YYYY HH:mm:ss")}</TableCell>
                                     <TableCell align="center">
-                                        <IconButton onClick={() => { poista(row.varaus_id) }} >
+                                        <IconButton onClick={() => { poistaMajoitusVaraus(row.varaus_id) }} >
                                             <Delete />
                                         </IconButton>
                                         <IconButton /* onClick={()=>{muokkaa(row.varattu_alkupvm, row.varattu_loppupvm)}} */>
@@ -134,7 +159,8 @@ const Asiakas = () => {
                     </Typography>
                 </div>
             }
-            <Dialogi open={openDialog} setOpen={setOpenDialog} otsikko={"Varauksen poisto"} viesti={"Poistetaanko varaus? Myös kyseiseen varaukseen liittyvät palveluvaraukset poistetaan."} reitti={"/varaukset/asiakas"} />
+            <Dialogi open={openDialog} setOpen={setOpenDialog} otsikko={"Majoitusvarauksen poisto"} viesti={"Poistetaanko varaus? Myös kyseiseen varaukseen liittyvät palveluvaraukset poistetaan."} reitti={"/varaukset/asiakas"} />
+            <Dialogi openPalvelu={openDialogPalvelu} setOpenPalvelu={setOpenDialogPalvelu} otsikko={"Palveluvarauksen poisto"} viesti={"Poistetaanko varaus?"} reitti={"/varaukset/asiakas"} />
 
 
             <Typography style={{ marginTop: 40 }} variant="h4" align="left" color="text.primary" paragraph sx={{ mt: 4 }}>
@@ -163,7 +189,7 @@ const Asiakas = () => {
                                     <TableCell align="center">{row.nimi}</TableCell>
                                     <TableCell align="center">{row.lkm}</TableCell>
                                     <TableCell align="center">
-                                        <IconButton onClick={() => { poista(row.varaus_id) }} >
+                                        <IconButton onClick={() => { poistaPalveluVaraus(row.varaus_id) }} >
                                             <Delete />
                                         </IconButton>
                                         <IconButton /* onClick={()=>{muokkaa(row.varattu_alkupvm, row.varattu_loppupvm)}} */>

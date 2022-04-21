@@ -93,6 +93,9 @@ app.use(varauksetRoutes);
 const varauksenPalvelutRoutes = require('./routes/varauksenPalvelutRoutes')
 app.use(varauksenPalvelutRoutes);
 
+const laskuRoutes = require('./routes/laskuRoutes')
+app.use(laskuRoutes);
+
 app.use(function(err, req, res, next){
   res.status(err.status || 500);
   res.send({ error: err.message });

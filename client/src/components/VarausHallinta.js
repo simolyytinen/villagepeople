@@ -144,7 +144,6 @@ const VarausHallinta = () => {
                 </Grid>
                 <Grid item xs={12} md={12}>
                     <Typography variant="h6" align="left" color="red" paragraph sx={{ mt: 4 }}>
-                        {/* {virhe ? "Mökkiä ei voida poistaa, siihen liittyy varauksia" : ""} */}
                     </Typography>
                     <VarausTaulukko sarakkeet={sarakkeet} data={varaukset} poista={poistaClick} muokkaa={muokkausClick} />
                 </Grid>

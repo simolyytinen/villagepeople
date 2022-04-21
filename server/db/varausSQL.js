@@ -17,8 +17,16 @@ const executeSQL = (query, params) => {
 
 module.exports = {
 
+    // getVaraukset: (mokki_id, asiakas_id) => {
+    //     let sql = "SELECT * FROM varaus WHERE mokki_id LIKE ? AND asiakas_id LIKE ?";
+    //     console.log(sql);
+    //     return executeSQL(sql, [mokki_id, asiakas_id]);
+    // },
+
     getVaraukset: (mokki_id, asiakas_id) => {
-        let sql = "SELECT * FROM varaus WHERE mokki_id LIKE ? AND asiakas_id LIKE ?";
+        let sql = "SELECT varaus_id, v.asiakas_id, v.mokki_id, m.mokkinimi, varattu_pvm, vahvistus_pvm, varattu_alkupvm, varattu_loppupvm, a.etunimi, a.sukunimi, al.nimi as sijainti FROM varaus v ";
+        sql = sql + "JOIN asiakas a ON v.asiakas_id = a.asiakas_id ";
+        sql = sql + "JOIN mokki m on v.mokki_id = m.mokki_id JOIN alue al on m.alue_id = al.alue_id WHERE v.mokki_id LIKE ? AND v.asiakas_id LIKE ?";
         console.log(sql);
         return executeSQL(sql, [mokki_id, asiakas_id]);
     },

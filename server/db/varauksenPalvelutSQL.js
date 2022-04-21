@@ -18,7 +18,7 @@ const executeSQL = (query, params) => {
 module.exports = {
 
     getVarauksenPalvelut: (asiakas_id) => {
-        let sql = "SELECT vp.varaus_id, v.asiakas_id, vp.palvelu_id, vp.lkm FROM varauksen_palvelut vp JOIN varaus v on v.varaus_id = vp.varaus_id WHERE v.asiakas_id=?";
+        let sql = "SELECT vp.varaus_id, v.asiakas_id, vp.palvelu_id, p.nimi, vp.lkm FROM varauksen_palvelut vp JOIN varaus v on v.varaus_id = vp.varaus_id JOIN palvelu p on vp.palvelu_id = p.palvelu_id WHERE v.asiakas_id=?";
 
         //Täällä lauseella saadaan samaan taulukkoon majoitusvaraus ja palveluvaraukset ko. majoitusvarauksille. MUTTA, jos varaukselle ei ole palveluvarausta, niin majoitusvarauskaan ei tulostu..
         // let sql = "SELECT v.varaus_id, v.asiakas_id, v.mokki_id, m.mokkinimi, v.varattu_pvm, v.vahvistus_pvm, v.varattu_alkupvm, v.varattu_loppupvm, vp.palvelu_id, vp.lkm, p.nimi ";

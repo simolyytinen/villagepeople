@@ -25,6 +25,7 @@ module.exports = {
         // sql = sql + "FROM varaus v JOIN mokki m on m.mokki_id = v.mokki_id ";
         // sql = sql + "JOIN varauksen_palvelut vp on vp.varaus_id = v.varaus_id ";
         // sql = sql + "JOIN palvelu p on vp.palvelu_id = p.palvelu_id WHERE asiakas_id=?";
+        console.log(sql);
         return executeSQL(sql, [asiakas_id]);
     },
 
@@ -41,7 +42,8 @@ module.exports = {
     // },
 
     insertVarauksenPalvelut: (varaus_id, palvelu_id, lkm) => {
-        let sql = "INSERT INTO varauksen_palvelut (varaus_id, palvelu_id, lkm) values (?, ?, ?)"
+        let sql = "INSERT INTO varauksen_palvelut (varaus_id, palvelu_id, lkm) values (?, ?, ?)";
+        console.log(sql);
         return executeSQL(sql, [varaus_id, palvelu_id, lkm]);
     },
 

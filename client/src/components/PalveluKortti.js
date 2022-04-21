@@ -9,6 +9,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { DataContext } from "../App";
 import Dialogi from "./Dialogi";
+import KayttajanVarauksetDropBox from "./KayttajanVarauksetDropBox.js.js";
 
 const PalveluKortti = ({ data }) => {
 
@@ -18,33 +19,35 @@ const PalveluKortti = ({ data }) => {
   const [palvelu_id, setPalvelu_id] = useState("");
   const [lkm, setLkm] = useState("");
   const [varaukset, setVaraukset] = useState("");
+  // const [varauksenPalvelut, setVarauksenPalvelut] = useState("");
 
 
   // ********** PALVELUVARAUKSEN VIEMINEN KANTAAN **********
   //VARAUS_ID tulee käyttäjän tekemästä mökkivarauksesta, tehdään haku kantaan käyttäjä ID:llä ja kohdennetaan palvelun varaus tietylle majoitusvaraukselle? Tähän droppivalikko, josta asiakas valitsee mille varaukselle haluaa palvelun lisätä? value={varaus_id}
   //PALVELU_ID tulee palvelukortin tiedoista
   //LKM, Tähän droppivalikko/valitsinrulla lukumäärästä. Jos sovitaan, että se tarkoittaa henkilöiden määrää ko. palvelulle? Hinta on sitten hinta*lkm
-  
 
-  // Käyttäjän varauksien haku kannasta
-  useEffect(()=>{
+
+  // Käyttäjän majoitusvarauksien haku kannasta
+  useEffect(() => {
     const funktio = () => {
-        let api = server + "/api/varaukset/"+kayttaja;
-        fetch(api)
+      let api = server + "/api/varaukset/" + kayttaja;
+      fetch(api)
         .then(response => response.json())
         .then((data) => {
-            console.log(data);
-            setVaraukset(data)})
+          console.log(data);
+          setVaraukset(data)
+        })
         .catch(err => console.log(err));
     }
     /* if (alueId !== "") */ funktio();
-}, [server])
+  }, [server])
 
 
-  //Varauksen lisääminen kantaan varauksen_palvelut tauluun
+  //Palveluvarauksen lisääminen kantaan varauksen_palvelut tauluun
   useEffect(() => {
     const funktio = () => {
-      console.log("useEffect palveluvaraus majoitusvaraukselle "/*  + varaus_id */)
+      console.log("useEffect palveluvaraus majoitusvaraukselle")
       const api = server + "/api/varauksenPalvelut";
 
       fetch(api, {
@@ -52,10 +55,10 @@ const PalveluKortti = ({ data }) => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(
           {
-            varaus_id: 1/* varaus_id */,
-            palvelu_id: palvelut.a.palvelu_id, 
-            lkm : 1
-           
+            varaus_id: varaus_id,
+            palvelu_id: palvelut.a.palvelu_id,
+            lkm: 1
+
           })
       })
         .then((res) => {
@@ -69,22 +72,35 @@ const PalveluKortti = ({ data }) => {
         .catch(err => console.log(err))
     }
 
-      if (varaus_id && palvelu_id && lkm)
-     funktio();
-  }, [palvelut, server])
+    if (varaus_id > 0 && palvelu_id > 0 && lkm > 0 && openDialog == false)
+      funktio();
+  }, [openDialog, server])
 
   const varaa = (e) => {
-    setPalvelut(e);
-    console.log("id "+palvelut.a.palvelu_id + palvelut.a.nimi);
-    // console.log(palvelut);
     setOpenDialog(() => true)
+    setPalvelut(e);
+    setVaraus_id(varaus_id);
+    console.log("varaus_id, palveluid " + varaus_id + " " + palvelut.a.palvelu_id)
+    // console.log("id "+palvelut.a.palvelu_id + palvelut.a.nimi);
+    // console.log(palvelut);
+    
   }
 
 
   return (
-    <Container sx={{ py: 8 }} maxWidth="md">
+    <Container sx={{ py: 1 }} maxWidth="md">
+
+      {varaukset.length > 0 && login ?
+        <div>
+          <Typography variant="h5" align="left" color="text.primary" paragraph sx={{ mt: 4 }}>
+            Majoitusvaraukset
+          </Typography>
+          <KayttajanVarauksetDropBox data={varaukset} varaus_id={varaus_id} setVaraus_id={setVaraus_id} />
+        </div>
+        : null}
+
       {/* End hero unit */}
-      <Grid container spacing={4}>
+      <Grid container spacing={4} style={{ marginTop: 20 }}>
         {data.map((a, index) => (
           <Grid item key={a.palvelu_id} xs={12} sm={6} md={4}>
             <Card
@@ -104,7 +120,7 @@ const PalveluKortti = ({ data }) => {
                   {a.nimi} - {a.sijainti}
                 </Typography>
                 <Typography>
-                  {a.kuvaus}<br/>
+                  {a.kuvaus}<br />
                   Hinta: {a.hintayhteensa} €
                 </Typography>
               </CardContent>

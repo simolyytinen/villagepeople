@@ -40,8 +40,6 @@ const Kortti = ({data, alkuPvm, loppuPvm}) => {
           {
             asiakas_id: kayttaja, //kirjautuneen käyttäjän ID contextista
             mokki_id: majoitus.a.mokki_id, //mökin ID contextista
-           /*  varattu_pvm : varattu_pvm, //tulee SQL-lauseessa
-            vahvistus_pvm : vahvistus_pvm, //tulee SQL-lauseessa */
             varattu_alkupvm : moment(alkuPvm).format("YYYY-MM-DD 14:00"),
             varattu_loppupvm : moment(loppuPvm).format("YYYY-MM-DD 12:00") 
           })

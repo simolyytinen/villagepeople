@@ -19,12 +19,13 @@ const VarausHallinta = () => {
     const [hae, setHae] = useState(0);
     const [poistaId, setPoistaId] = useState(-1);
     const [muokkaus, setMuokkaus] = useState(false);
+    const [alkuPvm, setAlkuPvm] = useState("");
+    const [loppuPvm, setLoppuPvm] = useState("");
+    const [varaus_id, setVaraus_id] = useState("");
 
     const [muokkausData, setMuokkausData] = useState("");
     const [muokattavaVaraus, setMuokattavaVaraus] = useState("");
-    const [lisaysData, setLisaysData] = useState("");
 
-    const [asiakasId, setAsiakasId] = useState("");
     const [alueId, setAlueId] = useState("");
     const [virhe, setVirhe] = useState(false);
 
@@ -48,18 +49,39 @@ const VarausHallinta = () => {
     }, [server])
 
     //Varauksien haku kannasta
-    useEffect(()=>{
+    useEffect(() => {
         const funktio = () => {
             let api = server + "/api/varaukset/";
             fetch(api)
-            .then(response => response.json())
-            .then((data) => {
-                console.log(data);
-                setVaraukset(data)})
-            .catch(err => console.log(err));
+                .then(response => response.json())
+                .then((data) => {
+                    console.log(data);
+                    setVaraukset(data)
+                })
+                .catch(err => console.log(err));
         }
         /* if (alueId !== "") */ funktio();
     }, [hae, /* alueId, */ server])
+
+
+    useEffect(()=>{
+        const funktio = () => {
+            const api = server + "/api/varaukset";
+            console.log("varauksen muokkaus useEffect", JSON.stringify(muokkausData));
+            fetch(api, {
+                method: "PUT",
+                headers: { 'Content-Type' : 'application/json'},
+                body: JSON.stringify(muokkausData)
+            })
+            .then((res) => {
+                setHae(hae => hae + 1);
+                setMuokkausData("");
+            })
+            .catch(err => console.log(err))
+        }
+        if (muokkausData !== "") funktio()
+    }, [muokkausData, server])
+
 
     // Muokkaaminen
     const muokkausClick = (varaus) => {
@@ -67,32 +89,35 @@ const VarausHallinta = () => {
         setMuokkaus(true);
     }
 
+    const tallennaClick = (data) => {
+        setMuokkausData({
+            // varaus_id: muokattavaVaraus.varaus_id,
+            // varattu_alkupvm : muokattavaVaraus.alkuPvm,
+            // varattu_loppupvm : muokattavaVaraus.loppuPvm,
+            ...data
+        });
+        setMuokkaus(false);
+    }
+
     const poistaClick = (id) => {
 
     }
 
-    const tallennaClick = () => {
-
-    }
-
-    const lisaaClick = () => {
-
-    }
 
     return (
         <Container maxWidth="xl">
             <Typography variant="h3" align="center" color="text.primary" paragraph sx={{ mt: 4 }}>
                 Varausten hallinta
             </Typography>
-            <Typography variant="h4" align="left" color="text.primary" paragraph sx={{mt: 4}}>
+            <Typography variant="h4" align="left" color="text.primary" paragraph sx={{ mt: 4 }}>
                 Valitse alue
             </Typography>
-            <AlueDropBox alueid={alueId} setAlueId={setAlueId} data={toimipaikat}/>
+            <AlueDropBox alueid={alueId} setAlueId={setAlueId} data={toimipaikat} />
             <Grid container spacing={4}>
                 <Grid item xs={12} md={12}>
                     <Typography variant="h4" align="left" color="text.primary" paragraph sx={{ mt: 4 }}>
                     </Typography>
-                    <VarausForm muokataanko={muokkaus} setMuokataanko={setMuokkaus} muokattavaVaraus={muokattavaVaraus} tallennaClick={tallennaClick} lisaaClick={lisaaClick} />
+                    <VarausForm muokataanko={muokkaus} setMuokataanko={setMuokkaus} muokattavaVaraus={muokattavaVaraus} tallennaClick={tallennaClick} />
                 </Grid>
                 <Grid item xs={12} md={12}>
                     <Typography variant="h6" align="left" color="red" paragraph sx={{ mt: 4 }}>

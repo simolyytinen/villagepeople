@@ -19,6 +19,7 @@ module.exports = {
 
     getVaraukset: (mokki_id, asiakas_id) => {
         let sql = "SELECT * FROM varaus WHERE mokki_id LIKE ? AND asiakas_id LIKE ?";
+        console.log(sql);
         return executeSQL(sql, [mokki_id, asiakas_id]);
     },
 
@@ -26,22 +27,26 @@ module.exports = {
         let sql = "SELECT varaus_id, v.asiakas_id, v.mokki_id, m.mokkinimi, varattu_pvm, vahvistus_pvm, varattu_alkupvm, varattu_loppupvm, a.etunimi, a.sukunimi, al.nimi as sijainti FROM varaus v ";
         sql = sql + "JOIN asiakas a ON v.asiakas_id = a.asiakas_id ";
         sql = sql + "JOIN mokki m on v.mokki_id = m.mokki_id JOIN alue al on m.alue_id = al.alue_id";
+        console.log(sql);
         return executeSQL(sql, []);
     },
 
     deleteVaraus: (varaus_id) => {
         let sql = "DELETE FROM varaus WHERE varaus_id=?";
+        console.log(sql);
         return executeSQL(sql, [varaus_id]);
     },
 
     insertVaraus: (asiakas_id, mokki_id, /* varattu_pvm, vahvistus_pvm, */varattu_alkupvm, varattu_loppupvm) => {
         let sql = "INSERT INTO varaus (asiakas_id, mokki_id, varattu_pvm, vahvistus_pvm, varattu_alkupvm, varattu_loppupvm) values (?, ?, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP()+INTERVAL 1 DAY, ?, ?)"
+        console.log(sql);
         return executeSQL(sql, [asiakas_id, mokki_id, /* varattu_pvm, vahvistus_pvm, */varattu_alkupvm, varattu_loppupvm]);
     },
 
-    updateVaraus: (varattu_alkupvm, varattu_loppupvm, varaus_id) => {
-        let sql = "UPDATE varaus SET varattu_alkupvm=?, varattu_loppupvm=? WHERE varaus_id=?";
-        return executeSQL(sql, [varattu_alkupvm, varattu_loppupvm, varaus_id]);
+    updateVaraus: (alkupvm, loppupvm, varaus_id) => {
+        let sql = "UPDATE varaus SET varattu_alkupvm=from_unixtime(?), varattu_loppupvm=from_unixtime(?) WHERE varaus_id=?";
+        console.log(sql);
+        return executeSQL(sql, [alkupvm, loppupvm, varaus_id]);
     },
 
 }

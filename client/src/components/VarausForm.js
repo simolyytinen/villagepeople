@@ -1,16 +1,23 @@
-import { Box, Button, TextField, Grid } from "@mui/material";
+import { Box, Button, TextField, Grid, Stack } from "@mui/material";
 import { useEffect, useState } from 'react';
-import DatePickers from './DatePicker';
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
+import moment from "moment";
 
-export default function VarausForm({ muokataanko, setMuokataanko, muokattavaVaraus, tallennaClick, lisaaClick }) {
+export default function VarausForm({ muokataanko, setMuokataanko, muokattavaVaraus, tallennaClick }) {
+
+  // moment.alkuPvm.format("YYYY-MM-DD 14:00:00")
 
   const [alkuPvm, setAlkuPvm] = useState("");
   const [loppuPvm, setLoppuPvm] = useState("");
+  const [varaus_id, setVaraus_id] = useState("");
 
   useEffect(() => {
     const funktio = () => {
+      setVaraus_id(muokattavaVaraus.varaus_id);
       setAlkuPvm(muokattavaVaraus.alkuPvm);
-      setLoppuPvm(muokattavaVaraus.loppuPvm)
+      setLoppuPvm(muokattavaVaraus.loppuPvm);
     }
     if (muokataanko) funktio();
   }, [muokataanko, muokattavaVaraus])
@@ -20,14 +27,17 @@ export default function VarausForm({ muokataanko, setMuokataanko, muokattavaVara
     muokataanko ? tallennaClick({
       varattu_alkupvm: alkuPvm,
       varattu_loppupvm: loppuPvm,
+      varaus_id: varaus_id
     }) :
     setAlkuPvm("");
     setLoppuPvm("");
+    setVaraus_id("");
   };
 
   const peruuta = () => {
     setAlkuPvm("");
     setLoppuPvm("");
+    setVaraus_id("");
 
     setMuokataanko(false);
   }
@@ -36,7 +46,33 @@ export default function VarausForm({ muokataanko, setMuokataanko, muokattavaVara
     <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
       <Grid container spacing={4}>
         <Grid item xs={12} md={6}>
-          <DatePickers alkuPvm={alkuPvm} loppuPvm={loppuPvm} setAlkuPvm={setAlkuPvm} setLoppuPvm={setLoppuPvm} />
+        <Stack
+              sx={{ pt: 1 }}
+              direction="row"
+              spacing={2}
+              justifyContent="center"
+            >
+                <LocalizationProvider dateAdapter={AdapterMoment}>
+                    <DatePicker
+                      label="Varaus alkaa"
+                      value={alkuPvm}
+                      onChange={(newValue) => {
+                        setAlkuPvm(newValue);
+                      }}
+
+                      // onChange={(event)=>{setAlkuPvm(event.target.value)}}
+                      renderInput={(params) => <TextField {...params} />}
+                    />
+                    <DatePicker
+                      label="Varaus loppuu"
+                      value={loppuPvm}
+                      onChange={(newValue) => {
+                        setLoppuPvm(newValue);
+                      }}
+                      renderInput={(params) => <TextField {...params} />}
+                    />
+              </LocalizationProvider>
+            </Stack>
         </Grid>
       </Grid>
 

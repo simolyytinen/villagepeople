@@ -74,8 +74,6 @@ module.exports = {
 
         let asiakas_id = req.body.asiakas_id;
         let mokki_id = req.body.mokki_id;
-        // let varattu_pvm = req.body.varattu_pvm; //kantaan menee SQL:ssä current_timestamp()
-        // let vahvistus_pvm = req.body.vahvistus_pvm; //tämä pitäis tulla clientilta, kun kuitataan varaus jotenkin? nyt kantaan menee SQL:ssä current_timestamp + 1 pv
         let varattu_alkupvm = req.body.varattu_alkupvm;
         let varattu_loppupvm = req.body.varattu_loppupvm;
 
@@ -100,10 +98,13 @@ module.exports = {
             let varattu_alkupvm = req.body.varattu_alkupvm;
             let varattu_loppupvm = req.body.varattu_loppupvm;
 
-            let c = await varausSql.updateVaraus(varattu_alkupvm, varattu_loppupvm, varaus_id);
+            let alkupvm = new Date(varattu_alkupvm).valueOf() / 1000;
+            let loppupvm = new Date(varattu_loppupvm).valueOf() / 1000;
+
+            let c = await varausSql.updateVaraus(alkupvm, loppupvm, varaus_id);
 
             res.statusCode = 200;
-            res.json({ msg: "Palvelun muokkaaminen onnistui." });
+            res.json({ msg: "Varauksen muokkaaminen onnistui." });
         }
         catch (err) {
             console.log("Error in server")

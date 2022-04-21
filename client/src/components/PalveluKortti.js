@@ -90,7 +90,7 @@ const PalveluKortti = ({ data }) => {
   return (
     <Container sx={{ py: 1 }} maxWidth="md">
 
-      {varaukset.length > 0 && login ?
+      {varaukset.length > 0 && kayttaja ?
         <div>
           <Typography variant="h5" align="left" color="text.primary" paragraph sx={{ mt: 4 }}>
             Majoitusvaraukset

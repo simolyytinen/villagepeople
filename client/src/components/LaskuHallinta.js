@@ -7,6 +7,7 @@ import LaskuForm from "./LaskuForm";
 import { DataContext } from "../App";
 
 
+
 const LaskuHallinta = () => {
     // tuodaan contextista serverin osoite
     const { server } = useContext(DataContext);
@@ -131,8 +132,8 @@ const LaskuHallinta = () => {
         if (muokkausData !== "") funktio()
     }, [muokkausData, server])
 
-
-
+      
+    
     return (
         <Container maxWidth="xl">
             <Typography variant="h3" align="center" color="text.primary" paragraph sx={{mt: 4}}>
@@ -152,6 +153,7 @@ const LaskuHallinta = () => {
                     </Typography>
                     <LaskuTaulukko sarakkeet={sarakkeet} data={laskut} poista={poistaClick} muokkaa={muokkausClick} />
                 </Grid>
+                
             </Grid>
             
         </Container>

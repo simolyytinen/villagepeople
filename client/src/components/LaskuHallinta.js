@@ -6,19 +6,18 @@ import LaskuTaulukko from "./LaskuTaulukko";
 import LaskuForm from "./LaskuForm";
 import { DataContext } from "../App";
 
-// Ei toimi vielä, pohjana asiakashallinta
 
 const LaskuHallinta = () => {
     // tuodaan contextista serverin osoite
     const { server } = useContext(DataContext);
 
-    const [asiakkaat, setAsiakkaat] = useState([]);
+    const [laskut, setLaskut] = useState([]);
     const [hae, setHae] = useState(0);
     const [poistaId, setPoistaId] = useState(-1);
     const [muokkaus, setMuokkaus] = useState(false);
     
     const [muokkausData, setMuokkausData] = useState("");
-    const [muokattavaAsiakas, setMuokattavaAsiakas] = useState("");
+    const [muokattavaLasku, setMuokattavaLasku] = useState("");
     const [lisaysData, setLisaysData] = useState("");
 
     const [virhe, setVirhe] = useState(false);
@@ -31,33 +30,33 @@ const LaskuHallinta = () => {
     // Asiakkaiden hakeminen tietokannasta
     useEffect(()=>{
         const funktio = () => {
-            let api = server + "/api/asiakkaat/";
+            let api = server + "/api/laskut/";
             fetch(api)
             .then(response => response.json())
             .then((data) => {
                 console.log(data);
-                setAsiakkaat(data)})
+                setLaskut(data)})
             .catch(err => console.log(err));
         }
         funktio();
     }, [hae, server])
     
     
-    // Mökin poistaminen
+    // Laskun poistaminen
     const poistaClick = (id) => {
         setPoistaId(id);
     }
 
     useEffect(()=>{
         const funktio = () => {
-            const api = server + "/api/asiakas/" + poistaId;
+            const api = server + "/api/laskut/" + poistaId;
             fetch(api, {
                 method: "DELETE"
             })
             .then((res) => {
                 if (res.status === 600) {
                     setVirhe(true);
-                    console.log("Ei voida poistaa, asiakkaaseen liittyy varauksia.") 
+                    console.log("Ei voida poistaa, laskuun liittyy varauksia.") 
                     setTimeout(()=>{
                         setVirhe(false);
                     }, 5000) 
@@ -73,7 +72,7 @@ const LaskuHallinta = () => {
 
     }, [poistaId, server])
 
-    // Mökin lisääminen
+    // laskun lisääminen
     const lisaaClick = (data) => {
         setLisaysData({
             ...data
@@ -83,7 +82,7 @@ const LaskuHallinta = () => {
 
      useEffect(()=>{
         const funktio = () => {
-            const api = server + "/api/asiakas";
+            const api = server + "/api/laskut";
             fetch(api, {
                 method: "POST",
                 headers: { 'Content-Type' : 'application/json'},
@@ -101,14 +100,14 @@ const LaskuHallinta = () => {
 
 
      // Muokkaaminen
-     const muokkausClick = (asiakas) => {
-         setMuokattavaAsiakas(asiakas)
+     const muokkausClick = (lasku) => {
+         setMuokattavaLasku(lasku)
          setMuokkaus(true);
      }
 
      const tallennaClick = (data) => {
         setMuokkausData({
-            asiakas_id : muokattavaAsiakas.asiakas_id,
+            lasku_id : muokattavaLasku.lasku_id,
             ...data
         });
         setMuokkaus(false);
@@ -116,7 +115,7 @@ const LaskuHallinta = () => {
 
     useEffect(()=>{
         const funktio = () => {
-            const api = server + "/api/asiakas";
+            const api = server + "/api/laskut";
             
             fetch(api, {
                 method: "PUT",
@@ -145,13 +144,13 @@ const LaskuHallinta = () => {
                     <Typography variant="h4" align="left" color="text.primary" paragraph sx={{mt: 4}}>
                     {muokkaus ? "Muokkaa laskua" : "Lisää uusi lasku"}
                     </Typography>
-                    <LaskuForm muokataanko={muokkaus} setMuokataanko={setMuokkaus} muokattavaAsiakas={muokattavaAsiakas} tallennaClick={tallennaClick} lisaaClick={lisaaClick}/>
+                    <LaskuForm muokataanko={muokkaus} setMuokataanko={setMuokkaus} muokattavaLasku={muokattavaLasku} tallennaClick={tallennaClick} lisaaClick={lisaaClick}/>
                 </Grid>
                 <Grid item xs={12} md={12}>
                     <Typography variant="h6" align="left" color="red" paragraph sx={{mt: 4}}>
                     {virhe ? "Asiakasta ei voida poistaa, siihen liittyy varauksia" : ""}
                     </Typography>
-                    <LaskuTaulukko sarakkeet={sarakkeet} data={asiakkaat} poista={poistaClick} muokkaa={muokkausClick} />
+                    <LaskuTaulukko sarakkeet={sarakkeet} data={laskut} poista={poistaClick} muokkaa={muokkausClick} />
                 </Grid>
             </Grid>
             

@@ -27,7 +27,7 @@ module.exports = {
         try {
 
             console.log("haetaan kaikki laskut");
-            let c = await laskuSql.getLaskut();
+            let c = await sql.getLaskut();
 
             res.status = 200;
             res.json(c);
@@ -47,14 +47,14 @@ module.exports = {
             let alv = req.body.alv; 
             
 
-            let t = await varausSql.getVaraukset(varaus_id);
-            if (t.length > 0) {
+            
+            
                 let a = await sql.postLasku(varaus_id, summa, alv);
 
                 res.statusCode = 201;
             res.json({msg : "Laskun lisääminen onnistui."});
                 
-            }
+            
             
             
             
@@ -72,18 +72,12 @@ module.exports = {
         try {
             let lasku_id = req.params.lasku_id;
 
-            let v = await laskuSql.getLaskut(lasku_id, "%");
             
-            if (v.length == 0) {
                 let a = await sql.deleteLasku(lasku_id);
 
                 res.statusCode = 200;
                 res.json({msg : "Laskun poistaminen onnistui."});
-            }
-            else {
-                res.statusCode = 600;
-                res.json({msg : "Laskua ei voida poistaa, siihen liittyy varauksia"});
-            }
+           
 
             
         }
@@ -96,15 +90,16 @@ module.exports = {
 
     muokkaaLasku: async (req, res) => {
         try {
-            let lasku_id = req.body.lasku_id;
+            
             let varaus_id = req.body.varaus_id;
             let summa = req.body.summa; 
             let alv = req.body.alv; 
+            let lasku_id = req.body.lasku_id;
             
 
             // samat tarkastukset kun lisäyksen tapauksessa?
 
-            let a = await sql.updateLasku(lasku_id, varaus_id, summa, alv);
+            let a = await sql.updateLasku(varaus_id, summa, alv, lasku_id);
 
             res.statusCode = 200;
             res.json({msg : "Laskun muokkaaminen onnistui."});

@@ -8,8 +8,10 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { IconButton } from '@mui/material';
 import { Delete, Edit } from '@mui/icons-material';
+import generatePDF from './reportGenerator';
+import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 
-// EI TOIMI
+
 
 export default function LaskuTaulukko({sarakkeet, data, poista, muokkaa}) {
 
@@ -17,16 +19,16 @@ export default function LaskuTaulukko({sarakkeet, data, poista, muokkaa}) {
     <TableContainer style={{marginTop: 32}} component={Paper}>
       <Table aria-label="simple table">
         <TableHead>
-          <TableRow key={0}>
-            {sarakkeet.map((sarake)=>(
-                <TableCell component="th" align="center">{sarake}</TableCell>
+          <TableRow>
+            {sarakkeet.map((sarake, index)=>(
+                <TableCell key={index} component="th" align="center">{sarake}</TableCell>
             ))}
           </TableRow>
         </TableHead>
         <TableBody>
           {data.map((row) => (
             <TableRow
-              key={row.id}
+              key={row.lasku_id}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell align="center">{row.lasku_id}</TableCell>
@@ -40,6 +42,7 @@ export default function LaskuTaulukko({sarakkeet, data, poista, muokkaa}) {
                   <IconButton onClick={()=>{muokkaa(row)}}>
                     <Edit />
                   </IconButton>
+                  <IconButton onClick={()=> {generatePDF(row)}}><PictureAsPdfIcon /></IconButton>
               </TableCell>
             </TableRow>
           ))}

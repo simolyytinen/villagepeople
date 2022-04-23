@@ -9,6 +9,7 @@ import { DataContext } from "../App";
 
 
 
+
 const LaskuHallinta = () => {
     // tuodaan contextista serverin osoite
     const { server } = useContext(DataContext);
@@ -26,7 +27,7 @@ const LaskuHallinta = () => {
 
 
     const sarakkeet = [
-        "Lasku ID", "Varaus ID", "Summa", "Alv", "Muuta/Poista"
+        "Lasku ID", "Varaus ID", "Summa", "Alv", "Laskutuspvm", "Maksuehto", "Hallinta", "Maksettu"
     ];
 
     // Asiakkaiden hakeminen tietokannasta

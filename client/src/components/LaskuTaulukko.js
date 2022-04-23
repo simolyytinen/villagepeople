@@ -6,7 +6,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { IconButton } from '@mui/material';
+import { Checkbox, IconButton } from '@mui/material';
 import { Delete, Edit } from '@mui/icons-material';
 import generatePDF from './reportGenerator';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
@@ -14,6 +14,14 @@ import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 
 
 export default function LaskuTaulukko({sarakkeet, data, poista, muokkaa}) {
+
+  const current = new Date();
+  const date = `${current.getDate()}/${current.getMonth()+1}/${current.getFullYear()}`;
+
+  const erapaiva = "10pv netto"
+
+
+  
 
   return (
     <TableContainer style={{marginTop: 32}} component={Paper}>
@@ -35,6 +43,8 @@ export default function LaskuTaulukko({sarakkeet, data, poista, muokkaa}) {
               <TableCell align="center">{row.varaus_id}</TableCell>
               <TableCell align="center">{row.summa}</TableCell>
               <TableCell align="center">{row.alv}</TableCell>
+              <TableCell align="center">{date}</TableCell>
+              <TableCell align="center">{erapaiva}</TableCell>
               <TableCell align="center">
                   <IconButton onClick={()=>{poista(row.lasku_id)}}>
                     <Delete />
@@ -44,6 +54,7 @@ export default function LaskuTaulukko({sarakkeet, data, poista, muokkaa}) {
                   </IconButton>
                   <IconButton onClick={()=> {generatePDF(row)}}><PictureAsPdfIcon /></IconButton>
               </TableCell>
+              <TableCell align="center"><Checkbox /></TableCell>
             </TableRow>
           ))}
         </TableBody>

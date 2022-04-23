@@ -21,9 +21,8 @@ module.exports = {
         try {
             let varaus_id = req.body.varaus_id;
             let palvelu_id = req.body.palvelu_id;
-            let lkm = req.body.lkm;
 
-            let v = await sql.insertVarauksenPalvelut(varaus_id, palvelu_id, lkm);
+            let v = await sql.insertVarauksenPalvelut(varaus_id, palvelu_id);
 
             res.statusCode = 200;
             res.json(v);

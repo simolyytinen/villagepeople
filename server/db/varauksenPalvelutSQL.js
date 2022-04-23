@@ -35,10 +35,10 @@ module.exports = {
         return executeSQL(sql, [varaus_id]);
     },
 
-    insertVarauksenPalvelut: (varaus_id, palvelu_id, lkm) => {
-        let sql = "INSERT INTO varauksen_palvelut (varaus_id, palvelu_id, lkm) values (?, ?, ?)";
+    insertVarauksenPalvelut: (varaus_id, palvelu_id) => {
+        let sql = "INSERT INTO varauksen_palvelut (varaus_id, palvelu_id, lkm) values (?, ?, 1)";
         console.log(sql);
-        return executeSQL(sql, [varaus_id, palvelu_id, lkm]);
+        return executeSQL(sql, [varaus_id, palvelu_id]);
     },
 
     // updateVaraus: (varattu_alkupvm, varattu_loppupvm, varaus_id) => {

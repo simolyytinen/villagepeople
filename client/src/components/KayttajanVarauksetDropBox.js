@@ -11,7 +11,6 @@ import moment from "moment";
 export default function VarauksenPalvelutDroppi({ varaus_id, setVaraus_id, data }) {
 
   const handleChange = (event) => {
-    console.log("varaukset droppi varausID " +event)
     setVaraus_id(event);
   };
 

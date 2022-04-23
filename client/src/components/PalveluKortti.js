@@ -9,7 +9,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { DataContext } from "../App";
 import Dialogi from "./Dialogi";
-import KayttajanVarauksetDropBox from "./KayttajanVarauksetDropBox.js.js";
+import KayttajanVarauksetDropBox from "./KayttajanVarauksetDropBox.js";
 
 const PalveluKortti = ({ data }) => {
 
@@ -17,7 +17,6 @@ const PalveluKortti = ({ data }) => {
   const [openDialog, setOpenDialog] = useState(false);
   const [varaus_id, setVaraus_id] = useState("");
   const [palvelu_id, setPalvelu_id] = useState("");
-  const [lkm, setLkm] = useState("");
   const [varaukset, setVaraukset] = useState("");
   // const [varauksenPalvelut, setVarauksenPalvelut] = useState("");
 
@@ -25,29 +24,26 @@ const PalveluKortti = ({ data }) => {
   // ********** PALVELUVARAUKSEN VIEMINEN KANTAAN **********
   //VARAUS_ID tulee käyttäjän tekemästä mökkivarauksesta, tehdään haku kantaan käyttäjä ID:llä ja kohdennetaan palvelun varaus tietylle majoitusvaraukselle? Tähän droppivalikko, josta asiakas valitsee mille varaukselle haluaa palvelun lisätä? value={varaus_id}
   //PALVELU_ID tulee palvelukortin tiedoista
-  //LKM, Tähän droppivalikko/valitsinrulla lukumäärästä. Jos sovitaan, että se tarkoittaa henkilöiden määrää ko. palvelulle? Hinta on sitten hinta*lkm
+  //Lkm on aina 1, määritetty suoraan SQL lauseessa
 
 
   // Käyttäjän majoitusvarauksien haku kannasta
   useEffect(() => {
-    const funktio = () => {
-      let api = server + "/api/varaukset/" + kayttaja;
-      fetch(api)
-        .then(response => response.json())
-        .then((data) => {
-          console.log(data);
-          setVaraukset(data)
-        })
-        .catch(err => console.log(err));
-    }
-    /* if (alueId !== "") */ funktio();
+    let api = server + "/api/varaukset/" + kayttaja;
+    fetch(api)
+      .then(response => response.json())
+      .then((data) => {
+        console.log(data);
+        setVaraukset(data)
+      })
+      .catch(err => console.log(err));
   }, [server])
 
 
   //Palveluvarauksen lisääminen kantaan varauksen_palvelut tauluun
   useEffect(() => {
     const funktio = () => {
-      console.log("useEffect palveluvaraus majoitusvaraukselle")
+      console.log("useEffect palveluvaraus majoitusvaraukselle" + varaus_id)
       const api = server + "/api/varauksenPalvelut";
 
       fetch(api, {
@@ -56,34 +52,31 @@ const PalveluKortti = ({ data }) => {
         body: JSON.stringify(
           {
             varaus_id: varaus_id,
-            palvelu_id: palvelut.a.palvelu_id,
-            lkm: 1
-
+            palvelu_id: palvelu_id,
           })
       })
         .then((res) => {
-          // setHae(hae => hae + 1)
-          console.log("");
-          setPalvelut("");
+          console.log(varaus_id, palvelu_id);
+          // setPalvelut("");
           setVaraus_id("");
           setPalvelu_id("");
-          setLkm("");
         })
         .catch(err => console.log(err))
     }
 
-    if (varaus_id > 0 && palvelu_id > 0 && lkm > 0 && openDialog == false)
+    if (varaus_id > 0 && palvelu_id > 0 /* && openDialog == false */)
       funktio();
-  }, [openDialog, server])
+  }, [/* openDialog, */varaus_id, palvelu_id/* , server */])
 
   const varaa = (e) => {
+    setPalvelu_id(e);
+    // setVaraus_id(varaus_id);
+    console.log("varaus_id " + varaus_id + " palveluid " + palvelu_id)
+
     setOpenDialog(() => true)
-    setPalvelut(e);
-    setVaraus_id(varaus_id);
-    console.log("varaus_id, palveluid " + varaus_id + " " + palvelut.a.palvelu_id)
     // console.log("id "+palvelut.a.palvelu_id + palvelut.a.nimi);
-    // console.log(palvelut);
-    
+    // console.log("palvelut",palvelut);
+
   }
 
 
@@ -98,7 +91,6 @@ const PalveluKortti = ({ data }) => {
           <KayttajanVarauksetDropBox data={varaukset} varaus_id={varaus_id} setVaraus_id={setVaraus_id} />
         </div>
         : null}
-
       {/* End hero unit */}
       <Grid container spacing={4} style={{ marginTop: 20 }}>
         {data.map((a, index) => (
@@ -125,8 +117,8 @@ const PalveluKortti = ({ data }) => {
                 </Typography>
               </CardContent>
               <CardActions>
-                {login ?
-                  <Button size="small" onClick={(e) => { varaa({ a }) }}>Varaa</Button>
+              {varaukset.length > 0 && kayttaja ?
+                  <Button size="small" onClick={(e) => { varaa(a.palvelu_id) }}>Varaa</Button>
                   : null}
               </CardActions>
             </Card>

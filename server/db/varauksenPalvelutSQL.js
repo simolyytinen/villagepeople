@@ -46,4 +46,14 @@ module.exports = {
     //     return executeSQL(sql, [varattu_alkupvm, varattu_loppupvm, varaus_id]);
     // },
 
+    getVarauksenPalvelutEhdoilla: (alue_id, alkuPvm, loppuPvm) => {
+        let sql = "SELECT a.palvelu_id, b.nimi, d.etunimi, d.sukunimi, c.varattu_alkupvm, c.varattu_loppupvm, a.lkm FROM varauksen_palvelut a " +
+        "JOIN palvelu b ON a.palvelu_id = b.palvelu_id " +
+        "JOIN varaus c ON a.varaus_id = c.varaus_id " +
+        "JOIN asiakas d ON c.asiakas_id = d.asiakas_id " +
+        "WHERE b.alue_id = ? AND c.varattu_alkupvm BETWEEN ? AND ? " +
+        "OR c.varattu_loppupvm BETWEEN ? AND ? ORDER BY c.varattu_alkupvm";
+        return executeSQL(sql, [alue_id, alkuPvm, loppuPvm, alkuPvm, loppuPvm])
+    }
+
 }

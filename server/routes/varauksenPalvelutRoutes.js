@@ -17,5 +17,8 @@ router.route('/api/varauksenPalvelut/:varaus_id').
 // router.route('/api/varauksenPalvelut/:varaus_id').
 //     put(ctrl.muokkaaVarauksenPalvelut);
 
+router.route('/api/varauksenPalvelutEhdoilla').
+    post(ctrl.haeVarauksenPalvelutEhdoilla);
+
 // Julkaistaan ao. funktiot tämän js-filun ulkopuolelle
 module.exports = router;

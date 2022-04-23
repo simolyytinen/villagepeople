@@ -22,27 +22,19 @@ values (12100, "Harri", "Hursten", "Olarinkatu 77", "harski@gmail.com", "0405215
 (95980, "Seija", "Sailas", "Tunturitue 92", "seija.s@hotmail.com", "0502020213");
 
 insert into varaus (asiakas_id, mokki_id, varattu_pvm, vahvistus_pvm, varattu_alkupvm, varattu_loppupvm)
-values (1, 1, "2022-04-14", "2022-04-15", "2022-06-06", "2022-07-06"),
-(2, 2, "2022-05-13", "2022-05-13", "2022-08-01", "2022-08-10"),
-(3, 3, "2022-04-16", "2022-04-16", "2022-11-01", "2022-12-31"),
-(4, 4, "2022-05-12", "2022-05-12", "2022-05-13", "2022-05-14"),
-(5, 5, "2022-06-05", "2022-06-07", "2022-09-25", "2022-10-01");
+values (1, 1, NOW(), NOW(), NOW(), NOW());
 
 insert into palvelu (alue_id, nimi, tyyppi, kuvaus, hinta, alv)
-values (1, "Paljun vuokraus", 1, "3h vuokra", 350, 24),
- (2, "Hiihtokoulu", 1, "1h hiihtokoulua ammattilaisen kanssa", 70, 24),
-  (3, "Rekiajelu", 0, "6 koiran valjakko, kesto n. 2h", 300, 24),
-   (4, "Paljuvuokra", 1, "3h vuokra, sis. vedet ja lämmityspuut", 270, 24),
-    (5, "Lumikenkäily tunturissa", 0, "2h lumikenkäily oppaan kanssa", 250, 24),
-     (6, "Jäärata carting", 1, "1h vuoro jääradalle cartin-autoilla, max. 5 hlö", 600, 24);
+values (1, ""), (2, ""), (3, ""), (4, ""), (5, ""), (6, ""), (7, ""), (8, "");
 
 insert into lasku (varaus_id, summa, alv)
 values (), (), (), (), ();
 
-insert into varauksen_palvelut (varaus_id, palvelu_id, lkm)
-values (), (), (), (), ();
+insert into varauksen_pavelut (varaus_id, palvelu_id, lkm)
+values (3, 5, 2), (8, 5, 1);
 
 
 SET SQL_SAFE_UPDATES = 0;
 delete from mokki;
 delete from posti;
+

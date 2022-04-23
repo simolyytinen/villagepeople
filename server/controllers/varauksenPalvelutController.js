@@ -51,5 +51,25 @@ module.exports = {
             res.json({ status: "NOT OK", msg: err });
         }
     },
+
+    haeVarauksenPalvelutEhdoilla: async (req, res) => {
+        try {
+            let alue_id = req.body.alue_id;
+            let alkuPvm = req.body.alkuPvm + " 00:00:00";
+            let loppuPvm = req.body.loppuPvm + " 23:59:00";
+            
+            console.log(req.body);
+
+            let palvelut = await sql.getVarauksenPalvelutEhdoilla(alue_id, alkuPvm, loppuPvm);
+            
+            res.statusCode = 200;
+            res.json(palvelut);
+        }
+        catch (err) {
+            console.log("Error in server")
+            res.statusCode = 400;
+            res.json({msg : err});
+        }
+    },
  
 }

@@ -16,6 +16,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { Stack } from "@mui/material";
 
 
 const Raportointi = () => {
@@ -41,9 +42,9 @@ const Raportointi = () => {
 
 
     const sarakkeet = [
-        "Varauksen tunnus", "Varaajan nimi", "Mökin nimi", "Varauksen alku", "Varauksen loppu"
+        "Varauksen tunnus", "Mökin nimi", "Varauksen alku", "Varauksen loppu", "Varaajan nimi"
     ];
-    const palveluSarakkeet = [];
+    const palveluSarakkeet = ["Palvelun tunnus", "Palvelun nimi", "Varauksen alku", "Varauksen loppu", "Varaajan nimi"];
 
     const auth = "Bearer " + token;
 
@@ -97,6 +98,25 @@ const Raportointi = () => {
         }
     }
 
+    //Varauksien palveluiden haku kannasta
+    useEffect(() => {
+        const funktio = () => {
+            let api = server + "/api/varauksenPalvelutEhdoilla";
+            fetch(api, {
+            method: "POST",
+            headers: { 'Content-Type' : 'application/json'},
+            body: JSON.stringify(palveluHaku)
+            })
+            .then(response => response.json())
+            .then((data) => {
+                console.log(data);
+                setPalvelut(data)
+            })
+            .catch(err => console.log(err));
+        }
+        if (palveluHaku !== "") funktio();
+    }, [ palveluHaku, server])
+
     const haePalveluVaraukset = () => {
         if (alueId === "") setVirhe("Valitse alue ensin");
         else if (alkuPvm === null || loppuPvm === null) setVirhe("Valitse päivämäärät");
@@ -121,7 +141,7 @@ const Raportointi = () => {
 
 
     return (
-        <Container maxWidth="xl">
+        <Container maxWidth="xl" sx={{mb: 6}}>
             <Typography variant="h3" align="center" color="text.primary" paragraph sx={{mt: 4}}>
               Raportointi
             </Typography>
@@ -137,11 +157,18 @@ const Raportointi = () => {
                     <Typography variant="h4" align="center" color="text.primary" paragraph sx={{mt: 4}}>
                     Valitse toiminto
                     </Typography>
-                    <Button variant={showMajoitus ? "contained" : "outlined"} onClick={()=>majoitusClick()} sx={{ width: '45%', height: "56px", mb: 2 }}>Majoitusraportti</Button>
-                    <Button variant={showPalvelu ? "contained" : "outlined"} onClick={()=>palveluClick()} sx={{ width: '45%', height: "56px", ml: 2, mb: 2 }}>Palveluraportti</Button>
+                    <Button variant={showMajoitus ? "contained" : "outlined"} onClick={()=>majoitusClick()} sx={{ width: '45%', height: '56px', mb: 2 }}>Majoitusraportti</Button>
+                    <Button variant={showPalvelu ? "contained" : "outlined"} onClick={()=>palveluClick()} sx={{ width: '45%', height: '56px', ml: 2, mb: 2 }}>Palveluraportti</Button>
                 </Grid>
-                <Grid item xs={12} md={12}>
-                    <LocalizationProvider dateAdapter={AdapterMoment}>
+            </Grid>
+
+            <Stack
+              sx={{}}
+              direction="row"
+              spacing={2}
+              justifyContent="left"
+            >
+                <LocalizationProvider dateAdapter={AdapterMoment}>
                         <DatePicker
                         label="Alkupäivämäärä"
                         value={alkuPvm}
@@ -158,19 +185,22 @@ const Raportointi = () => {
                             setLoppuPvm(newValue);
                         }}
                         
-                        renderInput={(params) => <TextField {...params} sx={{ ml: 2}}/>}
+                        renderInput={(params) => <TextField {...params} />}
                         />
                     </LocalizationProvider>
-                </Grid>
-            </Grid>
+            </Stack>
             {/* MAJOITUSRAPORTTI */}
             {showMajoitus ?
             <>
             <Button variant="contained" onClick={()=>haeVaraukset()} sx={{ mt: 2 }} >Hae majoitusvaraus-raportti</Button>
             <Typography variant="h5" align="left" color="red" paragraph sx={{mt: 4}}>
-                    {naytaVirhe ? virhe : ""}
+            {naytaVirhe ? virhe : ""}
             </Typography>
-
+            
+            {varaukset.length == 0 ? 
+             <Typography variant="h5" align="left" color="text.primary" paragraph sx={{mt: 4}}>
+             {majoitusHaku === "" ? "" : "Ei varauksia annetuilla hakuehdoilla."}
+            </Typography> :
             <TableContainer style={{marginTop: 32}} component={Paper}>
                 <Table aria-label="simple table">
                     <TableHead>
@@ -187,15 +217,16 @@ const Raportointi = () => {
                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                         >
                         <TableCell align="center">{row.varaus_id}</TableCell>
-                        <TableCell align="center">{row.etunimi} {row.sukunimi}</TableCell>
                         <TableCell align="center">{row.mokkinimi}</TableCell>
                         <TableCell align="center">{moment(row.varattu_alkupvm).format("DD.MM.YYYY")}</TableCell>
                         <TableCell align="center">{moment(row.varattu_loppupvm).format("DD.MM.YYYY")}</TableCell>
+                        <TableCell align="center">{row.etunimi} {row.sukunimi}</TableCell>
                         </TableRow>
                     ))}
                     </TableBody>
                 </Table>
             </TableContainer>
+            }
             </> 
             : <></>}
 
@@ -206,32 +237,38 @@ const Raportointi = () => {
             <Typography variant="h5" align="left" color="red" paragraph sx={{mt: 4}}>
                     {naytaVirhe ? virhe : ""}
             </Typography>
+            {palvelut.length == 0 ? 
+            
+            <Typography variant="h5" align="left" color="text.primary" paragraph sx={{mt: 4}}>
+             {palveluHaku === "" ? "" : "Ei palvelu-varauksia annetuilla hakuehdoilla."}
+            </Typography> :
 
             <TableContainer style={{marginTop: 32}} component={Paper}>
                 <Table aria-label="simple table">
                     <TableHead>
                     <TableRow key={0}>
-                        {sarakkeet.map((sarake)=>(
+                        {palveluSarakkeet.map((sarake)=>(
                             <TableCell component="th" align="center">{sarake}</TableCell>
                         ))}
                     </TableRow>
                     </TableHead>
                     <TableBody>
-                    {varaukset.map((row) => (
+                    {palvelut.map((row) => (
                         <TableRow
-                        key={row.varaus_id}
+                        key={row.palvelu_id}
                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                         >
-                        <TableCell align="center">{row.varaus_id}</TableCell>
-                        <TableCell align="center">{row.etunimi} {row.sukunimi}</TableCell>
-                        <TableCell align="center">{row.mokkinimi}</TableCell>
+                        <TableCell align="center">{row.palvelu_id}</TableCell>
+                        <TableCell align="center">{row.nimi}</TableCell>
                         <TableCell align="center">{moment(row.varattu_alkupvm).format("DD.MM.YYYY")}</TableCell>
                         <TableCell align="center">{moment(row.varattu_loppupvm).format("DD.MM.YYYY")}</TableCell>
+                        <TableCell align="center">{row.etunimi} {row.sukunimi}</TableCell>
                         </TableRow>
                     ))}
                     </TableBody>
                 </Table>
             </TableContainer>
+            }
             </> 
             
             : <></>}

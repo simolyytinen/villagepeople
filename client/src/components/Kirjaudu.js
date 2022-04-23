@@ -45,6 +45,7 @@ const Kirjaudu = () => {
                 setAdmin(true);
                 setLogin(true);
                 setTunnus("");
+                navigate("/raportointi");
             }
             else {
                 let data = await response.json();

@@ -2,6 +2,26 @@ const varausSql = require('../db/varausSQL');
 
 module.exports = {
 
+    haeVarauksetEhdoilla: async (req, res) => {
+        try {
+            let alue_id = req.body.alue_id;
+            let alkuPvm = req.body.alkuPvm;
+            let loppuPvm = req.body.loppuPvm;
+            
+            console.log(req.body);
+
+            let varaukset = await varausSql.getVarauksetEhdoilla(alue_id, alkuPvm, loppuPvm);
+            
+            res.statusCode = 200;
+            res.json(varaukset);
+        }
+        catch (err) {
+            console.log("Error in server")
+            res.statusCode = 400;
+            res.json({msg : err});
+        }
+    },
+
     haeVaraukset: async (req, res) => {
 
         let asiakas_id;
@@ -26,7 +46,7 @@ module.exports = {
             }
         }
         catch (err) {
-            console.log("Error in server")
+            console.log("Error in server", err)
             res.status = 400;
             res.json({ status: "NOT OK", msg: err });
         }

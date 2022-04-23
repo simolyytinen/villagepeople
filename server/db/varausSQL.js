@@ -22,6 +22,14 @@ module.exports = {
     //     console.log(sql);
     //     return executeSQL(sql, [mokki_id, asiakas_id]);
     // },
+    getVarauksetEhdoilla: (alue_id, alkuPvm, loppuPvm) => {
+        let sql = "SELECT a.varaus_id, b.etunimi, b.sukunimi, c.mokkinimi, a.varattu_alkupvm, a.varattu_loppupvm FROM varaus a " +
+        "JOIN mokki c ON a.mokki_id = c.mokki_id JOIN asiakas b ON a.asiakas_id = b.asiakas_id " +
+        "WHERE c.alue_id = ? " +
+        "AND a.varattu_alkupvm BETWEEN ? AND ? OR a.varattu_loppupvm BETWEEN ? AND ?";
+        
+        return executeSQL(sql, [alue_id, alkuPvm, loppuPvm, alkuPvm, loppuPvm]);
+    },
 
     getVaraukset: (mokki_id, asiakas_id) => {
         let sql = "SELECT varaus_id, v.asiakas_id, v.mokki_id, m.mokkinimi, varattu_pvm, vahvistus_pvm, varattu_alkupvm, varattu_loppupvm, a.etunimi, a.sukunimi, al.nimi as sijainti FROM varaus v ";

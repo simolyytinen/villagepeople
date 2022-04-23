@@ -5,8 +5,8 @@ module.exports = {
     haeVarauksetEhdoilla: async (req, res) => {
         try {
             let alue_id = req.body.alue_id;
-            let alkuPvm = req.body.alkuPvm;
-            let loppuPvm = req.body.loppuPvm;
+            let alkuPvm = req.body.alkuPvm + " 00:00:00";
+            let loppuPvm = req.body.loppuPvm + " 23:59:00";
             
             console.log(req.body);
 

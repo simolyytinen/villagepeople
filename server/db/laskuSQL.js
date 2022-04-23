@@ -34,7 +34,8 @@ module.exports = {
     },
 
     getAvoimetVaraukset: () => {
-        let sql = "SELECT * FROM varaus WHERE varaus_id NOT IN (SELECT varaus_id FROM lasku)";
+        let sql = "SELECT a.varaus_id, a.varattu_alkupvm, a.varattu_loppupvm, b.mokkinimi, c.nimi as 'sijainti' FROM varaus a JOIN mokki b ON a.mokki_id = b.mokki_id " +
+        "JOIN alue c ON b.alue_id = c.alue_id WHERE varaus_id NOT IN (SELECT varaus_id FROM lasku)";
         return executeSQL(sql, []);
     },
 

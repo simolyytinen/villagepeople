@@ -34,7 +34,7 @@ const LaskuHallinta = () => {
         "Lasku ID", "Varaus ID", "Summa", "Alv", "Laskutuspvm", "Eräpäivä", "Hallinta", "Maksettu"
     ];
 
-    // Asiakkaiden hakeminen tietokannasta
+    // Laskujen hakeminen tietokannasta
     useEffect(() => {
         const funktio = () => {
             let api = server + "/api/laskut/";
@@ -181,9 +181,9 @@ const LaskuHallinta = () => {
                         label="Varaukset"
                         onChange={(event) => setVarausId(event.target.value) }
                         >
-                        {avoimetVaraukset.map(varaukset => {
+                        {avoimetVaraukset.map((varaukset, index) => {
                             return (
-                                <MenuItem key={varaukset.value} value={varaukset.varaus_id}>
+                                <MenuItem key={index} value={varaukset.varaus_id}>
                                 ID: {varaukset.varaus_id} | Ajankohta: {moment(varaukset.varattu_alkupvm).format("DD.MM.YYYY")} - {moment(varaukset.varattu_loppu_pvm).format("DD.MM.YYYY")} | Mökki: {varaukset.mokkinimi} | Sijainti: {varaukset.sijainti}
                                 </MenuItem>
                             );
@@ -203,6 +203,9 @@ const LaskuHallinta = () => {
                 <Grid item xs={12} md={12}>
                     <Typography variant="h6" align="left" color="red" paragraph sx={{ mt: 4 }}>
                         {virhe ? "Laskua ei voida poistaa, sitä ei ole maksettu" : ""}
+                    </Typography>
+                    <Typography variant="h4" align="left" color="text.primary" paragraph sx={{ mt: 4 }}>
+                        Laskut
                     </Typography>
                     <LaskuTaulukko sarakkeet={sarakkeet} data={laskut} poista={poistaClick} muokkaa={muokkausClick} />
                 </Grid>

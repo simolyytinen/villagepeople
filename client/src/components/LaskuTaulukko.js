@@ -48,7 +48,7 @@ export default function LaskuTaulukko({sarakkeet, data, poista, muokkaa}) {
                   </IconButton>
                   <IconButton onClick={()=> {generatePDF(row)}}><PictureAsPdfIcon /></IconButton>
               </TableCell>
-              <TableCell align="center"><Checkbox checked={row.maksettu} /></TableCell> {/* EI PYSTY MUOKKAAMAAN TILAA */}
+              <TableCell align="center"><Checkbox checked={row.maksettu} /></TableCell>
             </TableRow>
           ))}
         </TableBody>

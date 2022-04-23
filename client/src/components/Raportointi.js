@@ -137,7 +137,15 @@ const Raportointi = () => {
         }, 5000)
     }, [virhe])
      
-
+    const tyhjenna = () => {
+        setAlueId("");
+        setAlkuPvm(null);
+        setLoppuPvm(null);
+        setMajoitusHaku("");
+        setPalveluHaku("");
+        setPalvelut([]);
+        setVaraukset([]);
+    }
 
 
     return (
@@ -193,6 +201,7 @@ const Raportointi = () => {
             {showMajoitus ?
             <>
             <Button variant="contained" onClick={()=>haeVaraukset()} sx={{ mt: 2 }} >Hae majoitusvaraus-raportti</Button>
+            <Button variant="outlined" onClick={()=>tyhjenna()} sx={{ ml: 2, mt: 2 }} >Tyhjennä</Button>
             <Typography variant="h5" align="left" color="red" paragraph sx={{mt: 4}}>
             {naytaVirhe ? virhe : ""}
             </Typography>
@@ -211,9 +220,9 @@ const Raportointi = () => {
                     </TableRow>
                     </TableHead>
                     <TableBody>
-                    {varaukset.map((row) => (
+                    {varaukset.map((row, index) => (
                         <TableRow
-                        key={row.varaus_id}
+                        key={index+1}
                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                         >
                         <TableCell align="center">{row.varaus_id}</TableCell>
@@ -234,6 +243,7 @@ const Raportointi = () => {
             {showPalvelu ? 
             <>
             <Button variant="contained" onClick={()=>haePalveluVaraukset()} sx={{ mt: 2 }} >Hae palveluvaraus-raportti</Button>
+            <Button variant="outlined" onClick={()=>tyhjenna()} sx={{ ml: 2, mt: 2 }} >Tyhjennä</Button>
             <Typography variant="h5" align="left" color="red" paragraph sx={{mt: 4}}>
                     {naytaVirhe ? virhe : ""}
             </Typography>
@@ -253,9 +263,9 @@ const Raportointi = () => {
                     </TableRow>
                     </TableHead>
                     <TableBody>
-                    {palvelut.map((row) => (
+                    {palvelut.map((row, index) => (
                         <TableRow
-                        key={row.palvelu_id}
+                        key={index+1}
                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                         >
                         <TableCell align="center">{row.palvelu_id}</TableCell>

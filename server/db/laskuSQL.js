@@ -18,10 +18,9 @@ const executeSQL = (query, params) => {
 module.exports = {
 
     getLasku: (lasku_id) => {
-        let sql = "SELECT a.lasku_id, a.varaus_id, a.summa, a.alv, a.laskutus_pvm, a.erapaiva, a.maksettu, " +
-        "c.etunimi, c.sukunimi, c.puhelinnro, c.email FROM lasku a " +
+        let sql = "SELECT a.lasku_id, a.varaus_id, a.summa, a.alv, a.laskutus_pvm, a.erapaiva, a.maksettu " +
+        "FROM lasku a " +
         "JOIN varaus b ON a.varaus_id = b.varaus_id " +
-        "JOIN asiakas c ON b.asiakas_id = c.asiakas_id " +
         "WHERE lasku_id LIKE ?";
         return executeSQL(sql, [lasku_id]);
     },
@@ -47,10 +46,9 @@ module.exports = {
     },
 
     getLaskut: () => {
-        let sql = "SELECT a.lasku_id, a.varaus_id, a.summa, a.alv, a.laskutus_pvm, a.erapaiva, a.maksettu, " +
-        "c.etunimi, c.sukunimi, c.puhelinnro, c.email FROM lasku a " +
-        "JOIN varaus b ON a.varaus_id = b.varaus_id " +
-        "JOIN asiakas c ON b.asiakas_id = c.asiakas_id ";
+        let sql = "SELECT a.lasku_id, a.varaus_id, a.summa, a.alv, a.laskutus_pvm, a.erapaiva, a.maksettu " +
+        "FROM lasku a " +
+        "JOIN varaus b ON a.varaus_id = b.varaus_id ";
         
         console.log(sql);
         return executeSQL(sql, []);

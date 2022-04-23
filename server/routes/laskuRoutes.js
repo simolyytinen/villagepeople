@@ -21,5 +21,8 @@ router.route('/api/laskut/:lasku_id').
 router.route('/api/laskut').
     put(ctrl.muokkaaLasku);
 
+router.route('/api/avoimetvaraukset').
+    get(ctrl.haeAvoimetVaraukset);
+
 // Julkaistaan ao. funktiot tämän js-filun ulkopuolelle
 module.exports = router;

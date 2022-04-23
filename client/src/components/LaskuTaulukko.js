@@ -10,17 +10,11 @@ import { Checkbox, IconButton } from '@mui/material';
 import { Delete, Edit } from '@mui/icons-material';
 import generatePDF from './reportGenerator';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
+import moment from 'moment';
 
 
 
 export default function LaskuTaulukko({sarakkeet, data, poista, muokkaa}) {
-
-  const current = new Date();
-  const date = `${current.getDate()}/${current.getMonth()+1}/${current.getFullYear()}`;
-
-  const erapaiva = "10pv netto"
-
-
   
 
   return (
@@ -43,8 +37,8 @@ export default function LaskuTaulukko({sarakkeet, data, poista, muokkaa}) {
               <TableCell align="center">{row.varaus_id}</TableCell>
               <TableCell align="center">{row.summa}</TableCell>
               <TableCell align="center">{row.alv}</TableCell>
-              <TableCell align="center">{date}</TableCell>
-              <TableCell align="center">{erapaiva}</TableCell>
+              <TableCell align="center">{moment(row.laskutus_pvm).format("DD.MM.YYYY")}</TableCell>
+              <TableCell align="center">{moment(row.erapaiva).format("DD.MM.YYYY")}</TableCell>
               <TableCell align="center">
                   <IconButton onClick={()=>{poista(row.lasku_id)}}>
                     <Delete />
@@ -54,7 +48,7 @@ export default function LaskuTaulukko({sarakkeet, data, poista, muokkaa}) {
                   </IconButton>
                   <IconButton onClick={()=> {generatePDF(row)}}><PictureAsPdfIcon /></IconButton>
               </TableCell>
-              <TableCell align="center"><Checkbox /></TableCell>
+              <TableCell align="center"><Checkbox checked={row.maksettu} /></TableCell> {/* EI PYSTY MUOKKAAMAAN TILAA */}
             </TableRow>
           ))}
         </TableBody>

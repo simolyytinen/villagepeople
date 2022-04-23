@@ -40,25 +40,47 @@ module.exports = {
         }
     },
 
+    haeAvoimetVaraukset: async (req, res) => {
+        try {
+
+            console.log("haetaan avoimet varaukset");
+            let c = await sql.getAvoimetVaraukset();
+
+            res.status = 200;
+            res.json(c);
+
+        }
+        catch (err) {
+            console.log("Error in server")
+            res.status = 400;
+            res.json({ status: "NOT OK", msg: err });
+        }
+    },
+
     lisaaLasku: async (req, res) => {
         try {
             let varaus_id = req.body.varaus_id;
-            let summa = req.body.summa; 
-            let alv = req.body.alv; 
-            
+            let alv = 22; // kovakoodattu alv
+            let summa = 0;
+             
+            let varaus = await sql.getVaraukset(varaus_id);
+            let palvelut = await sql.getPalvelut(varaus_id);
 
-            
-            
-                let a = await sql.postLasku(varaus_id, summa, alv);
+            // Laskun kokonaismäärän laskenta
+            for (let i=0; i<varaus.length; i++) {
+                summa += varaus[i].hinta;
 
-                res.statusCode = 201;
+            }
+            for (i=0; i<palvelut.length; i++) {
+                summa += palvelut[i].kokonaishinta;
+
+            }
+
+
+            let a = await sql.postLasku(varaus_id, summa, alv);
+
+            res.statusCode = 201;
             res.json({msg : "Laskun lisääminen onnistui."});
-                
-            
-            
-            
-            
-
             
         }
         catch (err) {
@@ -71,14 +93,23 @@ module.exports = {
     poistaLasku: async (req, res) => {
         try {
             let lasku_id = req.params.lasku_id;
+            let b = await sql.getLasku(lasku_id);
+            console.log(b);
 
-            
+            if (b[0].maksettu == false) {
+                console.log("Laskua ei ole maksettu");
+                res.statusCode = 600;
+                res.json({msg : "Laskua ei ole maksettu"})
+            }
+            else {
+                console.log("PoistetaaN");
                 let a = await sql.deleteLasku(lasku_id);
 
                 res.statusCode = 200;
                 res.json({msg : "Laskun poistaminen onnistui."});
-           
-
+            }
+            
+            
             
         }
         catch (err) {
@@ -90,16 +121,16 @@ module.exports = {
 
     muokkaaLasku: async (req, res) => {
         try {
+            console.log(req.body);
             
-            let varaus_id = req.body.varaus_id;
             let summa = req.body.summa; 
             let alv = req.body.alv; 
             let lasku_id = req.body.lasku_id;
+            let erapaiva = req.body.erapaiva;
+            let maksettu = req.body.maksettu;
             
 
-            // samat tarkastukset kun lisäyksen tapauksessa?
-
-            let a = await sql.updateLasku(varaus_id, summa, alv, lasku_id);
+            let a = await sql.updateLasku(lasku_id, summa, alv, erapaiva, maksettu);
 
             res.statusCode = 200;
             res.json({msg : "Laskun muokkaaminen onnistui."});

@@ -5,6 +5,8 @@ import Grid from "@mui/material/Grid";
 import LaskuTaulukko from "./LaskuTaulukko";
 import LaskuForm from "./LaskuForm";
 import { DataContext } from "../App";
+import moment from "moment";
+import {FormControl, InputLabel, Select, MenuItem, Button} from '@mui/material';
 
 
 
@@ -15,19 +17,21 @@ const LaskuHallinta = () => {
     const { server } = useContext(DataContext);
 
     const [laskut, setLaskut] = useState([]);
+    const [avoimetVaraukset, setAvoimetVaraukset] = useState([]);
     const [hae, setHae] = useState(0);
     const [poistaId, setPoistaId] = useState(-1);
     const [muokkaus, setMuokkaus] = useState(false);
 
     const [muokkausData, setMuokkausData] = useState("");
     const [muokattavaLasku, setMuokattavaLasku] = useState("");
-    const [lisaysData, setLisaysData] = useState("");
+    const [lisaysId, setLisaysId] = useState("");
+    const [varausId, setVarausId] = useState("");
 
     const [virhe, setVirhe] = useState(false);
 
 
     const sarakkeet = [
-        "Lasku ID", "Varaus ID", "Summa", "Alv", "Laskutuspvm", "Maksuehto", "Hallinta", "Maksettu"
+        "Lasku ID", "Varaus ID", "Summa", "Alv", "Laskutuspvm", "Eräpäivä", "Hallinta", "Maksettu"
     ];
 
     // Asiakkaiden hakeminen tietokannasta
@@ -45,9 +49,24 @@ const LaskuHallinta = () => {
         funktio();
     }, [hae, server])
 
+    // Käsitteleättömien varausten hakeminen
+    useEffect(() => {
+        const funktio = () => {
+            let api = server + "/api/avoimetvaraukset";
+            fetch(api)
+                .then(response => response.json())
+                .then((data) => {
+                    console.log(data);
+                    setAvoimetVaraukset(data)
+                })
+                .catch(err => console.log(err));
+        }
+        funktio();
+    }, [hae, server])
 
     // Laskun poistaminen
     const poistaClick = (id) => {
+        console.log("poistetaaN");
         setPoistaId(id);
     }
 
@@ -60,13 +79,15 @@ const LaskuHallinta = () => {
                 .then((res) => {
                     if (res.status === 600) {
                         setVirhe(true);
-                        console.log("Ei voida poistaa, laskuun liittyy varauksia.")
+                        setPoistaId(-1);
+                        console.log("Ei voida poistaa, laskua ei olla maksettu.")
                         setTimeout(() => {
                             setVirhe(false);
                         }, 5000)
                     }
                     else {
                         console.log(res)
+                        setPoistaId(-1);
                         setHae(hae => hae + 1); // laukaistaan asiakkaiden hakeminen useEffect
                     }
                 })
@@ -77,10 +98,9 @@ const LaskuHallinta = () => {
     }, [poistaId, server])
 
     // laskun lisääminen
-    const lisaaClick = (data) => {
-        setLisaysData({
-            ...data
-        });
+    const lisaaClick = (varausId) => {
+        setLisaysId(varausId);
+        console.log(varausId)
 
     }
 
@@ -90,17 +110,20 @@ const LaskuHallinta = () => {
             fetch(api, {
                 method: "POST",
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(lisaysData)
+                body: JSON.stringify({
+                    varaus_id : lisaysId
+                })
             })
                 .then((res) => {
-                    setHae(hae => hae + 1); // laukaistaan asiakkaiden hakeminen useEffect
-                    setLisaysData("");
+                    setHae(hae => hae + 1); // laukaistaan laskujen ja avoimien varausten hakeminen useEffect
+                    setLisaysId("");
+                    setVarausId("");
                 })
                 .catch(err => console.log(err))
         }
 
-        if (lisaysData !== "") funktio();
-    }, [lisaysData, server])
+        if (lisaysId !== "") funktio();
+    }, [lisaysId, server])
 
 
     // Muokkaaminen
@@ -144,14 +167,42 @@ const LaskuHallinta = () => {
 
             <Grid container spacing={4}>
                 <Grid item xs={12} md={12}>
+                    {!muokkaus ? 
+                    <>
                     <Typography variant="h4" align="left" color="text.primary" paragraph sx={{ mt: 4 }}>
-                        {muokkaus ? "Muokkaa laskua" : "Lisää uusi lasku"}
+                        Käsittelemättömät varaukset
                     </Typography>
-                    <LaskuForm muokataanko={muokkaus} setMuokataanko={setMuokkaus} muokattavaLasku={muokattavaLasku} tallennaClick={tallennaClick} lisaaClick={lisaaClick} />
+                    <FormControl fullWidth onChange={(event)=>{setVarausId(event.target.value)}}>
+                        <InputLabel id="varaukset">Varaukset</InputLabel>
+                        <Select
+                        labelId="varaukset"
+                        id="varaukset"
+                        value={varausId}
+                        label="Varaukset"
+                        onChange={(event) => setVarausId(event.target.value) }
+                        >
+                        {avoimetVaraukset.map(varaukset => {
+                            return (
+                                <MenuItem key={varaukset.value} value={varaukset.varaus_id}>
+                                ID: {varaukset.varaus_id} | Ajankohta: {moment(varaukset.varattu_alkupvm).format("DD.MM.YYYY")} - {moment(varaukset.varattu_loppu_pvm).format("DD.MM.YYYY")} | Mökki: {varaukset.mokkinimi} | Sijainti: {varaukset.sijainti}
+                                </MenuItem>
+                            );
+                            })}
+                        </Select>
+                    </FormControl>
+                    <Button variant="contained" sx={{mt:2}} onClick={()=>{lisaaClick(varausId)}}>Lisää lasku</Button>
+                    </> :
+                    <>
+                    <Typography variant="h4" align="left" color="text.primary" paragraph sx={{ mt: 4 }}>
+                        Muokkaa laskua
+                    </Typography>
+                    <LaskuForm muokataanko={muokkaus} setMuokataanko={setMuokkaus} muokattavaLasku={muokattavaLasku} tallennaClick={tallennaClick}/>
+                    </>}
+
                 </Grid>
                 <Grid item xs={12} md={12}>
                     <Typography variant="h6" align="left" color="red" paragraph sx={{ mt: 4 }}>
-                        {virhe ? "Laskua ei voida poistaa, siihen liittyy varauksia" : ""}
+                        {virhe ? "Laskua ei voida poistaa, sitä ei ole maksettu" : ""}
                     </Typography>
                     <LaskuTaulukko sarakkeet={sarakkeet} data={laskut} poista={poistaClick} muokkaa={muokkausClick} />
                 </Grid>

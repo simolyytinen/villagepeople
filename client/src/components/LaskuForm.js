@@ -1,19 +1,27 @@
-import { Box, Button, TextField, Grid } from "@mui/material";
+import { Box, Button, TextField, Grid, fabClasses } from "@mui/material";
 import { useEffect, useState } from 'react';
+import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { FormControlLabel, Checkbox } from '@mui/material';
+import moment from "moment";
 
-export default function LaskuForm({ muokataanko, setMuokataanko, muokattavaLasku, tallennaClick, lisaaClick }) {
+export default function LaskuForm({ muokataanko, setMuokataanko, muokattavaLasku, tallennaClick }) {
 
-  const [varaus_id, setVaraus_id] = useState("");
+
   const [summa, setSumma] = useState("");
   const [alv, setAlv] = useState("");
+  const [erapaiva, setErapaiva] = useState("");
+  const [maksettu, setMaksettu] = useState(false);
   
 
 
   useEffect(()=>{
       const funktio = () => {
-        setVaraus_id(muokattavaLasku.varaus_id);
         setSumma(muokattavaLasku.summa);
         setAlv(muokattavaLasku.alv);
+        setErapaiva(muokattavaLasku.erapaiva);
+        muokattavaLasku.maksettu == 0 ? setMaksettu(false) : setMaksettu(true);
         
       }
       if (muokataanko) funktio();
@@ -21,29 +29,20 @@ export default function LaskuForm({ muokataanko, setMuokataanko, muokattavaLasku
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    muokataanko ? tallennaClick({
-      varaus_id : varaus_id,
+    tallennaClick({
       summa : summa,
-      alv : alv
-     
-      
-
-    }) : lisaaClick({
-        varaus_id : varaus_id,
-        summa : summa,
-        alv : alv
-      
+      alv : alv,
+      erapaiva :  moment(erapaiva).format("YYYY-MM-DD"),
+      maksettu : maksettu
     })
-    setVaraus_id("");
-    setSumma("");
-    setAlv("");
-    
   };
 
   const peruuta = () => {
-    setVaraus_id("");
     setSumma("");
     setAlv("");
+    setErapaiva("");
+    setMaksettu(false);
+
     setMuokataanko(false);
   }
 
@@ -54,12 +53,11 @@ export default function LaskuForm({ muokataanko, setMuokataanko, muokattavaLasku
           <TextField
             margin="normal"
             fullWidth
-            required
+            disabled
             id="varaus_id"
             label="Varaus_id"
             name="varaus_id"
-            value={varaus_id}
-            onChange={(event)=>{setVaraus_id(event.target.value)}}
+            value={muokattavaLasku.varaus_id}
           />
           <TextField
             margin="normal"
@@ -82,12 +80,30 @@ export default function LaskuForm({ muokataanko, setMuokataanko, muokattavaLasku
             onChange={(event)=>{setAlv(event.target.value)}}
           /> 
         </Grid>
+        <Grid item xs={12} md={6}>
+          <LocalizationProvider dateAdapter={AdapterMoment}>
+              <DatePicker
+                label="Eräpäivä"
+                value={erapaiva}
+                onChange={(newValue) => {
+                  setErapaiva(newValue);
+                }}
+                renderInput={(params) => <TextField {...params} sx={{mt: 2}} />}
+              />
+          </LocalizationProvider>
+          <FormControlLabel
+              key="1"
+              label="Maksettu"
+              sx={{display: "block", mt:2}}
+              control={<Checkbox checked={maksettu} onChange={(e) => setMaksettu(e.target.checked)} />}
+              />
+        </Grid>
       </Grid>
       <Button fullWidth type="submit" variant="contained" sx={{ mt: 3, mb: 2 }}>
-        {muokataanko ? "Tallenna" : "Lisää"}
+        Tallenna
       </Button>
       <Button fullWidth onClick={()=>{peruuta()}} variant="outlined" sx={{ mb: 2 }}>
-        {muokataanko ? "Peruuta" : "Tyhjennä"}
+        Peruuta
       </Button>
     </Box>
   );

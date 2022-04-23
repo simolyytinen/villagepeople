@@ -122,6 +122,8 @@ CREATE TABLE IF NOT EXISTS `villagepeople`.`lasku` (
   `varaus_id` INT NOT NULL,
   `summa` DOUBLE(8,2) NOT NULL,
   `alv` DOUBLE(8,2) NOT NULL,
+  `laskutus_pvm` DATETIME NOT NULL,
+  `erapaiva` DATETIME NOT NULL,
   PRIMARY KEY (`lasku_id`),
   INDEX `fk_lasku_varaus1_idx` (`varaus_id` ASC) VISIBLE,
   CONSTRAINT `fk_lasku_varaus`

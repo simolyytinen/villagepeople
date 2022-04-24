@@ -7,6 +7,7 @@ import LaskuForm from "./LaskuForm";
 import { DataContext } from "../App";
 import moment from "moment";
 import {FormControl, InputLabel, Select, MenuItem, Button} from '@mui/material';
+import generatePDF from './reportGenerator';
 
 
 
@@ -28,6 +29,11 @@ const LaskuHallinta = () => {
     const [varausId, setVarausId] = useState("");
 
     const [virhe, setVirhe] = useState(false);
+
+    const [asiakas, setAsiakas] = useState({});
+    const [majoitus, setMajoitus] = useState([]);
+    const [palvelut, setPalvelut] = useState([]);
+    const [lasku, setLasku] = useState(-1);
 
 
     const sarakkeet = [
@@ -158,6 +164,32 @@ const LaskuHallinta = () => {
         if (muokkausData !== "") funktio()
     }, [muokkausData, server])
 
+    // Laskun PDF muodostaminen
+    const muodostaPDF = (laskurivi) => {
+        setLasku(laskurivi);
+    }
+
+    useEffect(() => {
+        const funktio = () => {
+            console.log("laskudataa muodostetaan");
+            let api = server + "/api/laskudata/" + lasku.varaus_id;
+            fetch(api)
+                .then(response => response.json())
+                .then((data) => {
+                    console.log("effect", data);
+                    generatePDF(lasku, data.asiakas, data.majoitus, data.palvelut);
+
+                })
+                .finally(()=>{
+                    setLasku([]);
+                })
+                .catch(err => console.log(err));
+        }
+        if (lasku.varaus_id > 0) funktio();
+    }, [lasku, server]);
+
+  
+
 
     return (
         <Container maxWidth="xl">
@@ -207,7 +239,7 @@ const LaskuHallinta = () => {
                     <Typography variant="h4" align="left" color="text.primary" paragraph sx={{ mt: 4 }}>
                         Laskut
                     </Typography>
-                    <LaskuTaulukko sarakkeet={sarakkeet} data={laskut} poista={poistaClick} muokkaa={muokkausClick} />
+                    <LaskuTaulukko sarakkeet={sarakkeet} data={laskut} poista={poistaClick} muokkaa={muokkausClick} muodosta={muodostaPDF} />
                 </Grid>
 
 

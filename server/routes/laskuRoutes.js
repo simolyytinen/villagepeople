@@ -7,6 +7,9 @@ let ctrl = require('../controllers/laskuController');
 
 router.route('/api/laskut/:lasku_id').
     get(ctrl.haeLasku);
+
+router.route('/api/laskudata/:varaus_id').
+    get(ctrl.haeLaskudata);
     
 router.route('/api/laskut/').
     get(ctrl.haeLaskut);

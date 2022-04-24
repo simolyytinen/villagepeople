@@ -8,13 +8,12 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Checkbox, IconButton } from '@mui/material';
 import { Delete, Edit } from '@mui/icons-material';
-import generatePDF from './reportGenerator';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import moment from 'moment';
 
 
 
-export default function LaskuTaulukko({sarakkeet, data, poista, muokkaa}) {
+export default function LaskuTaulukko({sarakkeet, data, poista, muokkaa, muodosta}) {
   
 
   return (
@@ -46,7 +45,7 @@ export default function LaskuTaulukko({sarakkeet, data, poista, muokkaa}) {
                   <IconButton onClick={()=>{muokkaa(row)}}>
                     <Edit />
                   </IconButton>
-                  <IconButton onClick={()=> {generatePDF(row)}}><PictureAsPdfIcon /></IconButton>
+                  <IconButton onClick={()=> {muodosta(row)}}><PictureAsPdfIcon /></IconButton>
               </TableCell>
               <TableCell align="center"><Checkbox checked={row.maksettu} /></TableCell>
             </TableRow>

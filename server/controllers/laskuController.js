@@ -40,6 +40,26 @@ module.exports = {
         }
     },
 
+    haeLaskudata: async (req, res) => {
+
+        try {
+            let varaus_id = req.params.varaus_id;
+
+            let asiakas = await sql.getLaskunAsiakas(varaus_id);
+            let majoitus = await sql.getVaraukset(varaus_id);
+            let palvelut = await sql.getPalvelut(varaus_id);
+
+            res.status = 200;
+            res.json({asiakas, majoitus, palvelut});
+
+        }
+        catch (err) {
+            console.log("Error in server")
+            res.status = 400;
+            res.json({ status: "NOT OK", msg: err });
+        }
+    },
+
     haeAvoimetVaraukset: async (req, res) => {
         try {
 

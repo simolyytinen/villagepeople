@@ -26,7 +26,7 @@ module.exports = {
     },
 
     getVaraukset: (varaus_id) => {
-        let sql = "SELECT a.varaus_id, b.mokkinimi, b.hinta " +
+        let sql = "SELECT a.varaus_id, b.mokkinimi, a.varattu_alkupvm, a.varattu_loppupvm, b.hinta " +
         "FROM varaus a JOIN mokki b ON a.mokki_id = b.mokki_id " +
         "WHERE a.varaus_id = ?";
         return executeSQL(sql, [varaus_id]);
@@ -68,6 +68,11 @@ module.exports = {
     updateLasku: (lasku_id, summa, alv, erapaiva, maksettu) => {
         let sql = "UPDATE lasku SET  summa = ?, alv = ?, erapaiva = ?, maksettu = ? WHERE lasku_id = ?";
         return executeSQL(sql, [summa, alv, erapaiva, maksettu, lasku_id])
+    },
+
+    getLaskunAsiakas: (varaus_id) => {
+        let sql = "SELECT b.etunimi, b.sukunimi, b.puhelinnro, b.email FROM varaus a JOIN asiakas b ON a.asiakas_id = b.asiakas_id WHERE a.varaus_id = ?";
+        return executeSQL(sql, [varaus_id]);
     },
 
 }

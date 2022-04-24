@@ -26,7 +26,7 @@ export default function VarausForm({ muokataanko, setMuokataanko, muokattavaVara
     event.preventDefault();
     muokataanko ? tallennaClick({
       varattu_alkupvm: moment(alkuPvm).format("YYYY-MM-DD 14:00:00"),
-      varattu_loppupvm: moment(loppuPvm).format("YYYY-MM-DD 14:00:00"),
+      varattu_loppupvm: moment(loppuPvm).format("YYYY-MM-DD 12:00:00"),
       varaus_id: varaus_id
     }) :
       setAlkuPvm("");

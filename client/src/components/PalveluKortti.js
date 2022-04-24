@@ -142,7 +142,7 @@ const PalveluKortti = ({ data }) => {
                   <Button size="small" onClick={(e) => { varaa(a.palvelu_id) }}>Varaa</Button>
                   : null}
                   {!varaus_id && kayttaja ?
-                  <Typography variant="h8" color="red">Valitse majoitusvaraus</Typography>
+                  <Typography variant="h8" color="red">Majoitusvaraus puuttuu</Typography>
                 : null  
                 }
               </CardActions>

@@ -26,11 +26,11 @@ const Asiakas = () => {
 
 
     const sarakkeet = [
-        "Varaus ID", "Mökki ID", "Mökin nimi", "Sijainti", "Varattu", "Vahvistettu", "Varaus alkaa", "Varaus loppuu", "Poista/Muokkaa"
+        "Varaus ID", "Mökki ID", "Mökin nimi", "Sijainti", "Varattu", "Vahvistettu", "Varaus alkaa", "Varaus loppuu", "Poista"
     ];
 
     const palveluSarakkeet = [
-        "Varaus ID", "Asiakas ID", "Palvelu ID", "Nimi", "Lkm", "Poista/Muokkaa"
+        "Varaus ID", "Asiakas ID", "Palvelu ID", "Nimi", "Lkm", "Poista"
     ];
 
     //Varauksien haku kannasta kirjautuneelle käyttäjälle
@@ -148,9 +148,6 @@ const Asiakas = () => {
                                         <IconButton onClick={() => { poistaMajoitusVaraus(row.varaus_id) }} >
                                             <Delete />
                                         </IconButton>
-                                        <IconButton /* onClick={()=>{muokkaa(row.varattu_alkupvm, row.varattu_loppupvm)}} */>
-                                            <Edit />
-                                        </IconButton>
                                     </TableCell>
                                 </TableRow>
                             ))}
@@ -196,9 +193,6 @@ const Asiakas = () => {
                                     <TableCell align="center">
                                         <IconButton onClick={() => { poistaPalveluVaraus(row.varaus_id, row.palvelu_id) }} >
                                             <Delete />
-                                        </IconButton>
-                                        <IconButton /* onClick={()=>{muokkaa(row.varattu_alkupvm, row.varattu_loppupvm)}} */>
-                                            <Edit />
                                         </IconButton>
                                     </TableCell>
                                 </TableRow>

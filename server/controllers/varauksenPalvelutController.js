@@ -14,11 +14,13 @@ module.exports = {
         catch (err) {
             console.log("Error in server")
             res.statusCode = 400;
-            res.json({msg : err});
+            res.json({ msg: err });
         }
     },
     lisaaVarauksenPalvelut: async (req, res) => {
+
         try {
+            let asiakas_id = req.params.asiakas_id;
             let varaus_id = req.body.varaus_id;
             let palvelu_id = req.body.palvelu_id;
 
@@ -26,15 +28,23 @@ module.exports = {
 
             res.statusCode = 200;
             res.json(v);
+
         }
         catch (err) {
             console.log("Error in server")
-            res.statusCode = 400;
-            res.json({msg : err});
+            if (err.errno == "1062") {
+                res.statusCode = 600;
+                res.json({ msg: err.sqlMessage })
+            }
+
+            else {
+                res.statusCode = 400;
+                res.json({ msg: err });
+            }
         }
     },
 
-    poistaVarauksenPalvelut: async (req, res) =>{
+    poistaVarauksenPalvelut: async (req, res) => {
         let varaus_id = req.params.varaus_id;
 
         try {
@@ -56,19 +66,19 @@ module.exports = {
             let alue_id = req.body.alue_id;
             let alkuPvm = req.body.alkuPvm + " 00:00:00";
             let loppuPvm = req.body.loppuPvm + " 23:59:00";
-            
+
             console.log(req.body);
 
             let palvelut = await sql.getVarauksenPalvelutEhdoilla(alue_id, alkuPvm, loppuPvm);
-            
+
             res.statusCode = 200;
             res.json(palvelut);
         }
         catch (err) {
             console.log("Error in server")
             res.statusCode = 400;
-            res.json({msg : err});
+            res.json({ msg: err });
         }
     },
- 
+
 }

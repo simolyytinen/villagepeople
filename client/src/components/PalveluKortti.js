@@ -18,6 +18,7 @@ const PalveluKortti = ({ data }) => {
   const [varaus_id, setVaraus_id] = useState("");
   const [palvelu_id, setPalvelu_id] = useState("");
   const [varaukset, setVaraukset] = useState("");
+  const [virhe, setVirhe] = useState(false);
   // const [varauksenPalvelut, setVarauksenPalvelut] = useState("");
 
 
@@ -43,7 +44,7 @@ const PalveluKortti = ({ data }) => {
   //Palveluvarauksen lisääminen kantaan varauksen_palvelut tauluun
   useEffect(() => {
     const funktio = () => {
-      console.log("useEffect palveluvaraus majoitusvaraukselle" + varaus_id)
+      console.log("useEffect palveluvaraus majoitusID " + varaus_id)
       const api = server + "/api/varauksenPalvelut";
 
       fetch(api, {
@@ -56,10 +57,23 @@ const PalveluKortti = ({ data }) => {
           })
       })
         .then((res) => {
-          console.log(varaus_id, palvelu_id);
-          // setPalvelut("");
-          setVaraus_id("");
-          setPalvelu_id("");
+          if (res.status === 600) {
+            setVirhe(true);
+            console.log("Duplikaatti palveluvaraus")
+            setTimeout(() => {
+              setVirhe(false);
+              setVaraus_id("");
+              setPalvelu_id("");
+            }, 5000)
+          }
+          else {
+            console.log(varaus_id, palvelu_id);
+            setOpenDialog(() => true)
+            // setPalvelut("");
+            setVaraus_id("");
+            setPalvelu_id("");
+          }
+
         })
         .catch(err => console.log(err))
     }
@@ -73,7 +87,6 @@ const PalveluKortti = ({ data }) => {
     // setVaraus_id(varaus_id);
     console.log("varaus_id " + varaus_id + " palveluid " + palvelu_id)
 
-    setOpenDialog(() => true)
     // console.log("id "+palvelut.a.palvelu_id + palvelut.a.nimi);
     // console.log("palvelut",palvelut);
 
@@ -91,10 +104,17 @@ const PalveluKortti = ({ data }) => {
           <KayttajanVarauksetDropBox data={varaukset} varaus_id={varaus_id} setVaraus_id={setVaraus_id} />
         </div>
         : null}
+
+      {virhe ?
+        <Typography variant="h4" align="center" color="red" paragraph sx={{ mt: 4 }}>
+          Kyseiselle majoitusvaraukselle on varattu haluttu palvelu, tarkista valinnat!
+        </Typography>
+        : null}
+
       {/* End hero unit */}
       <Grid container spacing={4} style={{ marginTop: 20 }}>
         {data.map((a, index) => (
-          <Grid item key={a.palvelu_id} xs={12} sm={6} md={4}>
+          <Grid item key={index} xs={12} sm={6} md={4}>
             <Card
               sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
             >
@@ -117,7 +137,7 @@ const PalveluKortti = ({ data }) => {
                 </Typography>
               </CardContent>
               <CardActions>
-              {varaukset.length > 0 && kayttaja ?
+                {varaukset.length > 0 && kayttaja && varaus_id ?
                   <Button size="small" onClick={(e) => { varaa(a.palvelu_id) }}>Varaa</Button>
                   : null}
               </CardActions>

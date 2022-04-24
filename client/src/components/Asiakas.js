@@ -21,6 +21,8 @@ const Asiakas = () => {
     const [openDialog, setOpenDialog] = useState(false);
     const [openDialogPalvelu, setOpenDialogPalvelu] = useState(false);
     const [varauksenPalvelut, setVarauksenPalvelut] = useState("");
+    const [varaus_id, setVaraus_id] = useState("");
+
 
 
     const sarakkeet = [
@@ -28,7 +30,7 @@ const Asiakas = () => {
     ];
 
     const palveluSarakkeet = [
-        "Varaus ID", "Asiakas ID","Palvelu ID", "Nimi", "Lkm", "Poista/Muokkaa"
+        "Varaus ID", "Asiakas ID", "Palvelu ID", "Nimi", "Lkm", "Poista/Muokkaa"
     ];
 
     //Varauksien haku kannasta kirjautuneelle käyttäjälle
@@ -83,24 +85,27 @@ const Asiakas = () => {
     //Palveluvarauksen poisto
     useEffect(() => {
         const funktio = () => {
-            const api = server + "/api/varauksenPalvelut/" + poistaPalveluId;
-            console.log("palveluvarauksen poisto " + poistaPalveluId);
+            const api = server + "/api/varauksenPalvelut/" + varaus_id + "/" + poistaPalveluId;
+            console.log("palveluvarauksen poisto useEffect...");
 
             fetch(api, {
                 method: "DELETE",
             })
                 .then((res) => {
                     setHae(hae => hae + 1);
+                    setPoistaPalveluId("");
                 })
                 .catch(err => console.log(err))
         }
-        if (poistaPalveluId > 0 && openDialog == false) funktio();
+        if (varaus_id > 0 && poistaPalveluId > 0 && openDialog == false) funktio();
 
-    }, [/* poistaId,  */openDialogPalvelu, server])
+    }, [openDialog, server])
 
-    const poistaPalveluVaraus = (id) =>{
-        setOpenDialogPalvelu(() => true);
-        setPoistaPalveluId(id);
+    const poistaPalveluVaraus = (varaus_id, palvelu_id) => {
+        setVaraus_id(varaus_id);
+        setPoistaPalveluId(palvelu_id);
+        console.log("varausID: " + varaus_id + "palveluID: " + palvelu_id);
+        setOpenDialog(() => true);
     }
 
 
@@ -153,14 +158,14 @@ const Asiakas = () => {
                     </Table>
                 </TableContainer>
 
-                : <div>
-                    <Typography style={{ marginTop: 80 }} variant="h4" align="center" color="text.primary" paragraph sx={{ mt: 4 }}>
-                        Sinulla ei ole aktiivisia majoitusvarauksia.
-                    </Typography>
-                </div>
+                :
+
+                <Typography style={{ marginTop: 40 }} variant="h6" align="left" color="text.primary" paragraph sx={{ mt: 4 }}>
+                    Ei aktiivisia majoitusvarauksia
+                </Typography>
             }
-            <Dialogi open={openDialog} setOpen={setOpenDialog} otsikko={"Majoitusvarauksen poisto"} viesti={"Poistetaanko varaus? Myös kyseiseen varaukseen liittyvät palveluvaraukset poistetaan."} reitti={"/varaukset/asiakas"} />
-            <Dialogi openPalvelu={openDialogPalvelu} setOpenPalvelu={setOpenDialogPalvelu} otsikko={"Palveluvarauksen poisto"} viesti={"Poistetaanko varaus?"} reitti={"/varaukset/asiakas"} />
+
+            <Dialogi open={openDialog} setOpen={setOpenDialog} otsikko={"Varauksen poisto"} viesti={poistaPalveluId ? "Poistetaanko palveluvaraus" : "Poistetaanko majoitusvaraus? Myös kyseiseen varaukseen liittyvät palveluvaraukset poistetaan."} reitti={"/varaukset/asiakas"} />
 
 
             <Typography style={{ marginTop: 40 }} variant="h4" align="left" color="text.primary" paragraph sx={{ mt: 4 }}>
@@ -178,9 +183,9 @@ const Asiakas = () => {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {varauksenPalvelut.map((row) => (
+                            {varauksenPalvelut.map((row, index) => (
                                 <TableRow
-                                    key={row.varaus_id}
+                                    key={index}
                                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                 >
                                     <TableCell align="center">{row.varaus_id}</TableCell>
@@ -189,7 +194,7 @@ const Asiakas = () => {
                                     <TableCell align="center">{row.nimi}</TableCell>
                                     <TableCell align="center">{row.lkm}</TableCell>
                                     <TableCell align="center">
-                                        <IconButton onClick={() => { poistaPalveluVaraus(row.varaus_id) }} >
+                                        <IconButton onClick={() => { poistaPalveluVaraus(row.varaus_id, row.palvelu_id) }} >
                                             <Delete />
                                         </IconButton>
                                         <IconButton /* onClick={()=>{muokkaa(row.varattu_alkupvm, row.varattu_loppupvm)}} */>
@@ -201,11 +206,10 @@ const Asiakas = () => {
                         </TableBody>
                     </Table>
                 </TableContainer>
-                : <div>
-                <Typography style={{ marginTop: 80 }} variant="h4" align="center" color="text.primary" paragraph sx={{ mt: 4 }}>
-                    Sinulla ei ole aktiivisia palveluvarauksia.
+                : <Typography style={{ marginTop: 40 }} variant="h6" align="left" color="text.primary" paragraph sx={{ mt: 4 }}>
+                    Ei aktiivisia palveluvarauksia
                 </Typography>
-            </div>}
+            }
         </Container>
     )
 }

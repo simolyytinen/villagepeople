@@ -8,8 +8,15 @@ module.exports = {
 
             let v = await sql.getVarauksenPalvelut(asiakas_id);
 
-            res.statusCode = 200;
-            res.json(v);
+            if(v.length == 0){
+                res.statusCode = 201;
+                res.json(v);
+            }else{
+                res.statusCode = 200;
+                res.json(v);
+            }
+
+           
         }
         catch (err) {
             console.log("Error in server")
@@ -46,10 +53,11 @@ module.exports = {
 
     poistaVarauksenPalvelut: async (req, res) => {
         let varaus_id = req.params.varaus_id;
+        let palvelu_id = req.params.palvelu_id;
 
         try {
-            console.log("poistetaan palveluvaraus: " + varaus_id);
-            let c = await sql.deleteVarauksenPalvelu(varaus_id);
+            console.log("poistetaan palveluvaraus: " + varaus_id + " "+palvelu_id);
+            let c = await sql.deleteVarauksenPalvelu(varaus_id, palvelu_id);
 
             res.status = 200;
             res.json(c);

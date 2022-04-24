@@ -11,7 +11,7 @@ router.route('/api/varauksenPalvelut/:asiakas_id').
 router.route('/api/varauksenPalvelut').
     post(ctrl.lisaaVarauksenPalvelut);
 
-router.route('/api/varauksenPalvelut/:varaus_id').
+router.route('/api/varauksenPalvelut/:varaus_id/:palvelu_id').
     delete(ctrl.poistaVarauksenPalvelut);
 
 // router.route('/api/varauksenPalvelut/:varaus_id').

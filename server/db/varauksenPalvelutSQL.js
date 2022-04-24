@@ -29,10 +29,10 @@ module.exports = {
         return executeSQL(sql, [asiakas_id]);
     },
 
-    deleteVarauksenPalvelu: (varaus_id) => {
-        let sql = "DELETE FROM varauksen_palvelut WHERE varaus_id=?";
+    deleteVarauksenPalvelu: (varaus_id, palvelu_id) => {
+        let sql = "DELETE FROM varauksen_palvelut WHERE varaus_id=? AND palvelu_id=?";
         console.log(sql);
-        return executeSQL(sql, [varaus_id]);
+        return executeSQL(sql, [varaus_id, palvelu_id]);
     },
 
     insertVarauksenPalvelut: (varaus_id, palvelu_id) => {

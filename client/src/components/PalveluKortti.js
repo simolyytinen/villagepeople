@@ -10,6 +10,7 @@ import Container from '@mui/material/Container';
 import { DataContext } from "../App";
 import Dialogi from "./Dialogi";
 import KayttajanVarauksetDropBox from "./KayttajanVarauksetDropBox.js";
+import { style } from "@mui/system";
 
 const PalveluKortti = ({ data }) => {
 
@@ -99,7 +100,7 @@ const PalveluKortti = ({ data }) => {
       {varaukset.length > 0 && kayttaja ?
         <div>
           <Typography variant="h5" align="left" color="text.primary" paragraph sx={{ mt: 4 }}>
-            Majoitusvaraukset
+            Majoitusvarauksesi
           </Typography>
           <KayttajanVarauksetDropBox data={varaukset} varaus_id={varaus_id} setVaraus_id={setVaraus_id} />
         </div>
@@ -107,7 +108,7 @@ const PalveluKortti = ({ data }) => {
 
       {virhe ?
         <Typography variant="h4" align="center" color="red" paragraph sx={{ mt: 4 }}>
-          Kyseiselle majoitusvaraukselle on varattu haluttu palvelu, tarkista valinnat!
+          Olet jo tehnyt kyseisen palveluvarauksen, tarkista valinnat!
         </Typography>
         : null}
 
@@ -124,7 +125,7 @@ const PalveluKortti = ({ data }) => {
                   // 16:9
                   pt: '56.25%',
                 }}
-                image="https://source.unsplash.com/random/?hiking"
+                image="https://source.unsplash.com/random/?outdoor"
                 alt="palvelu"
               />
               <CardContent sx={{ flexGrow: 1 }}>
@@ -140,6 +141,10 @@ const PalveluKortti = ({ data }) => {
                 {varaukset.length > 0 && kayttaja && varaus_id ?
                   <Button size="small" onClick={(e) => { varaa(a.palvelu_id) }}>Varaa</Button>
                   : null}
+                  {!varaus_id && kayttaja ?
+                  <Typography variant="h8" color="red">Valitse majoitusvaraus</Typography>
+                : null  
+                }
               </CardActions>
             </Card>
           </Grid>

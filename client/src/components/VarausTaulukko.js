@@ -14,6 +14,7 @@ export default function VarausTaulukko({ sarakkeet, data, poista, muokkaa }) {
 
     return (
         <TableContainer style={{marginTop: 32}} component={Paper}>
+          {data.length > 0 ? 
           <Table aria-label="simple table">
             <TableHead>
               <TableRow key={0}>
@@ -30,7 +31,7 @@ export default function VarausTaulukko({ sarakkeet, data, poista, muokkaa }) {
                 >
                   <TableCell align="center">{row.varaus_id}</TableCell>
                   <TableCell align="center">{row.etunimi} {row.sukunimi}</TableCell>
-                  <TableCell align="center">{row.mokki_id} / {row.mokkinimi}</TableCell>
+                  <TableCell align="center">{row.mokki_id} - {row.mokkinimi}</TableCell>
                   <TableCell align="center">{row.sijainti}</TableCell>
                   <TableCell align="center">{moment(row.varattu_pvm).format("DD.MM.YYYY HH:mm:ss")}</TableCell>
                   <TableCell align="center">{moment(row.vahvistus_pvm).format("DD.MM.YYYY HH:mm:ss")}</TableCell>
@@ -40,7 +41,7 @@ export default function VarausTaulukko({ sarakkeet, data, poista, muokkaa }) {
                       <IconButton onClick={()=>{poista(row.varaus_id)}}>
                         <Delete />
                       </IconButton>
-                      <IconButton onClick={()=>{muokkaa(row/* .varaus_id, row.varattu_alkupvm, row.varattu_loppupvm */)}}>
+                      <IconButton onClick={()=>{muokkaa(row)}}>
                         <Edit />
                       </IconButton>
                   </TableCell>
@@ -48,6 +49,7 @@ export default function VarausTaulukko({ sarakkeet, data, poista, muokkaa }) {
               ))}
             </TableBody>
           </Table>
+          : null }
         </TableContainer>
       )
   }

@@ -162,7 +162,7 @@ const Asiakas = () => {
                 </Typography>
             }
 
-            <Dialogi open={openDialog} setOpen={setOpenDialog} otsikko={"Varauksen poisto"} viesti={poistaPalveluId ? "Poistetaanko palveluvaraus" : "Poistetaanko majoitusvaraus? Myös kyseiseen varaukseen liittyvät palveluvaraukset poistetaan."} reitti={"/varaukset/asiakas"} />
+            <Dialogi open={openDialog} setOpen={setOpenDialog} otsikko={"Varauksen poisto"} viesti={poistaPalveluId ? "Palveluvaraus poistettu" : "Majoitusvaraus ja palveluvaraukset poistettu."} reitti={"/varaukset/asiakas"} />
 
 
             <Typography style={{ marginTop: 40 }} variant="h4" align="left" color="text.primary" paragraph sx={{ mt: 4 }}>

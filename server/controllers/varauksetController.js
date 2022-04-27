@@ -55,10 +55,11 @@ module.exports = {
     //Admin käyttäjän varaushallintaa varten
     haeKaikkiVaraukset: async (req, res) => {
 
-        try {
+        let alue_id = req.params.alue_id;
 
+        try {
             console.log("haetaan kaikki varaukset");
-            let c = await varausSql.getKaikkiVaraukset();
+            let c = await varausSql.getKaikkiVaraukset(alue_id);
 
             res.status = 200;
             res.json(c);
@@ -100,7 +101,7 @@ module.exports = {
         try {
 
             console.log("lisätään uusi varaus");
-            let c = await varausSql.insertVaraus(asiakas_id, mokki_id, /* varattu_pvm, vahvistus_pvm, */ varattu_alkupvm, varattu_loppupvm);
+            let c = await varausSql.insertVaraus(asiakas_id, mokki_id, varattu_alkupvm, varattu_loppupvm);
 
             res.status = 200;
             res.json({ msg: "Varauksen lisäys onnistui" });

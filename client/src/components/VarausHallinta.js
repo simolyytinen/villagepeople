@@ -33,7 +33,7 @@ const VarausHallinta = () => {
 
 
     const sarakkeet = [
-        "Varaus ID", "Asiakas", "Mökki ID/Nimi", "Sijainti", "Varattu", "Vahvistettu", "Varaus alkaa", "Varaus loppuu", "Poista/Muokkaa"
+        "Varaus ID", "Asiakas", "Mökki ID - Nimi", "Sijainti", "Varattu", "Vahvistettu", "Varaus alkaa", "Varaus loppuu", "Poista/Muokkaa"
     ];
 
     const auth = "Bearer " + token;
@@ -53,7 +53,7 @@ const VarausHallinta = () => {
     //Varauksien haku kannasta
     useEffect(() => {
         const funktio = () => {
-            let api = server + "/api/varaukset/";
+            let api = server + "/api/varauksetKaikki/"+alueId;
             fetch(api)
                 .then(response => response.json())
                 .then((data) => {
@@ -62,8 +62,8 @@ const VarausHallinta = () => {
                 })
                 .catch(err => console.log(err));
         }
-        /* if (alueId !== "") */ funktio();
-    }, [hae, /* alueId, */ server])
+         if (alueId !== "")  funktio();
+    }, [hae, alueId, server])
 
 
     //Varauksen muokkaus
@@ -130,7 +130,7 @@ const VarausHallinta = () => {
     return (
         <Container maxWidth="xl">
             <Typography variant="h3" align="center" color="text.primary" paragraph sx={{ mt: 4 }}>
-                Varausten hallinta
+                Majoitusvarausten hallinta
             </Typography>
             <Typography variant="h4" align="left" color="text.primary" paragraph sx={{ mt: 4 }}>
                 Valitse alue
@@ -148,7 +148,7 @@ const VarausHallinta = () => {
                     <VarausTaulukko sarakkeet={sarakkeet} data={varaukset} poista={poistaClick} muokkaa={muokkausClick} />
                 </Grid>
             </Grid>
-            <Dialogi open={openDialog} setOpen={setOpenDialog} otsikko={"Varauksen poisto"} viesti={"Poistetaanko varaus? Myös kyseiseen varaukseen liittyvät palveluvaraukset poistetaan."} reitti={"/varaukset/hallinta"} />
+            <Dialogi open={openDialog} setOpen={setOpenDialog} otsikko={"Varauksen poisto"} viesti={"Majoitusvaraus ja palveluvaraukset poistettu."} reitti={"/varaukset/hallinta"} />
         </Container>
     )
 

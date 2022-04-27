@@ -8,7 +8,7 @@ let ctrl = require('../controllers/varauksetController');
 router.route('/api/varaukset/:asiakas_id').
     get(ctrl.haeVaraukset);
 
-router.route('/api/varaukset').
+router.route('/api/varauksetKaikki/:alue_id').
     get(ctrl.haeKaikkiVaraukset);
 
 router.route('/api/varaukset/:varaus_id').

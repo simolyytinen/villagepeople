@@ -3,11 +3,10 @@ import { useEffect, useState } from 'react';
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import moment from "moment";
 
 export default function VarausForm({ muokataanko, setMuokataanko, muokattavaVaraus, tallennaClick }) {
-
-  // moment.alkuPvm.format("YYYY-MM-DD 14:00:00")
 
   const [alkuPvm, setAlkuPvm] = useState("");
   const [loppuPvm, setLoppuPvm] = useState("");
@@ -29,7 +28,7 @@ export default function VarausForm({ muokataanko, setMuokataanko, muokattavaVara
       varattu_loppupvm: moment(loppuPvm).format("YYYY-MM-DD 12:00:00"),
       varaus_id: varaus_id
     }) :
-      setAlkuPvm("");
+    setAlkuPvm("");
     setLoppuPvm("");
     setVaraus_id("");
   };
@@ -62,19 +61,17 @@ export default function VarausForm({ muokataanko, setMuokataanko, muokattavaVara
               value={varaus_id}
               onChange={(event) => { setVaraus_id(event.target.value) }}
             />
-            <LocalizationProvider dateAdapter={AdapterMoment} >
+            <LocalizationProvider dateAdapter={AdapterDateFns} >
               <DatePicker
                 label="Varaus alkaa"
                 value={alkuPvm}
                 onChange={(newValue) => {
                   setAlkuPvm(newValue);
                 }}
-
-                // onChange={(event)=>{setAlkuPvm(event.target.value)}}
                 renderInput={(params) => <TextField {...params} />}
               />
               <DatePicker
-                label="Varaus loppuu"
+                label="Varaus päättyy"
                 value={loppuPvm}
                 onChange={(newValue) => {
                   setLoppuPvm(newValue);

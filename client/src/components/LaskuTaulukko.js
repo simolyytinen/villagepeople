@@ -18,6 +18,7 @@ export default function LaskuTaulukko({sarakkeet, data, poista, muokkaa, muodost
 
   return (
     <TableContainer style={{marginTop: 32}} component={Paper}>
+      {data.length > 0 ?
       <Table aria-label="simple table">
         <TableHead>
           <TableRow>
@@ -52,6 +53,7 @@ export default function LaskuTaulukko({sarakkeet, data, poista, muokkaa, muodost
           ))}
         </TableBody>
       </Table>
+      : "Ei laskuja" }
     </TableContainer>
   )
 }

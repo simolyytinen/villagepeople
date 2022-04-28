@@ -22,10 +22,6 @@ const Kortti = ({data, alkuPvm, loppuPvm}) => {
   const [varattu_alkupvm, setVarattu_alkupvm] = useState("");
   const [varattu_loppupvm, setVarattu_loppupvm] = useState("");
 
-  
-  // ********** VARAUKSEN VIEMINEN KANTAAN**********
-  //majoituskohteet mapataan kortteihin objektiin a. Varausnappi kutsuu metodia "varaa", joka asettaa context muuttujaan "majoitus" objektin a tiedot -> UseEffect laukeaa, kun majoitus muuttuu.
-
 
   // Varauksen lisääminen kantaan varaus-tauluun
   useEffect(() => {

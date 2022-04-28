@@ -29,7 +29,7 @@ export default function VarauksenPalvelutDroppi({ varaus_id, setVaraus_id, data 
          {data.map((varaukset, index) => {
               return (
                 <MenuItem key={index} value={varaukset.varaus_id}>
-                  ID: {varaukset.varaus_id} | Ajankohta: {moment(varaukset.varattu_alkupvm).format("DD.MM.YYYY")} - {moment(varaukset.varattu_loppu_pvm).format("DD.MM.YYYY")} | Mökki: {varaukset.mokkinimi} | Sijainti: {varaukset.sijainti}
+                  ID: {varaukset.varaus_id} | Ajankohta: {moment(varaukset.varattu_alkupvm).format("DD.MM.YYYY")} - {moment(varaukset.varattu_loppupvm).format("DD.MM.YYYY")} | Mökki: {varaukset.mokkinimi} | Sijainti: {varaukset.sijainti}
                 </MenuItem>
               );
             })}

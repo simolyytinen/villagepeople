@@ -25,10 +25,11 @@ insert into varaus (asiakas_id, mokki_id, varattu_pvm, vahvistus_pvm, varattu_al
 values (1, 1, NOW(), NOW(), NOW(), NOW());
 
 insert into palvelu (alue_id, nimi, tyyppi, kuvaus, hinta, alv)
-values (1, ""), (2, ""), (3, ""), (4, ""), (5, ""), (6, ""), (7, ""), (8, "");
-
-insert into lasku (varaus_id, summa, alv)
-values (), (), (), (), ();
+values (1, "Paljuvuokra", 1, "3h vuokra", 300, 24), 
+(2, "Suksivuokra", 1, "6h vuokra", 35, 24), 
+(3, "Moottorikelkka", 1, "3h vuokra", 160, 24), 
+(4, "Rekiajelu", 1, "Rekiajelu Huskyjen kanssa n. 2h, sis lounaan", 600, 24), 
+(5, "Lumikenkäily oppaan kanssa", 1, "Retken kesto 4h, upeat tunturimaisemat", 250, 24);
 
 insert into varauksen_pavelut (varaus_id, palvelu_id, lkm)
 values (3, 5, 2), (8, 5, 1);

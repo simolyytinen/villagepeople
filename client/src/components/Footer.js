@@ -12,7 +12,7 @@ function Copyright() {
       {'Copyright © '}
         Sinna Hujanen, Simo Lyytinen ja Ville Paasonen
       {' '}
-      {new Date().getFullYear()}
+      2022
       {'.'}
     </Typography>
   );
@@ -36,7 +36,7 @@ export default function Footer() {
           color="text.secondary"
           component="p"
         >
-          Elämyksiä ja majoitusta jo vuodesta {new Date().getFullYear()}!
+          Elämyksiä ja majoitusta jo vuodesta 2022!
         </Typography>
         <Copyright />
       </Box>

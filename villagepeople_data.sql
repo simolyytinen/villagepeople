@@ -31,7 +31,7 @@ values (1, "Paljuvuokra", 1, "3h vuokra", 300, 24),
 (4, "Rekiajelu", 1, "Rekiajelu Huskyjen kanssa n. 2h, sis lounaan", 600, 24), 
 (5, "Lumikenkäily oppaan kanssa", 1, "Retken kesto 4h, upeat tunturimaisemat", 250, 24);
 
-insert into varauksen_pavelut (varaus_id, palvelu_id, lkm)
+insert into varauksen_palvelut (varaus_id, palvelu_id, lkm)
 values (3, 5, 2), (8, 5, 1);
 
 
